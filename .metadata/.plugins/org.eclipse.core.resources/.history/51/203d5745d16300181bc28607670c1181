@@ -1,0 +1,7 @@
+package com.bridgeit.autowired;
+
+public class Movie {
+
+	private int ticket;
+	private String name;
+}

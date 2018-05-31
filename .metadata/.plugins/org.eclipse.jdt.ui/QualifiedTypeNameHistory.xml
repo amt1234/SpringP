@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.beans.Beans"/>
+<fullyQualifiedTypeName name="org.springframework.aop.framework.autoproxy.BeanFactoryAdvisorRetrievalHelper"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.BeanFactory"/>
+<fullyQualifiedTypeName name="org.springframework.core.io.Resource"/>
+<fullyQualifiedTypeName name="org.springframework.core.io.FileSystemResource"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.xml.XmlBeanFactory"/>
+<fullyQualifiedTypeName name="org.springframework.context.ApplicationContext"/>
+<fullyQualifiedTypeName name="org.springframework.core.io.ClassPathResource"/>
+<fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.lang.Double"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.bridgeit.programs.InjectCollection"/>
+<fullyQualifiedTypeName name="com.bridgeit.autowired.Movie"/>
+<fullyQualifiedTypeName name="com.bridgeit.programs.Triangle"/>
+<fullyQualifiedTypeName name="com.bridgeit.programs.Point"/>
+<fullyQualifiedTypeName name="com.bridgeit.programs.PointDemo"/>
+</qualifiedTypeNameHistroy>

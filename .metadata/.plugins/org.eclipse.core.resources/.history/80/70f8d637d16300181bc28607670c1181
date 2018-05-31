@@ -1,0 +1,5 @@
+package com.bridgeit.autowired;
+
+public class Movie {
+
+}

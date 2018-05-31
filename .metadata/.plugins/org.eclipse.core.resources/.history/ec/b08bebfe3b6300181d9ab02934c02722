@@ -1,0 +1,54 @@
+package com.bridgeit.programs;
+
+public class Triangle {
+	private String type;
+	private int height;
+	private double d;
+
+	public int getHeight() {
+		return height;
+	}
+
+	public Double getD()
+	{
+		return d;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
+	}
+	
+	public Triangle(String type)
+	{
+		System.out.println("constructor with type argument");
+		this.type=type;
+	}
+	public Triangle()
+	{
+		System.out.println("constructor without argument");
+	}
+
+	public Triangle(String type,int height){
+		System.out.println("Constructor with type and height argument ");
+		this.type=type;
+		this.height=height;
+	}
+	
+	public Triangle(String type,Double d)
+	{
+		this.type=type;
+		this.d=d;
+	}
+	
+	
+	public void drawing() {
+		System.out.println(getType() + " triangle type and height is "+getHeight());
+	}
+	public void drawing1()
+	{
+		System.out.println(getType()+" T AND H OF 1"+getD());
+	}
+}

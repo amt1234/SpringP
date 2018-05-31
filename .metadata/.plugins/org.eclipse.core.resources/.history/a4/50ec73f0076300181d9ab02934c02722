@@ -1,0 +1,13 @@
+package com.bridgeit.programs;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+
+public class App {
+
+	public static void main(String[] args) {
+		BeanFactory beanfactory=new XmlBeanFactory(resource);
+
+	}
+
+}
