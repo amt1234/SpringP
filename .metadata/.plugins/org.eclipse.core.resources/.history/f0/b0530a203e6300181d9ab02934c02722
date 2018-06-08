@@ -1,9 +1,0 @@
-package com.bridgeit.programs;
-
-public class Point {
-
-	public Point pointA;
-	public Point pointB;
-	public Point pointC;
-	
-}

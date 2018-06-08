@@ -3,13 +3,13 @@ package com.bridgeit.programs;
 public class Triangle {
 	private String type;
 	private int height;
-	private Point point1;
+	private Point1 point1;
 
-	public Point getPoint() {
+	public Point1 getPoint() {
 		return point1;
 	}
 
-	public void setPoint(Point point) {
+	public void setPoint(Point1 point) {
 		this.point1 = point;
 		System.out.println("setPoint");
 	}

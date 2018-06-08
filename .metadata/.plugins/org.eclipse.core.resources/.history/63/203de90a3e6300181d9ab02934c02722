@@ -1,7 +1,0 @@
-package com.bridgeit.programs;
-
-public class Point {
-
-	public PointA pointa;
-	
-}

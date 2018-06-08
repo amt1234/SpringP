@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server auto-publish-setting="2" auto-publish-time="1" com.springsource.tcserver.asf="false" com.springsource.tcserver.name="SpringServer" configuration-id="/Servers/SpringServer - Pivotal tc Server v4.0 at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="SpringServer - Pivotal tc Server v4.0 at localhost" instanceDir="/home/bridgelabz/Downloads/sts-bundle/pivotal-tc-server" name="SpringServer - Pivotal tc Server v4.0 at localhost" runtime-id="Pivotal tc Server v4.0" saveSeparateContextFiles="true" server-type="com.pivotal.server.tc.90" server-type-id="com.pivotal.server.tc.90" start-timeout="120" stop-timeout="15" testEnvironment="false" timestamp="2">
+  <list key="modules" value0="MvcDemo::org.eclipse.jst.jee.server:MvcDemo::jst.web::2.5"/>
+</server>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.bridgeit.programs.Point&apos; to &apos;Point1&apos;&#x0A;- Original project: &apos;SpringPractice&apos;&#x0A;- Original element: &apos;com.bridgeit.programs.Point&apos;&#x0A;- Renamed element: &apos;com.bridgeit.programs.Point1&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Point&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.bridgeit.programs{Point.java[Point" matchStrategy="1" name="Point1" qualified="false" references="true" similarDeclarations="false" stamp="1527860917332" textual="false" version="1.0"/>
+</session>

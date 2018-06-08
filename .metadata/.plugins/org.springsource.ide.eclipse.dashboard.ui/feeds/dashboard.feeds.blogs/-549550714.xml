@@ -5,7 +5,330 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-05-30T00:01:00Z</updated>
+  <updated>2018-06-06T19:54:29Z</updated>
+  <entry>
+    <title>Spring Cloud Data Flow 1.5.1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/06/spring-cloud-data-flow-1-5-1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mark Pollack</name>
+    </author>
+    <id>tag:spring.io,2018-06-06:3295</id>
+    <updated>2018-06-06T19:54:29Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://cloud.spring.io/spring-cloud-dataflow/"&gt;Spring Cloud Data Flow&lt;/a&gt; team is pleased to announce the &lt;code&gt;1.5.1&lt;/code&gt; GA release. Follow the &lt;em&gt;Getting Started&lt;/em&gt; guides for &lt;a href="https://docs.spring.io/spring-cloud-dataflow/docs/1.5.1.RELEASE/reference/htmlsingle/#getting-started"&gt;Local Server&lt;/a&gt;, &lt;a href="https://docs.spring.io/spring-cloud-dataflow-server-cloudfoundry/docs/1.5.1.RELEASE/reference/htmlsingle/#getting-started"&gt;Cloud Foundry&lt;/a&gt;, and &lt;a href="https://docs.spring.io/spring-cloud-dataflow-server-kubernetes/docs/1.5.1.RELEASE/reference/htmlsingle/#kubernetes-getting-started"&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This is a bug fix release.  The server improves the handling of special characters in stream definitions and passing of comma delimited strings in the Task launch argument list.  It should be used with Skipper 1.0.5.RELEASE.  The UI has been improved to support stream update functionality.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;As always, we welcome feedback and contributions, so please reach out to us on &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-dataflow"&gt;Stackoverflow&lt;/a&gt; or &lt;a href="https://github.com/spring-cloud/spring-cloud-dataflow/issues"&gt;GitHub&lt;/a&gt; or via &lt;a href="https://gitter.im/spring-cloud/spring-cloud-dataflow"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Cloud Skipper 1.0.5 released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/06/spring-cloud-skipper-1-0-5-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mark Pollack</name>
+    </author>
+    <id>tag:spring.io,2018-06-06:3294</id>
+    <updated>2018-06-06T19:54:20Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the team, I am pleased to announce the release of Spring Cloud Skipper 1.0.5 GA&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Skipper is a lightweight tool that allows you to discover Spring Boot applications and manage their lifecycle on multiple Cloud Platforms. You can use Skipper standalone or integrate it with Continuous Integration pipelines to help implement the practice of Continuous Deployment.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://docs.spring.io/spring-cloud-skipper/docs/1.0.5.RELEASE/reference/htmlsingle/#getting-started"&gt;getting started section&lt;/a&gt; in the reference guide is the best place to start kicking the tires.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This is primarily a bug fix release.  Significant changes since the 1.0 GA release are:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Improved state management by simplifying objects that are serialized by the state machine.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Improved handling of timeout during upgrade and rollback.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Package upgrades can now be cancelled.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Improved escaping of special characters in generated YAML.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upgraded deployer libraries to latest versions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update to Spring Shell 2.0.1.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Please reach out on &lt;a href="https://github.com/spring-cloud/spring-cloud-skipper/issues"&gt;GitHub Issues&lt;/a&gt;, &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-skipper"&gt;Stack Overflow&lt;/a&gt;, and the &lt;a href="https://gitter.im/spring-cloud/spring-cloud-skipper"&gt;Gitter channel&lt;/a&gt; with questions, feedback or contributions.&lt;/p&gt;
+&lt;/div&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Tips: JPA</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/06/spring-tips-jpa" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2018-06-06:3292</id>
+    <updated>2018-06-06T08:01:00Z</updated>
+    <content type="html">&lt;p&gt;speaker: &lt;a href="http://twitter.com/starbuxman"&gt;Josh Long&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Hi Spring fans! In this installment we look at the Java Persistence API (JPA) and its most ubiquitous implementation Hibernate. We look at basic Spring support for JPA, Spring Boot&amp;rsquo;s auto-configuration and supported configuration properties, mapped superclasses, auditing (using Spring Data&amp;rsquo;s JPA auditing facility) and journaling (using the Hibernate Envers project and Spring Data Envers).&lt;/p&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/2E8_0Qxi6Tg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
+  <entry>
+    <title>This Week in Spring - June 5th, 2018</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/06/this-week-in-spring-june-5th-2018" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2018-06-06:3293</id>
+    <updated>2018-06-06T06:22:20Z</updated>
+    <content type="html">&lt;p&gt;Hi Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! It&amp;rsquo;s been a wild and wonderful week. I&amp;rsquo;ve just returned from the epic VOXXED Singapore event, just intime to enjoy a wonderful week home in Spring-time and sun-filled San Francisco. We&amp;rsquo;ve got a &lt;em&gt;ton&lt;/em&gt; of things to cover, so let&amp;rsquo;s get to it! &lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Pivotal Cloud Foundry &lt;a href="https://pivotal.io/platform/services-marketplace/data-management/minio"&gt;now supports Minio&lt;/a&gt;, a highly available S3-like HA enterprise grade object storage server for developers.&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-release/milestones?direction=asc&amp;sort=due_date"&gt;Spring Cloud Finchley GA is scheduled for June 15&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;In Part 4 of &amp;ldquo;Should that be a Microservice?&amp;rdquo; Nate Schutta &lt;a href="https://content.pivotal.io/blog/should-that-be-a-microservice-part-4-independent-scalability"&gt;talks Independent Scalability and why it&amp;rsquo;s important&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Batch ninja Mahmoud Ben Hassine just announced Spring Batch 4.1.0.M1 which includes, among other thing, &lt;a href="https://spring.io/blog/2018/05/31/spring-batch-4-1-0-m1-released"&gt;simplified testing and easier remote chunking&lt;/a&gt;. Get the bits now!&lt;/li&gt;
+  &lt;li&gt;In last week&amp;rsquo;s &lt;em&gt;Spring Tips&lt;/em&gt; we looked at JDBC, which is much more than just the venerable &lt;code&gt;JdbcTemplate&lt;/code&gt;! In this post we look at the &lt;code&gt;JdbcTemplate&lt;/code&gt;, various SQL command objects, &lt;code&gt;SimpleFlatMapper&lt;/code&gt;, and so much more. &lt;a href="https://spring.io/blog/2018/05/30/spring-tips-jdbc"&gt;Check it out!&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Cloud teammember Ryan Baxter has just announced &lt;a href="https://spring.io/blog/2018/05/29/spring-cloud-finchley-rc2-has-been-released"&gt;that Spring Cloud Finchley.RC2 was released!&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Join Madhura Bhave and Stephane Maldini on June 20th for &lt;a href="https://www.meetup.com/sfjava/events/251270797/"&gt;this&lt;/a&gt; San Francisco JUG meetup!&lt;/li&gt;
+  &lt;li&gt;This is kind of interesting! It&amp;rsquo;s a &lt;a href="https://www.blueriq.com/blueriq-10/"&gt;rules-platform that targets Spring Boot, Spring Cloud and other frameworks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;The latest release &lt;a href="https://jqassistant.org/jqassistant-1-4-0-and-sonarqube-plugin-released/"&gt;of jQAssistant now supports quality control rules for Spring and Spring Boot-based applications&lt;/a&gt; with the inclusion of the Spring plugin.&lt;/li&gt;
+  &lt;li&gt;The Spring I/O team (behind the &lt;em&gt;epic&lt;/em&gt; Spring I/O conference in Barcelona, Spain, are now &lt;a href="http://twitter.com/spring_io"&gt;publishing their talks and you should follow that account to get the latest videos&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I really like this post by Spring creator Rod Johnson that describes the spirit of Spring and speaks to the &lt;a href="https://the-composition.com/developers-developers-developers-microsoft-github-and-the-ascendancy-of-code-7e6ceb51635f?source=userActivityShare-a17df5ec14a4-1528236113"&gt;recent acquisition of Github by Microsoft&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Check out the Vedran Pavic&amp;rsquo;s Spring I/O 2018 talk on Spring Session](&lt;a href="https://www.youtube.com/watch?v=sJcVaOERo6M&amp;feature=youtu.be"&gt;https://www.youtube.com/watch?v=sJcVaOERo6M&amp;feature=youtu.be&lt;/a&gt;)&lt;/li&gt;
+  &lt;li&gt;Check out Spring Data Geode lead &lt;a href="https://www.infoq.com/presentations/apache-geode-spring-data-annotations"&gt;John Blum&amp;rsquo;s SpringOne Platform 2017 talk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Spring Cloud Sleuth &lt;a href="https://twitter.com/springcloud/status/1004050966952448000"&gt;just accepted its 1000th pull-request&lt;/a&gt;! This project &lt;em&gt;just&lt;/em&gt; might have legs :-)&lt;/li&gt;
+  &lt;li&gt;In London? You should be at the SpringOne Tour event on 21-22 June in London! Learn about all &lt;a href="https://twitter.com/springcentral/status/1003701222707118080"&gt;things Cloud Native and Spring Boot&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Apache Kafka 2.0 just had a feature-freeze! &lt;a href="https://twitter.com/matthiasjsax/status/1002077052307095553?s=12"&gt;Congrats to the Apache Kafka team&lt;/a&gt;!&lt;/li&gt;
+  &lt;li&gt;Redis Labs liked my &lt;a href="https://twitter.com/RedisLabs/status/1002749155322757120"&gt;Spring Tips video introducing Spring&amp;rsquo;s vast support for Redis&lt;/a&gt;, and you might too!&lt;/li&gt;
+  &lt;li&gt;Bartosz Jedrzejewski has a &lt;em&gt;great&lt;/em&gt; post &lt;a href="https://www.e4developer.com/2018/05/31/webflux-in-practice-asynchronous-service-with-webclient/"&gt;on building reacitve applications with Spring WebFlux &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;This is super cool! The IntelliJ IDEA support now includes the ability to group related confguration properties in &lt;code&gt;application.properties&lt;/code&gt;. Nice work &lt;a href="https://twitter.com/yanncebron/status/1002473045330726912?s=12"&gt;to Yann Cebron and the team&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Having issues with Java 10, Lombok and Spring Boot? &lt;a href="https://twitter.com/rotnroll666/status/1002130120092585984?s=12"&gt;You might want to look at this thread&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;I love this blog on test driven documentation &lt;a href="https://www.vojtechruzicka.com/spring-rest-docs/"&gt;with Spring REST Docs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Get your early bird &lt;a href="https://twitter.com/springcentral/status/1002294544967258112"&gt;tickets to the RabbitMQ conference&lt;/a&gt;!&lt;/li&gt;
+  &lt;li&gt;Hurray! Pivotal Web Services now supports &lt;a href="https://twitter.com/springcentral/status/1002231331986620417"&gt;Docker images&lt;/a&gt;! Get it while it&amp;rsquo;s hot!&lt;/li&gt;
+  &lt;li&gt;I like this post, the fourth in a series, that looks at the canonical &amp;ldquo;REST in Practice&amp;rdquo; example, &lt;a href="https://blog.sourced-bvba.be//article/2018/05/17/tackling-restbucks-clean-architecture.4/"&gt;&lt;em&gt;Restbucks&lt;/em&gt;, and applies Clean Architecture&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://m.youtube.com/watch?v=x-5oREneJ_k&amp;list=PLjXUjSTUHs0SBkPlUEnkXcDqQKlyUOyAS&amp;index=2"&gt;YouTube&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;You should check out the slides from Spring Boot team legend Madhura Bhave&amp;rsquo;s Spring I/O 2018 talk on &lt;a href="https://twitter.com/springcentral/status/1001544783565766656"&gt;&amp;ldquo;What&amp;rsquo;s New in Spring Boot 2.0&amp;rdquo;&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Check out this &lt;a href="https://twitter.com/antirez/status/1001480569442783240?s=12"&gt;mega thread by Redis project lead Salvatore Sanfilippo on the latest and greatest in Redis&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;This is exciting! The next version of &lt;a href="https://twitter.com/snicoll/status/1001125994173009923"&gt;Spring Boot, 2.1, now includes the Spring Integration graph endpoint&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Christiaan Roeleveld has just announced his new &lt;a href="https://automate-it.today/bosh-tutorial-video-series/"&gt;BOSH&lt;/a&gt; video series and it looks really good! BOSH is the driftless package manager distributed systems. &lt;a href="http://bosh.io"&gt;It&lt;/a&gt; manages the lifecycle of infrastructure and surfaces a portable API that works, agnostic of the underlying IaaS.&lt;/li&gt;
+  &lt;li&gt;There is &lt;a href="https://github.com/osis/cf-swift-client"&gt;now a Swift-language Cloud Foundry binding&lt;/a&gt;. Cool!&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Batch 4.1.0.M1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/05/31/spring-batch-4-1-0-m1-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mahmoud Ben Hassine</name>
+    </author>
+    <id>tag:spring.io,2018-05-29:3290</id>
+    <updated>2018-05-31T18:51:20Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce that Spring Batch 4.1.0.M1 is now available on Github and the Pivotal download repository. Many thanks to all of those who contributed to this release!&lt;/p&gt;&lt;h1&gt;&lt;a href="#what-rsquo-s-new" class="anchor" name="what-rsquo-s-new"&gt;&lt;/a&gt;What&amp;rsquo;s new?&lt;/h1&gt;
+&lt;p&gt;Here are the highlights of this release:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Simplify testing&lt;/li&gt;
+  &lt;li&gt;Simplify remote chunking&lt;/li&gt;
+  &lt;li&gt;Add a new JSON item reader&lt;/li&gt;
+&lt;/ul&gt;&lt;h2&gt;&lt;a href="#simplify-testing" class="anchor" name="simplify-testing"&gt;&lt;/a&gt;Simplify Testing&lt;/h2&gt;
+&lt;p&gt;Spring Batch provides some nice utility classes (such as the &lt;code&gt;JobLauncherTestUtils&lt;/code&gt; and &lt;code&gt;JobRepositoryTestUtils&lt;/code&gt;) and test execution listeners (&lt;code&gt;StepScopeTestExecutionListener&lt;/code&gt; and &lt;code&gt;JobScopeTestExecutionListener&lt;/code&gt;) to test batch components. However, in order to use these utilities, you must configure them explicitly, as shown in the following example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@RunWith(SpringRunner.class)&#xD;
+@ContextConfiguration(classes = {JobConfiguration.class, JobTest.TestConfiguration.class})&#xD;
+@TestExecutionListeners(listeners = {StepScopeTestExecutionListener.class, JobScopeTestExecutionListener.class})&#xD;
+public class JobTest {&#xD;
+&#xD;
+   @Autowired&#xD;
+   private JobLauncherTestUtils jobLauncherTestUtils;&#xD;
+&#xD;
+   @Autowired&#xD;
+   private JobRepositoryTestUtils jobRepositoryTestUtils;&#xD;
+&#xD;
+&#xD;
+   @Before&#xD;
+   public void clearMetadata() {&#xD;
+      jobRepositoryTestUtils.removeJobExecutions();&#xD;
+   }&#xD;
+&#xD;
+   @Test&#xD;
+   public void testJob() throws Exception {&#xD;
+      // given&#xD;
+      JobParameters jobParameters = &#xD;
+            jobLauncherTestUtils.getUniqueJobParameters();&#xD;
+&#xD;
+      // when&#xD;
+      JobExecution jobExecution = &#xD;
+            jobLauncherTestUtils.launchJob(jobParameters);&#xD;
+&#xD;
+      // then&#xD;
+      Assert.assertEquals(ExitStatus.COMPLETED, &#xD;
+                          jobExecution.getExitStatus());&#xD;
+   }&#xD;
+&#xD;
+   @Configuration&#xD;
+   public static class TestConfiguration {&#xD;
+&#xD;
+      @Bean&#xD;
+      public JobLauncherTestUtils jobLauncherTestUtils() {&#xD;
+         return new JobLauncherTestUtils();&#xD;
+      }&#xD;
+&#xD;
+      @Bean&#xD;
+      public JobRepositoryTestUtils jobRepoTestUtils(DataSource dataSource,&#xD;
+                                               JobRepository jobRepository) {&#xD;
+&#xD;
+         return new JobRepositoryTestUtils(jobRepository, dataSource);&#xD;
+      }&#xD;
+&#xD;
+   }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this release, we introduced a new annotation, named &lt;code&gt;@SpringBatchTest&lt;/code&gt;, that marks a class as a test class for Spring Batch components. This annotation automatically adds utility beans and listeners to the test context and makes them automatically available for autowiring, as the following example shows:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@RunWith(SpringRunner.class)&#xD;
+@SpringBatchTest&#xD;
+@ContextConfiguration(classes = {JobConfiguration.class})&#xD;
+public class JobTest {&#xD;
+&#xD;
+   @Autowired&#xD;
+   private JobLauncherTestUtils jobLauncherTestUtils;&#xD;
+&#xD;
+   @Autowired&#xD;
+   private JobRepositoryTestUtils jobRepositoryTestUtils;&#xD;
+&#xD;
+&#xD;
+   @Before&#xD;
+   public void clearMetadata() {&#xD;
+      jobRepositoryTestUtils.removeJobExecutions();&#xD;
+   }&#xD;
+&#xD;
+   @Test&#xD;
+   public void testJob() throws Exception {&#xD;
+      // given&#xD;
+      JobParameters jobParameters = &#xD;
+            jobLauncherTestUtils.getUniqueJobParameters();&#xD;
+&#xD;
+      // when&#xD;
+      JobExecution jobExecution = &#xD;
+            jobLauncherTestUtils.launchJob(jobParameters);&#xD;
+&#xD;
+      // then&#xD;
+      Assert.assertEquals(ExitStatus.COMPLETED, &#xD;
+                          jobExecution.getExitStatus());&#xD;
+   }&#xD;
+   &#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With this new annotation, you can declaratively import test utilities and focus on testing the business logic of the batch job.&lt;/p&gt;&lt;h2&gt;&lt;a href="#simplify-remote-chunking" class="anchor" name="simplify-remote-chunking"&gt;&lt;/a&gt;Simplify Remote Chunking&lt;/h2&gt;
+&lt;p&gt;Setting up a remote chunking job requires the definition of a number of beans:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A connection factory to acquire connections from the messaging middleware (JMS, AMQP, and others)&lt;/li&gt;
+  &lt;li&gt;A &lt;code&gt;MessagingTemplate&lt;/code&gt; to send requests from the master to the workers and back again&lt;/li&gt;
+  &lt;li&gt;An input channel and an output channel for Spring Integration to get messages from the messaging middleware&lt;/li&gt;
+  &lt;li&gt;A special item writer (&lt;code&gt;ChunkMessageChannelItemWriter&lt;/code&gt;) on the master side that knows how to send chunks of data to workers for processing and writing&lt;/li&gt;
+  &lt;li&gt;A message listener (&lt;code&gt;ChunkProcessorChunkHandler&lt;/code&gt;) on the worker side to receive data from the master&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This can be a bit daunting at first glance. In this milestone, we tried to make this task as easy as possible by introducing a new annotation named &lt;code&gt;@EnableBatchIntegration&lt;/code&gt; as well as new APIs (&lt;code&gt;RemoteChunkingMasterStepBuilder&lt;/code&gt; and &lt;code&gt;RemoteChunkingWorkerBuilder&lt;/code&gt;) to simplify the configuration. Here is an example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Configuration&#xD;
+@EnableBatchProcessing&#xD;
+@EnableBatchIntegration&#xD;
+public class RemoteChunkingAppConfig {&#xD;
+  &#xD;
+   @Autowired&#xD;
+   private RemoteChunkingMasterStepBuilderFactory masterStepBuilderFactory;&#xD;
+  &#xD;
+   @Autowired&#xD;
+   private RemoteChunkingWorkerBuilder workerBuilder;&#xD;
+  &#xD;
+   @Bean&#xD;
+   public TaskletStep masterStep() {&#xD;
+         return this.masterStepBuilderFactory&#xD;
+         	        .get(&amp;quot;masterStep&amp;quot;)&#xD;
+         	        .chunk(100)&#xD;
+         	        .reader(itemReader())&#xD;
+         	        .outputChannel(outgoingRequestsToWorkers())&#xD;
+         	        .inputChannel(incomingRepliesFromWorkers())&#xD;
+         	        .build();&#xD;
+   }&#xD;
+  &#xD;
+   @Bean&#xD;
+   public IntegrationFlow worker() {&#xD;
+         return this.workerBuilder&#xD;
+         	        .itemProcessor(itemProcessor())&#xD;
+         	        .itemWriter(itemWriter())&#xD;
+         	        .inputChannel(incomingRequestsFromMaster())&#xD;
+         	        .outputChannel(outgoingRepliesToMaster())&#xD;
+         	        .build();&#xD;
+   }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This new annotation and builders takes care of the heavy lifting of configuring infrastructure beans. You can now easily configure a master step as well as a Spring Integration flow on the worker side.&lt;/p&gt;&lt;h2&gt;&lt;a href="#add-a-new-json-item-reader" class="anchor" name="add-a-new-json-item-reader"&gt;&lt;/a&gt;Add a New JSON Item Reader&lt;/h2&gt;
+&lt;p&gt;JSON is a popular data format nowadays, and many applications have a requirement to read and write JSON data in batch mode. In this first milestone, we have added a new item reader that supports JSON. Similar to the &lt;code&gt;StaxEventItemReader&lt;/code&gt; for XML, the &lt;code&gt;JsonItemReader&lt;/code&gt; uses streaming APIs in order to read JSON objects in chunks. Two JSON libraries are supported: &lt;a href="https://github.com/FasterXML/jackson"&gt;Jackson&lt;/a&gt; and &lt;a href="https://github.com/google/gson"&gt;Gson&lt;/a&gt;. The &lt;code&gt;JsonItemReader&lt;/code&gt; is able to read JSON files in the following format:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint json"&gt;[&#xD;
+  {&#xD;
+    &amp;quot;isin&amp;quot;: &amp;quot;123&amp;quot;,&#xD;
+    &amp;quot;quantity&amp;quot;: 1,&#xD;
+    &amp;quot;price&amp;quot;: 1.2,&#xD;
+    &amp;quot;customer&amp;quot;: &amp;quot;foo&amp;quot;&#xD;
+  },&#xD;
+  {&#xD;
+    &amp;quot;isin&amp;quot;: &amp;quot;456&amp;quot;,&#xD;
+    &amp;quot;quantity&amp;quot;: 2,&#xD;
+    &amp;quot;price&amp;quot;: 1.4,&#xD;
+    &amp;quot;customer&amp;quot;: &amp;quot;bar&amp;quot;&#xD;
+  }&#xD;
+]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each object of this &lt;code&gt;trades.json&lt;/code&gt; file represents an instance of the following &lt;code&gt;Trade&lt;/code&gt; class:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;public class Trade {&#xD;
+&#xD;
+   private String isin;&#xD;
+   private long quantity;&#xD;
+   private BigDecimal price;&#xD;
+   private String customer;&#xD;
+&#xD;
+   // getters and setters omitted&#xD;
+&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In order to read this &lt;code&gt;trades.json&lt;/code&gt; file, you can use the following item reader (using Jackson in this example):&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Bean&#xD;
+public JsonItemReader&amp;lt;Trade&amp;gt; jsonItemReader() {&#xD;
+&#xD;
+   ObjectMapper objectMapper = new ObjectMapper();&#xD;
+   // configure the objectMapper as required&#xD;
+   JacksonJsonObjectReader&amp;lt;Trade&amp;gt; jsonObjectReader = &#xD;
+            new JacksonJsonObjectReader&amp;lt;&amp;gt;(Trade.class);&#xD;
+   jsonObjectReader.setMapper(objectMapper);&#xD;
+&#xD;
+   return new JsonItemReaderBuilder&amp;lt;Trade&amp;gt;()&#xD;
+                 .jsonObjectReader(jsonObjectReader)&#xD;
+                 .resource(new ClassPathResource(&amp;quot;trades.json&amp;quot;))&#xD;
+                 .name(&amp;quot;tradeJsonItemReader&amp;quot;)&#xD;
+                 .build();&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&lt;a href="#other-improvements" class="anchor" name="other-improvements"&gt;&lt;/a&gt;Other Improvements&lt;/h2&gt;
+&lt;p&gt;This release also includes many other improvements, bug fixes, and documentation updates. For a complete list of changes, please check the &lt;a href="https://jira.spring.io/secure/ReleaseNote.jspa?projectId=10090&amp;version=16851"&gt;change log&lt;/a&gt;. We look forward to hearing your feedback on this milestone! Please feel free to ping &lt;a href="https://twitter.com/michaelminella"&gt;@michaelminella&lt;/a&gt;, &lt;a href="https://twitter.com/_benas_"&gt;@benas&lt;/a&gt;, or &lt;a href="https://twitter.com/cppwfs"&gt;@cppwfs&lt;/a&gt; on twitter or ask your question on &lt;a href="https://stackoverflow.com/questions/tagged/spring-batch"&gt;StackOverflow&lt;/a&gt; or &lt;a href="https://gitter.im/spring-batch/Lobby"&gt;Gitter&lt;/a&gt;. If you find any issue, please open a ticket on &lt;a href="http://jira.springsource.org/browse/BATCH"&gt;Jira&lt;/a&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#what-s-next" class="anchor" name="what-s-next"&gt;&lt;/a&gt;What’s Next?&lt;/h1&gt;
+&lt;p&gt;In the next milestone, we plan to:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Simplify remote partitioning setup (similar to simplifying remote chunking setup in this milestone)&lt;/li&gt;
+  &lt;li&gt;Add a &lt;code&gt;JsonItemWriter&lt;/code&gt; to complement the &lt;code&gt;JsonItemReader&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Add JSR-305 annotations to public APIs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Stay tuned!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://projects.spring.io/spring-batch/"&gt;Spring Batch Home&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-batch"&gt;Source on GitHub&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-batch/4.1.x/reference/html/index.html"&gt;Reference Documentation&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Tips: JDBC</title>
     <link rel="alternate" href="https://spring.io/blog/2018/05/30/spring-tips-jdbc" />
@@ -872,107 +1195,6 @@ Issues&lt;/a&gt;, or via the comments section. You can also ping me
 &lt;p&gt;Please try it out, share your feedback, and consider contributing to the project!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Project Vulnerability Reports Published</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/05/09/spring-project-vulnerability-reports-published" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Rossen Stoyanchev</name>
-    </author>
-    <id>tag:spring.io,2018-05-09:3274</id>
-    <updated>2018-05-09T16:18:00Z</updated>
-    <content type="html">&lt;p&gt;The following CVEs have been published today:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://pivotal.io/security/cve-2018-1257"&gt;CVE-2018-1257&lt;/a&gt; for Spring Framework &lt;a href="https://spring.io/blog/2018/05/08/spring-framework-4-3-17-and-5-0-6-available-now"&gt;5.0.6, 4.3.17&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://pivotal.io/security/cve-2018-1258"&gt;CVE-2018-1258&lt;/a&gt; for Spring Security &lt;a href="https://spring.io/blog/2018/05/08/spring-security-5-0-5-released"&gt;5.0.5&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://pivotal.io/security/cve-2018-1259"&gt;CVE-2018-1259&lt;/a&gt; for Spring Data &lt;a href="https://spring.io/blog/2018/05/08/spring-data-ingalls-sr12-and-kay-sr7-released"&gt;Ingalls SR12, Kay SR7&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://pivotal.io/security/cve-2018-1260"&gt;CVE-2018-1260&lt;/a&gt; for Spring Security OAuth &lt;a href="https://spring.io/blog/2018/05/08/spring-security-oauth-2-3-3-2-2-2-2-1-2-2-0-15-released"&gt;2.3.3, 2.2.2, 2.1.2, 2.0.15&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://pivotal.io/security/cve-2018-1261"&gt;CVE-2018-1261&lt;/a&gt; for Spring Integration “Zip” extension &lt;a href="https://github.com/spring-projects/spring-integration-extensions/releases/tag/zip.v1.0.1.RELEASE"&gt;1.0.1&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Please, review the information in the CVE reports and upgrade immediately. &lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Spring Boot Users:&lt;/strong&gt; Spring Boot &lt;a href="https://spring.io/blog/2018/05/09/spring-boot-2-0-2"&gt;2.0.2&lt;/a&gt; and &lt;a href="https://spring.io/blog/2018/05/09/spring-boot-1-5-13"&gt;1.5.13&lt;/a&gt;, released earlier today, contain the fixes for the above vulnerabilities.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Tips: Spring Security 5 OAuth Clients</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/05/09/spring-tips-spring-security-5-oauth-clients" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2018-05-09:3273</id>
-    <updated>2018-05-09T15:43:54Z</updated>
-    <content type="html">&lt;p&gt;speaker: &lt;a href="http://twitter.com/starbuxman"&gt;Josh Long&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Hi Spring fans! In this installment we&amp;rsquo;ll look at the new OAuth client support in Spring Security 5.&lt;/p&gt;
-&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/gSUeGi4sLlA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen&gt;&lt;/iframe&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.0.2</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/05/09/spring-boot-2-0-2" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Andy Wilkinson</name>
-    </author>
-    <id>tag:spring.io,2018-05-09:3272</id>
-    <updated>2018-05-09T15:39:00Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the team and the community, I am pleased to announce that Spring Boot 2.0.2 is now available from &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.springframework.boot%22"&gt;Maven Central&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Spring Boot 2.0.2 includes &lt;a href="https://github.com/spring-projects/spring-boot/milestone/109?closed=1"&gt;over 80 fixes, improvements, and dependency updates&lt;/a&gt;. Thanks to everyone that has contributed with issue reports and pull requests. Please note that a number of the upgraded dependencies contain fixes for various security vulnerabilities. Please see &lt;a href="https://spring.io/blog/2018/05/09/spring-project-vulnerability-reports-published"&gt;this blog post&lt;/a&gt; for further details.&lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="http://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/2.0.2.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 1.5.13</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/05/09/spring-boot-1-5-13" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Andy Wilkinson</name>
-    </author>
-    <id>tag:spring.io,2018-05-09:3271</id>
-    <updated>2018-05-09T11:27:00Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the team and community, I am pleased to announce that Spring Boot 1.5.13 has been released and is is now available from &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.springframework.boot%22"&gt;Maven Central&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Spring Boot 1.5.13 includes &lt;a href="https://github.com/spring-projects/spring-boot/milestone/110?closed=1"&gt;over 20 fixes, improvements and dependency updates&lt;/a&gt;. Thanks to all that have contributed with issue reports and pull requests. Please note that a number of the upgraded dependencies contain fixes for various security vulnerabilities. Please see &lt;a href="https://spring.io/blog/2018/05/09/spring-project-vulnerability-reports-published"&gt;this blog post&lt;/a&gt; for further details.&lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="http://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.5.13.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Security OAuth 2.3.3, 2.2.2, 2.1.2, 2.0.15 Released</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/05/08/spring-security-oauth-2-3-3-2-2-2-2-1-2-2-0-15-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Joe Grandja</name>
-    </author>
-    <id>tag:spring.io,2018-05-08:3270</id>
-    <updated>2018-05-08T22:51:00Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;I&amp;#8217;m pleased to announce the releases of Spring Security OAuth 2.3.3, 2.2.2, 2.1.2 and 2.0.15. These maintenance releases primarily deliver bug fixes.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;For a complete list of changes, please refer to:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-security-oauth/milestone/37?closed=1"&gt;2.3.3 changelog&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-security-oauth/milestone/32?closed=1"&gt;2.2.2 changelog&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-security-oauth/milestone/29?closed=1"&gt;2.1.2 changelog&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-security-oauth/milestone/25?closed=1"&gt;2.0.15 changelog&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;strong&gt;2018-05-09 Update:&lt;/strong&gt; The releases address a vulnerability. Please see &lt;a href="https://spring.io/blog/2018/05/09/spring-project-vulnerability-reports-published"&gt;this blog post&lt;/a&gt; published after the associated Spring Boot &lt;a href="https://spring.io/blog/2018/05/09/spring-boot-1-5-13"&gt;1.5.13&lt;/a&gt; release.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-security-oauth/"&gt;Project Page&lt;/a&gt; |
-&lt;a href="https://github.com/spring-projects/spring-security-oauth/"&gt;GitHub&lt;/a&gt; |
-&lt;a href="http://projects.spring.io/spring-security-oauth/docs/Home.html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-security-oauth2"&gt;Help&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;</content>
   </entry>
 </feed>

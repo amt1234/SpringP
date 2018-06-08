@@ -4,19 +4,19 @@ import java.util.List;
 
 public class InjectCollection {
 
-	List<Point> point;
+	List<Point1> point;
 
-	public List<Point> getPoint() {
+	public List<Point1> getPoint() {
 		return point;
 	}
 
-	public void setPoint(List<Point> point) {
+	public void setPoint(List<Point1> point) {
 		this.point = point;
 	}
 	
 	public void InjectM()
 	{
-		for(Point points: point)
+		for(Point1 points: point)
 		{
 			System.out.println("point ="+points.getX()+" , "+points.getY());
 		}

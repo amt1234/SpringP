@@ -1,26 +1,26 @@
 package com.bridgeit.programs;
 
 public class PointDemo {
-	public Point pointA;
-	public Point pointB;
-	public Point pointC;
+	public Point1 pointA;
+	public Point1 pointB;
+	public Point1 pointC;
 	
-	public Point getPointA() {
+	public Point1 getPointA() {
 		return pointA;
 	}
-	public void setPointA(Point pointA) {
+	public void setPointA(Point1 pointA) {
 		this.pointA = pointA;
 	}
-	public Point getPointB() {
+	public Point1 getPointB() {
 		return pointB;
 	}
-	public void setPointB(Point pointB) {
+	public void setPointB(Point1 pointB) {
 		this.pointB = pointB;
 	}
-	public Point getPointC() {
+	public Point1 getPointC() {
 		return pointC;
 	}
-	public void setPointC(Point pointC) {
+	public void setPointC(Point1 pointC) {
 		this.pointC = pointC;
 	}
 	
