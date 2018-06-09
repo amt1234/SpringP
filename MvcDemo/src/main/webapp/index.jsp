@@ -21,7 +21,7 @@
 			</tr>
 			<tr>
 				<td>Enter Password :</td>
-				<td><input type="password" name="pass" id="passwordId"></td>
+				<td><input type="password" name="password" id="passwordId"></td>
 			</tr>
 
 		</table>

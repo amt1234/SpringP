@@ -10,24 +10,28 @@ import com.bridgeit.module.Circle;
 import com.bridgeit.module.Triangle;
 
 @Component("service")
-//@ComponentScan(basePackages="")
+// @ComponentScan(basePackages="")
 public class ShapeService {
-public Triangle triangle;
+	
+	public Triangle triangle;
 
-public Circle circle;
+	public Circle circle;
 
-public Triangle getTriangle() {
-	return triangle;
-}
-@Autowired
-public void setTriangle(Triangle triangle) {
-	this.triangle = triangle;
-}
-public Circle getCircle() {
-	return circle;
-}
-@Autowired
-public void setCircle(Circle circle) {
-	this.circle = circle;
-}
+	public Triangle getTriangle() {
+		return triangle;
+	}
+
+	@Autowired
+	public void setTriangle(Triangle triangle) {
+		this.triangle = triangle;
+	}
+
+	public Circle getCircle() {
+		return circle;
+	}
+
+	@Autowired
+	public void setCircle(Circle circle) {
+		this.circle = circle;
+	}
 }

@@ -5,16 +5,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AddController {
 
-	@RequestMapping("/add")
+	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public ModelAndView add(HttpServletRequest request,HttpServletResponse response )
 	{
 		String username=request.getParameter("email");
-		String password=request.getParameter("pass");
+		String password=request.getParameter("password");
 		
 		ModelAndView modelAndView=new ModelAndView();
 		

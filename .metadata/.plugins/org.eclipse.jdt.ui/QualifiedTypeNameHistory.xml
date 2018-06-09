@@ -8,7 +8,6 @@
 <fullyQualifiedTypeName name="org.springframework.beans.factory.xml.XmlBeanFactory"/>
 <fullyQualifiedTypeName name="org.springframework.core.io.ClassPathResource"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.bridgeit.programs.InjectCollection"/>
 <fullyQualifiedTypeName name="com.bridgeit.autowired.Movie"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
@@ -37,9 +36,17 @@
 <fullyQualifiedTypeName name="org.aspectj.lang.annotation.AfterReturning"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
-<fullyQualifiedTypeName name="org.springframework.web.servlet.ModelAndView"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
+<fullyQualifiedTypeName name="org.springframework.web.servlet.ModelAndView"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="org.springframework.jdbc.core.RowMapper"/>
+<fullyQualifiedTypeName name="com.bridgeit.model.User"/>
+<fullyQualifiedTypeName name="javax.sql.DataSource"/>
+<fullyQualifiedTypeName name="org.springframework.jdbc.core.JdbcTemplate"/>
+<fullyQualifiedTypeName name="com.bridgeit.Dao.UserDaoImpl"/>
+<fullyQualifiedTypeName name="com.bridgeit.Dao.UserDao"/>
 </qualifiedTypeNameHistroy>

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LogoutController {
 
-	@RequestMapping("/logout")
+	@RequestMapping(value="/logout")
 	public ModelAndView logout(ModelAndView modelAndView)
 	{
 		modelAndView.setViewName("index");

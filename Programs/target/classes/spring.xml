@@ -14,14 +14,18 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 <bean id="service" class="com.bridgeit.services.ShapeService" autowire="byName">
 </bean> -->
 <bean id="triangle" class="com.bridgeit.module.Triangle">
-<property name="name" value="equilatral"></property>
+	<property name="name" value="equilatral"></property>
 </bean>
 
 <bean id="circle" class="com.bridgeit.module.Circle">
-<property name="name" value="sphere"></property>
+	<property name="name" value="sphere"></property>
 </bean>
-<bean id="logAspect" class="com.bridgeit.LoggerService.Logger"> </bean>
-<aop:aspectj-autoproxy />
+
+<aop:config></aop:config>
+
+<bean id="logAspect" class="com.bridgeit.LoggerService.Logger"></bean>
+
+<aop:aspectj-autoproxy proxy-target-class="true" />
 <context:annotation-config/>
-<context:component-scan base-package="com.bridgeit.services"/>
+<context:component-scan base-package="com.bridgeit"/>
 </beans>

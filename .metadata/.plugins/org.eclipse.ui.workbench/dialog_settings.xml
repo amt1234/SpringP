@@ -5,8 +5,8 @@
 		<item value="16" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="136" key="dialogHeight"/>
-		<item value="236" key="dialogWidth"/>
+		<item value="124" key="dialogHeight"/>
+		<item value="224" key="dialogWidth"/>
 		<list key="textEntries">
 			<item value="1"/>
 			<item value="1"/>
@@ -14,21 +14,21 @@
 			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.ui.views.ResourceNavigator"/>
 			<item value="org.eclipse.wst.server.ui.ServersView"/>
 			<item value="org.eclipse.wst.server.ui.new.server"/>
-			<item value="org.eclipse.ui.views.ResourceNavigator"/>
 			<item value="org.eclipse.ui.console.ConsoleView"/>
 		</list>
 		<list key="orderedProviders">
 			<item value="org.eclipse.e4.ui.parts"/>
-			<item value="org.eclipse.ui.wizards"/>
 			<item value="org.eclipse.e4.ui.parts"/>
+			<item value="org.eclipse.ui.wizards"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 		</list>
 		<list key="textArray">
+			<item value="na"/>
 			<item value="servers"/>
 			<item value="ser"/>
-			<item value="na"/>
 			<item value="cons"/>
 		</list>
 	</section>

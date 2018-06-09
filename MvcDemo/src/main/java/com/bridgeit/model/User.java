@@ -2,6 +2,7 @@ package com.bridgeit.model;
 
 public class User {
 
+	
 	private Integer Userid;
 	private String username;
 	private String email;
@@ -46,5 +47,9 @@ public class User {
 		this.dob = dob;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "User [Userid=" + Userid + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", mobileNo=" + mobileNo + ", dob=" + dob + "]";
+	}
 }

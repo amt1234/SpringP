@@ -4,30 +4,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.bridgeit.model.User;
-
+@Component
+@Repository
 public class UserDaoImpl implements UserDao {
 
 	private JdbcTemplate jdbcTemplate;
-	/*private DataSource datasource;
 	
-
-	public void setDatasource(DataSource datasource) {
-		this.datasource = datasource;
-	}
-*/
-
-
+	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	
 	
 	//Display all user
 	@Override
@@ -48,7 +42,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public int addUser(User user) {
 		String sql="insert into SpringTable(username,email,password,mobileNo,dob) values(?,?,?,?,?)";
-		return jdbcTemplate.update(sql);			
+		Object[] args = new Object[] {user.getUsername(),user.getEmail(),user.getPassword(),user.getMobileNo(),user.getDob()};
+		return jdbcTemplate.update(sql,args);			
 	}
 
 	//Update user dob and email by id

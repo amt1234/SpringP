@@ -14,7 +14,7 @@
 <h1>Register Page</h1>
 <!-- <form action="index.jsp" method="post" onsubmit="return ValidationTextname()">
  -->
- <form action="index.jsp" method="post">
+ <form action="registerController" method="post" modelAttribute="registerUser" onsubmit="">
  <table>
 			<tr>
 				<td>Enter Name :</td>

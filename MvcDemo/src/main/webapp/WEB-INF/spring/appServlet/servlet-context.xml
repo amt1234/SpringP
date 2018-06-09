@@ -15,6 +15,8 @@
 		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	
 
+<!-- <beans:bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" /> -->
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
@@ -34,6 +36,7 @@
 	</beans:bean>
 
 	<context:component-scan
-		base-package="com.bridgeit.programs" />
-	
+		base-package="com.bridgeit" />
+		
+	<context:annotation-config/>
 </beans:beans>
