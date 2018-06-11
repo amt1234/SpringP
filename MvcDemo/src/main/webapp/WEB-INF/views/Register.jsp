@@ -7,38 +7,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"  href="<c:url value="/resources/css/style.css"/>">
-<script src="js/Validation.js" type="text/javascript" ></script>
+<script src="<c:url value="/resources/js/Validation.js"/>" type="text/javascript" ></script>
 </head>
 <body>
 <div class="loginForm">
 <h1>Register Page</h1>
 <!-- <form action="index.jsp" method="post" onsubmit="return ValidationTextname()">
  -->
- <form action="registerController" method="post" modelAttribute="registerUser" onsubmit="">
+ <form action="registerController" method="post" modelAttribute="registerUser" onsubmit="return ValidationTextname()">
  <table>
 			<tr>
 				<td>Enter Name :</td>
-				<td><input type="text" name="username" id="nameId" required/></td>
+				<td><input type="text" name="username" id="nameId" /></td>
 			</tr>
 			<tr>
 				<td>Enter Email :</td>
-				<td><input type="email" name="email" id="emailId" required/></td>
+				<td><input type="email" name="email" id="emailId" /></td>
 			</tr>
 			<tr>
 				<td>Enter Password :</td>
-				<td><input type="password" name="password" id="passwordId" required/></td>
+				<td><input type="password" name="password" id="passwordId" /></td>
 			</tr>
 			<tr>
 				<td>Enter Mobile Number :</td>
-				<td><input type="text" name="mobileNo" id="mobileNo" required /></td>
+				<td><input type="text" name="mobileNo" id="mobileNo"  /></td>
 			</tr>
 			<tr>
 				<td>Enter DOB :</td>
-				<td><input type="date" name="dob" required/></td>
+				<td><input type="date" name="dob" /></td>
 			</tr>
 		</table>
 		<input class="button" type="submit" value="submit"/>
+		
 </form>
+<font color="red">${message}</font>
 
 </div>
 </body>

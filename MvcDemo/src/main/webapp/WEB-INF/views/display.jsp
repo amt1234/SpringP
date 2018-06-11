@@ -14,19 +14,20 @@
 
 ${emailid} 
 <form action="index.jsp">
-<%-- <%
+<%
 
 	response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
 	HttpSession httpSession=request.getSession();
 
-	if(httpSession.getAttribute("emailid")==null)
+	if(httpSession.getAttribute("userObject")==null)
 	{
 		response.sendRedirect("index.jsp");
 	}
 	
 	
 %>
-<h2>Welcome ${emailid}</h2> --%>
+<h2>Welcome ${username}</h2>
+
 <br>
 <!-- <a href="visit">visit here</a> -->
 <br>

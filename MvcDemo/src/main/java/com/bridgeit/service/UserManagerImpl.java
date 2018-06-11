@@ -19,15 +19,22 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public List<User> listAllUser() {
+	public List<User> listAllUser(User user) {
 
-		return userDao.listAllUser();
+		return userDao.listAllUser(user);
 	}
 
 	@Override
-	public int findUser() {
+	public boolean findUserByEmail(User user)
+	{
+		return findUserByEmail(user);
+		
+	}
+	@Override
+	public boolean findUser(User user) {
 
-		return userDao.findUser();
+		System.out.println("dbbb"+user.getEmail());
+		return userDao.findUser(user);
 	}
 
 	@Override

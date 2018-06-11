@@ -38,5 +38,13 @@
 	<context:component-scan
 		base-package="com.bridgeit" />
 		
+		<!-- Configuring interceptors based on URI -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/registerController" />
+			<beans:bean class="com.bridgeit.interceptor.InterceptorImp"/>
+		</interceptor>
+	</interceptors>
+		
 	<context:annotation-config/>
 </beans:beans>

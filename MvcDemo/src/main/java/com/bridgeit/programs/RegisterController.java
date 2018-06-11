@@ -1,5 +1,7 @@
 package com.bridgeit.programs;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +18,7 @@ public class RegisterController {
 //	private UserDao userDao;
 	@Autowired
 	UserManager userManager;
-/*
-	public RegisterController(UserManager userManager) {
-		this.userManager=userManager;
-	}
-*/
+
 	@RequestMapping(value="/registerController",method=RequestMethod.POST)
 	public String register(@ModelAttribute("registerUser") User user,Model model) {
 		
@@ -30,9 +28,11 @@ public class RegisterController {
 		System.out.println(user.getPassword());
 		System.out.println(user.getMobileNo());
 		System.out.println(user.getDob());
+		
 		userManager.addUser(user);
-		userManager.listAllUser();
-
+		userManager.listAllUser(user);
+		
+		
 		return "redirect:index.jsp";
 	}
 
@@ -40,6 +40,7 @@ public class RegisterController {
 	public ModelAndView rgisterMapping() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("Register");
+		
 		return modelAndView;
 	}
 

@@ -13,7 +13,7 @@
 <body>
 <div class="loginForm">
 <h1>Login</h1>
-	<form action="add" method="post">
+	<form action="add" method="post" modelAttribute="loginUser" >
 		<table>
 			<tr>
 				<td>Enter Username :</td>
