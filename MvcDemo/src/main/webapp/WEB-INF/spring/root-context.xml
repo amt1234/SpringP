@@ -21,18 +21,16 @@
 	</bean>
 
 	<bean id="jdbcTemplate"
-		class="org.springframework.jdbc.core.JdbcTemplate">
+	class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="userDao" class="com.bridgeit.Dao.UserDaoImpl"
-		autowire="byName">
-	</bean>
+	<!-- <bean id="userDao" class="com.bridgeit.Dao.UserDaoImpl">
+	</bean> -->
 
-	<bean id="userManagerImpl"
+	<!-- <bean id="userManagerImpl"
 		class="com.bridgeit.service.UserManagerImpl" autowire="byName">
-	</bean>
+	</bean> -->
 
-	<context:annotation-config />
-
+<!-- 	<context:annotation-config /> -->
 </beans>

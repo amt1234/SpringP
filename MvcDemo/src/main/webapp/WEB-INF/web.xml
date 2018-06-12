@@ -9,7 +9,7 @@
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 	<welcome-file-list>
-	<welcome-file>index.jsp</welcome-file></welcome-file-list>
+	<welcome-file>login.jsp</welcome-file></welcome-file-list>
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

@@ -12,9 +12,8 @@
 <body>
 <div class="loginForm">
 <h1>Register Page</h1>
-<!-- <form action="index.jsp" method="post" onsubmit="return ValidationTextname()">
- -->
- <form action="registerController" method="post" modelAttribute="registerUser" onsubmit="return ValidationTextname()">
+
+ <form action="registerCompleted" method="post" modelAttribute="registerUser" onsubmit="return ValidationTextname()">
  <table>
 			<tr>
 				<td>Enter Name :</td>

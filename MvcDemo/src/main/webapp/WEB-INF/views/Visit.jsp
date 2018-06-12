@@ -9,12 +9,11 @@
 <body>
 <h1>visit page</h1>
 <%
-
 response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
 HttpSession httpSession=request.getSession();
 if(httpSession.getAttribute("Username")==null)
 {
-	response.sendRedirect("index.jsp");
+	response.sendRedirect("login.jsp");
 }
 %>
 </body>

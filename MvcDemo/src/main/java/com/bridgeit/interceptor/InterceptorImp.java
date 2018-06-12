@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 public class InterceptorImp implements HandlerInterceptor {
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -20,6 +21,7 @@ public class InterceptorImp implements HandlerInterceptor {
 		String password = request.getParameter("password");
 		String dob = request.getParameter("dob");
 		long mobileNo;
+		
 		if(request.getParameter("mobileNo")==null)
 		{
 			mobileNo=0;

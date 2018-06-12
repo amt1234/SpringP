@@ -9,14 +9,10 @@ import com.bridgeit.Dao.UserDao;
 import com.bridgeit.model.User;
 
 @Service
-public class UserManagerImpl implements UserManager {
-
-	UserDao userDao;
+public class UserServiceManagerImpl implements UserServiceManager {
 
 	@Autowired
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}
+	UserDao userDao;
 
 	@Override
 	public List<User> listAllUser(User user) {
@@ -24,12 +20,6 @@ public class UserManagerImpl implements UserManager {
 		return userDao.listAllUser(user);
 	}
 
-	@Override
-	public boolean findUserByEmail(User user)
-	{
-		return findUserByEmail(user);
-		
-	}
 	@Override
 	public boolean findUser(User user) {
 

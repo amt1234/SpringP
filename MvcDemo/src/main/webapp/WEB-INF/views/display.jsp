@@ -10,26 +10,22 @@
 </head>
 <body>
 <h2>Hello User !</h2>
-<%-- <%= request.getAttribute("emailid")%> --%>
+<%-- <%= request.getAttribute("email")%> --%>
 
-${emailid} 
-<form action="index.jsp">
+${user.getEmail()} 
+<form action="logout">
 <%
-
 	response.setHeader("Cache-Control", "no-cache,no-store,must-revalidate");
 	HttpSession httpSession=request.getSession();
 
 	if(httpSession.getAttribute("userObject")==null)
 	{
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("login.jsp");
 	}
-	
-	
 %>
-<h2>Welcome ${username}</h2>
-
+<%-- <h2>Welcome ${username}</h2> --%>
 <br>
-<!-- <a href="visit">visit here</a> -->
+<!-- <a href="Visit">visit here</a> -->
 <br>
 <br>
 <center><input class="bottonlogout" type="submit" value="logout"/></center>

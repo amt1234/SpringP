@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.bridgeit.model.User;
 
-public interface UserManager {
+public interface UserServiceManager {
 
-	public List<User> listAllUser(User user);
-	public boolean findUserByEmail(User user);
+	List<User> listAllUser(User user);
 	public boolean findUser(User user);
 	public int addUser(User user);
 	public int updateUser(User user);
