@@ -3,6 +3,7 @@
 	<item value="/home/bridgelabz/Downloads" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="false" key="delegateUpdating"/>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="false" key="renameSubpackages"/>
 		<item value="false" key="updateQualifiedNames"/>
 		<item value="*" key="patterns"/>
 		<item value="false" key="updateSimilarElements"/>

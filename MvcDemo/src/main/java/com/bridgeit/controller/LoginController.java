@@ -1,5 +1,7 @@
 package com.bridgeit.controller;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +19,7 @@ import com.bridgeit.service.UserServiceManager;
 @Controller
 public class LoginController {
 
-	//service interface
+	// service interface
 	UserServiceManager userServiceManager;
 
 	public LoginController(UserServiceManager userManager) {
@@ -26,31 +28,49 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ModelAndView add(@ModelAttribute("loginUser") User user, HttpServletRequest request,
+	public Object add(@ModelAttribute("loginUser") User user, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		System.out.println("email :" + user.getEmail());
-		System.out.println("password " + user.getPassword());
-		System.out.println("userManager " + userServiceManager.findUser(user));
-		
-		if (userServiceManager.findUser(user)) {
+		List<User> list = (List<User>) userServiceManager.findUser(user);
+		String email2 = null;
+		String password2 = null;
+		for (User user2 : list) {
+			email2 = user2.getEmail();
+			password2 = user2.getPassword();
+		}
+
+		if ((email2.equals(user.getEmail()) && (password2.equals(user.getPassword())))) {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("userObject", user);
-			
+			System.out.println("valid user");
 			System.out.println("session id" + httpSession.getId());
 
 			Cookie cookie = new Cookie("cookie", user.getEmail());
 			response.addCookie(cookie);
 
-			modelAndView.setViewName("display");
 			modelAndView.addObject(user);
+			return "redirect:loadData";
 		} else {
-			
+
 			modelAndView.addObject("message", "please enter valid email and password");
 			modelAndView.setViewName("login");
 		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/loadData", method = RequestMethod.GET)
+	public ModelAndView dataLoad(HttpSession httpsession) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<User> list = (List<User>) userServiceManager.findUser((User) httpsession.getAttribute("userObject"));
+		
+		for (User user2 : list) {
+			modelAndView.addObject(user2.getEmail());
+			modelAndView.addObject(user2.getPassword());
+			modelAndView.addObject(user2.getUsername());
+		}
+		modelAndView.setViewName("display");
 		return modelAndView;
 	}
 }

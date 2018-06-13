@@ -21,7 +21,7 @@ public class UserServiceManagerImpl implements UserServiceManager {
 	}
 
 	@Override
-	public boolean findUser(User user) {
+	public Object findUser(User user) {
 
 		System.out.println("dbbb"+user.getEmail());
 		return userDao.findUser(user);

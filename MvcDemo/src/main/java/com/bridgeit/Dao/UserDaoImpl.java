@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
 
 	// select perticular user by id
 	@Override
-	public boolean findUser(User user) {
+	public Object findUser(User user) {
 
 		String sql = "select * from SpringTable where email=?";
 		Object[] args = new Object[] { user.getEmail() };
@@ -50,9 +50,10 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("list data " + list);
 
 		if (list.isEmpty())
+
 			return false;
 		else
-			return true;
+			return list;
 	}
 
 	// Add new user information
@@ -83,12 +84,17 @@ public class UserDaoImpl implements UserDao {
 	class UserMapper implements RowMapper<User> {
 
 		@Override
-		public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+		public User mapRow(ResultSet resultSet, int rowNum) {
 			User user = new User();
-			user.setUsername(resultSet.getString("username"));
-			user.setEmail(resultSet.getString("email"));
-			user.setMobileNo(resultSet.getLong("mobileNo"));
-			user.setDob(resultSet.getString("dob"));
+			try {
+				user.setUsername(resultSet.getString("username"));
+				user.setEmail(resultSet.getString("email"));
+				user.setPassword(resultSet.getString("password"));
+				user.setMobileNo(resultSet.getLong("mobileNo"));
+				user.setDob(resultSet.getString("dob"));
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
 			return user;
 		}
 
