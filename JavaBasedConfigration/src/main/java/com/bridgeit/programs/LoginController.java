@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bridgeit.programs.service.IUserService;
 import com.bridgeit.model.User;
+import com.bridgeit.service.IUserService;
 
 @Controller
 public class LoginController {

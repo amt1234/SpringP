@@ -1,9 +1,7 @@
-package com.bridgeit.programs.dao;
+package com.bridgeit.service;
 
 import com.bridgeit.model.User;
 
-public interface IUserDao {
-
+public interface IUserService {
 	public int addUser(User user);
-	
 }

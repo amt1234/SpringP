@@ -17,10 +17,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.bridgeit.programs.dao.IUserDao;
-import com.bridgeit.programs.dao.UserDao;
-import com.bridgeit.programs.service.IUserService;
-import com.bridgeit.programs.service.UserService;
+import com.bridgeit.dao.IUserDao;
+import com.bridgeit.dao.UserDao;
+import com.bridgeit.service.IUserService;
+import com.bridgeit.service.UserService;
 
 @EnableWebMvc
 @Configuration

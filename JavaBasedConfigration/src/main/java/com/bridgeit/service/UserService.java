@@ -1,10 +1,10 @@
-package com.bridgeit.programs.service;
+package com.bridgeit.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bridgeit.dao.IUserDao;
 import com.bridgeit.model.User;
-import com.bridgeit.programs.dao.IUserDao;
 
 @Service
 public class UserService implements IUserService {
