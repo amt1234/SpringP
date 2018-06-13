@@ -8342,3 +8342,36 @@ org.eclipse.core.runtime.CoreException: Launch configuration DocsConnectionProps
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
 !SUBENTRY 1 org.eclipse.jdt.launching 4 124 2018-06-13 18:31:18.003
 !MESSAGE Launch configuration DocsConnectionPropsHelper references closed project MvcDemo
+!SESSION 2018-06-13 18:48:15.765 -----------------------------------------------
+eclipse.buildId=3.9.4.201804120921-RELEASE-e47
+java.version=1.8.0_171
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_IN
+Framework arguments:  -product org.springsource.sts.ide
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.springsource.sts.ide
+
+!ENTRY org.eclipse.ui 2 0 2018-06-13 18:48:49.934
+!MESSAGE Warnings while parsing the images from the 'org.eclipse.ui.commandImages' extension point.
+!SUBENTRY 1 org.eclipse.ui 2 0 2018-06-13 18:48:49.934
+!MESSAGE Cannot bind to an undefined command: plug-in='org.eclipse.lsp4e', id='org.eclipse.lsp4e.togglehighlight'
+
+!ENTRY org.eclipse.jface 2 0 2018-06-13 18:48:53.993
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2018-06-13 18:48:53.993
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1784fcab,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@63e4bbf9,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
