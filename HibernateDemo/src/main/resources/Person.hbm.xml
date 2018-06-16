@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 15 Jun, 2018 12:37:49 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.bridgeit.model.Person" table="PERSON">
+        <id name="id" type="java.lang.Long">
+            <column name="PERSON_ID" />
+            <generator class="native" />
+        </id>
+        <property name="age" type="int">
+            <column name="AGE" />
+        </property>
+        <property name="firstname" type="java.lang.String">
+            <column name="FIRSTNAME" />
+        </property>
+        <property name="lastname" type="java.lang.String">
+            <column name="LASTNAME" />
+        </property>
+        
+        <set name="events" table="Person_Event">
+        <key column="PERSON_ID"></key>
+        <many-to-many column="USER_ID" class="com.bridgeit.model.User"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

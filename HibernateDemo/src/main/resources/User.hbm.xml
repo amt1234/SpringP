@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 14 Jun, 2018 4:45:51 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+	<class name="com.bridgeit.model.User" table="o2o_with_UserAndVehical">
+		<id name="id" type="int">
+			<column name="USER_ID" />
+			<generator class="sequence">
+			<!-- 	<param name="sequence">100</param> -->
+			</generator>
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" />
+		</property>
+		<one-to-one name="vehical" class="com.bridgeit.model.Vehical" cascade="all"></one-to-one>
+	</class>
+</hibernate-mapping>

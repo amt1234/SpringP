@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 16 Jun, 2018 6:14:23 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.bridgeit.model.Vehical" table="VEHICAL">
+        <id name="vehicalId" type="int">
+            <column name="VEHICALID" />
+            <generator class="foreign" >
+            <param name="USER_ID"></param>
+            </generator>
+            
+        </id>
+        <property name="vehicalName" type="java.lang.String">
+            <column name="VEHICALNAME" />
+        </property>
+        <one-to-one name="USER_ID" class="com.bridgeit.model.User" constrained="true"/>
+    </class>
+</hibernate-mapping>
+

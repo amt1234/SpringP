@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="230" key="DIALOG_X_ORIGIN"/>
-		<item value="16" key="DIALOG_Y_ORIGIN"/>
+		<item value="-524" key="DIALOG_X_ORIGIN"/>
+		<item value="-536" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="124" key="dialogHeight"/>
-		<item value="224" key="dialogWidth"/>
+		<item value="100" key="dialogHeight"/>
+		<item value="200" key="dialogWidth"/>
 		<list key="textEntries">
 			<item value="1"/>
 			<item value="1"/>
@@ -14,29 +14,28 @@
 			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.ui.console.ConsoleView"/>
 			<item value="org.eclipse.ui.views.ResourceNavigator"/>
 			<item value="org.eclipse.wst.server.ui.ServersView"/>
 			<item value="org.eclipse.wst.server.ui.new.server"/>
-			<item value="org.eclipse.ui.console.ConsoleView"/>
 		</list>
 		<list key="orderedProviders">
 			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.e4.ui.parts"/>
-			<item value="org.eclipse.ui.wizards"/>
 			<item value="org.eclipse.e4.ui.parts"/>
+			<item value="org.eclipse.ui.wizards"/>
 		</list>
 		<list key="textArray">
+			<item value="cons"/>
 			<item value="na"/>
 			<item value="servers"/>
 			<item value="ser"/>
-			<item value="cons"/>
 		</list>
 	</section>
 	<section name="NewWizardAction">
-		<item value="org.eclipse.wst.server.ui.new.server" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.hibernate.eclipse.console.wizards.NewHibernateMappingFileWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.emf.codegen.ecore.ui.wizardCategory"/>
-			<item value="org.eclipse.wst.server.ui"/>
+			<item value="hibernatewizards"/>
 		</list>
 	</section>
 </section>
