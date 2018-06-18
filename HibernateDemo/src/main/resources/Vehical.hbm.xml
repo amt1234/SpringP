@@ -9,7 +9,6 @@
             <generator class="foreign" >
             <param name="USER_ID"></param>
             </generator>
-            
         </id>
         <property name="vehicalName" type="java.lang.String">
             <column name="VEHICALNAME" />

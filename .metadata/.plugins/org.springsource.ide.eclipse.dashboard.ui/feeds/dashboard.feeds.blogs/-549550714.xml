@@ -5,7 +5,31 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-06-14T21:00:53Z</updated>
+  <updated>2018-06-18T12:22:42Z</updated>
+  <entry>
+    <title>Spring IO Platform Brussels SR11</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/18/spring-io-platform-brussels-sr11" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Andy Wilkinson</name>
+    </author>
+    <id>tag:spring.io,2018-06-18:3309</id>
+    <updated>2018-06-18T12:22:42Z</updated>
+    <content type="html">&lt;p&gt;I am pleased to announce that &lt;a href="http://platform.spring.io/platform"&gt;Spring IO Platform&lt;/a&gt; Brussels-SR11 is now available from both &lt;a href="https://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and Maven Central. &lt;/p&gt;
+&lt;p&gt;This maintenance release upgrades the versions of a number of the projects in the Platform:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring AMQP 1.7.8&lt;/li&gt;
+  &lt;li&gt;Spring Boot 1.5.14&lt;/li&gt;
+  &lt;li&gt;Spring Cloud Connectors 1.2.6&lt;/li&gt;
+  &lt;li&gt;Spring Data Ingalls SR13&lt;/li&gt;
+  &lt;li&gt;Spring Framework 4.3.18&lt;/li&gt;
+  &lt;li&gt;Spring Integration 4.3.17&lt;/li&gt;
+  &lt;li&gt;Spring Security 4.2.7&lt;/li&gt;
+  &lt;li&gt;Spring Session 1.3.3&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The versions of a number of third-party dependencies have also been updated.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://platform.spring.io/platform"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-io/platform/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/platform/docs/Brussels-SR11/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>Spring Project Vulnerability Reports Published</title>
     <link rel="alternate" href="https://spring.io/blog/2018/06/14/spring-project-vulnerability-reports-published" />
@@ -937,41 +961,5 @@ dependencies {&#xD;
     ...&#xD;
 }
 &lt;/code&gt;&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - May 29th, 2018</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/05/29/this-week-in-spring-may-29th-2018" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2018-05-29:3288</id>
-    <updated>2018-05-29T09:50:00Z</updated>
-    <content type="html">&lt;p&gt;Hi Spring fans and welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! I finished last week in Barcelona, Spain, for the &lt;em&gt;epic&lt;/em&gt; Spring IO 2018 event (were you there? why not? YOU SHOULD BE IT&amp;rsquo;S AMAZING!) and now I&amp;rsquo;m in San Francisco enjoying a restive 48 hours and soon I&amp;rsquo;ll be off to sunny Saint Louis for the epic &lt;a href="https://springonetour.io/2018/st-louis"&gt;Spring One Tour St. Louis event&lt;/a&gt; starting the 30th then it&amp;rsquo;s off to splendid Singapore for &lt;a href="https://voxxeddays.com/singapore/"&gt;the Voxxed Singapore event&lt;/a&gt;. If you&amp;rsquo;re in either region, &lt;a href="http://twitter.com/starbuxman"&gt;reach out&lt;/a&gt;! I&amp;rsquo;d love to heard and/or see you!&lt;/p&gt;
-&lt;p&gt;Anyway, as usual, we&amp;rsquo;ve got a ton to cover so let&amp;rsquo;s get to it! &lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Hi Spring fans! In last week&amp;rsquo;s installment of &lt;em&gt;Spring Tips&lt;/em&gt; we look at the Apache Camel enterprise integration framework and &lt;a href="https://spring.io/blog/2018/05/23/spring-tips-apache-camel"&gt;its integration with Spring Boot&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Don&amp;rsquo;t miss Spring Cloud Stream lead &lt;a href="https://content.pivotal.io/webinars/jun-7-spring-cloud-stream-whats-new-in-2-x-and-whats-next-webinar"&gt;Oleg Zhurakousky&amp;rsquo;s June 7 webinar on the latest and greatest in Spring Cloud Stream&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Do you really need any more reason to go to SpringOne Platform? Do &lt;em&gt;not&lt;/em&gt; miss &lt;a href="https://spring.io/blog/2018/05/22/enjoy-quality-time-with-the-spring-and-reactor-communities-at-springone-platform"&gt;this compelling invitation&lt;/a&gt; from Reactor project lead Stephane Maldini!&lt;/li&gt;
-  &lt;li&gt;Check out the latest and greatest &lt;a href="https://www.cloudfoundry.org/blog/cloud-foundry-cli-project-lead-updates/"&gt;support in the Cloud Foundry CLI&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Check out the latest &lt;a href="https://www.cloudfoundry.org/blog/new-updates-cloud-foundry-container-networking/"&gt;in Cloud Foundry&amp;rsquo;s container networking support&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Spring Data ninja and Redis-driver Lettuce maintainer Mark Paluch has a nice &lt;a href="https://paluch.biz/blog/174-a-first-look-at-redis-streams-and-how-to-use-them-with-java.html"&gt;post on using Redis Streams with Java&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is an interesting post on &lt;a href="https://salaboy.com/2018/05/24/spring-cloud-kubernetes-example/"&gt;using Spring Cloud and Kubernetes and Jenkins X&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Oleksandr Slynko has a &lt;a href="https://medium.com/@slynko/kubernetes-with-cloud-foundry-2fef09efbdb6"&gt;inspiring post&lt;/a&gt; on the hope of using Kubernetes with Cloud Foundry, based on Alexis Richardson&amp;rsquo;s CNCF 20-20 Vision track talk&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://speakerdeck.com/joshiste/spring-io-2018-monitoring-spring-boot-applications-with-spring-boot-admin"&gt;Spring IO 2018 - Monitoring Spring Boot Applications with Spring Boot Admin // Speaker Deck&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Assemberl, a small library to efficiently assemble results from querying, or merging of external data sources, or aggregation of microservices, &lt;a href="https://github.com/pellse/assembler"&gt;is now at 0.0.5&lt;/a&gt;. It offers a fluent DSL that uses Reactor. It was designed as a very lightweight solution to resolve the N + 1 queries problem when aggregating data, not only from database calls (e.g. Spring Data JPA, Hibernate) but from arbitrary data sources (relational databases, NoSQL, REST, local method calls, etc.)&lt;/li&gt;
-  &lt;li&gt;Gerit Meier&amp;rsquo;s slides on &lt;a href="https://speakerdeck.com/meistermeier/time-to-graph-up-with-spring-data-neo4j"&gt;Spring Data Neo4j, from Spring IO 2018, are now up&lt;/a&gt;. Neo4J is a graph-database that&amp;rsquo;s amazing at all sorts of modeling.&lt;/li&gt;
-  &lt;li&gt;The slides from Spring Data lead Oliver Gierke&amp;rsquo;s talk on &amp;ldquo;REST design beyond the obvious&amp;rdquo;, from Spring IO 2018, &lt;a href="https://speakerdeck.com/olivergierke/rest-beyond-the-obvious-api-design-for-ever-evolving-systems"&gt;are now available&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;The slides from Mark Pakuch&amp;rsquo;s Spring IO 2018 talk, &lt;a href="https://speakerdeck.com/mp911de/under-the-hood-of-reactive-data-access-1"&gt;&amp;ldquo;Under the Hoods of Reactive Data Access&amp;rdquo;&lt;/a&gt;, are now available.&lt;/li&gt;
-  &lt;li&gt;The slides from Reactor ninja Simon Basle&amp;rsquo;s Spring IO talk, &lt;a href="https://speakerdeck.com/simonbasle/flight-of-the-flux"&gt;&amp;ldquo;Flight of the Flux,&amp;rdquo; are now available&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is an oldie-but-a-goodie; it&amp;rsquo;s Spring web-dude Rossen Stoyanchev&amp;rsquo;s &lt;a href="https://twitter.com/infoq/status/1000142219154771969?s=12"&gt;comparison of Servlet and reactive web programming&lt;/a&gt; in Spring Framework.&lt;/li&gt;
-  &lt;li&gt;Ben Wilcock has a &lt;em&gt;fabulous&lt;/em&gt; infographic &lt;a href="https://twitter.com/benbravo73/status/999959147406819333"&gt;that looks at both Kubernetes and Pivotal Cloud Foundry&lt;/a&gt; and how and why they&amp;rsquo;re both awesome.&lt;/li&gt;
-  &lt;li&gt;Have you &lt;a href="https://twitter.com/springcentral/status/1000129667104366592"&gt;booked your tickets for the SpringOne Tour 2018 London event&lt;/a&gt;?&lt;/li&gt;
-  &lt;li&gt;This &lt;a href="https://twitter.com/springcentral/status/1000089196067983363"&gt;tweet&lt;/a&gt; is good news: preliminary &lt;a href="https://twitter.com/springcentral/status/1000089196067983363"&gt;Micrometer&lt;/a&gt; support&amp;rsquo;s been merged into &lt;a href="https://twitter.com/springcentral/status/1000089196067983363"&gt;Project Reactor&lt;/a&gt;; this means better instrumentation for your reactive workloads!&lt;/li&gt;
-  &lt;li&gt;Submit your &lt;a href="https://www.cloudfoundry.org/event_subpages/cfeu-2018-cfp/"&gt;talks in the Cloud Foundry Europe CFP&lt;/a&gt;; the CFP closes &lt;em&gt;soon&lt;/em&gt;!&lt;/li&gt;
-  &lt;li&gt;Deepak Kumar has a nice post that explains &lt;a href="https://dzone.com/articles/all-you-need-to-know-about-asyncronous-messaging-u?oid=twitter"&gt;&amp;ldquo;everything you need to know about.. RabbitMQ&amp;rdquo;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Devops legends John Willis and Gene Kim have a new audiobook out, &amp;ldquo;After the Phoenix Project,&amp;rdquo; that is about eight hours of conversation between them on all manner of different topics. This is a must listen for those &lt;a href="https://www.infoq.com/news/2018/05/Beyond-The-Phoenix-Project"&gt;trying to contextualize their organization&amp;rsquo;s path to production&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;I liked Pivotal SVP Onsi Fakhouri&amp;rsquo;s explanation of &lt;a href="https://twitter.com/pivotal/status/999009220778450944?s=12"&gt;how we help our customers continually iterate towards value for their customers&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
   </entry>
 </feed>

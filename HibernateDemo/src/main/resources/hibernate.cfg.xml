@@ -3,18 +3,26 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">root</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/HibernateDB</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="hbm2ddl.auto">update</property>
-        <property name="show_sql">true</property>
-       <!--  <mapping class="com.bridgeit.model.User"/>
-         <mapping class="com.bridgeit.model.Vehical"/> -->
-       <mapping resource="User.hbm.xml"/> 
-       <mapping resource="Vehical.hbm.xml"/>
-     <!--   <mapping resource="Person.hbm.xml"/> -->
-    </session-factory>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/HibernateDB</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="hbm2ddl.auto">update</property>
+		<property name="show_sql">true</property>
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+ 		<!-- <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property> -->
+		<!--<mapping class="com.bridgeit.model.User"/> <mapping class="com.bridgeit.model.Vehical"/> -->
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<!-- <mapping class="com.bridgeit.model.Laptop"/> -->
+		<mapping class="com.bridgeit.model.Student" />
+		
+
+
+		<!-- <mapping resource="User.hbm.xml"/> <mapping resource="Vehical.hbm.xml"/> -->
+		<!-- <mapping resource="Person.hbm.xml"/> -->
+		<!-- <mapping resource="Laptop.hbm.xml"/> <mapping resource="Student.hbm.xml"/> -->
+	</session-factory>
 </hibernate-configuration>

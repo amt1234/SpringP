@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18 Jun, 2018 10:27:33 AM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.bridgeit.model.Student" table="STUDENT">
+        <id name="studentId" type="int">
+            <column name="STUDENTID" />
+            <generator class="assigned" />
+        </id>
+        <property name="studentName" type="java.lang.String">
+            <column name="STUDENTNAME" />
+        </property>
+        <property name="studentMarks" type="int">
+            <column name="STUDENTMARKS" />
+        </property>
+        <list name="laptops"  table="LAPTOP" lazy="true"  cascade="all">
+            <key>
+                <column name="STUDENTID" />
+            </key>
+            <list-index></list-index>
+            <many-to-many class="com.bridgeit.model.Laptop" column="LAPTIOID" />
+        </list>
+    </class>
+</hibernate-mapping>
