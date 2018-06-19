@@ -1,22 +1,33 @@
 package com.bridgeit.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 import javax.imageio.spi.ServiceRegistry;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bridgeit.inheritance.Employee;
+import com.bridgeit.inheritance.Excecutive;
+import com.bridgeit.inheritance2.Bicycle;
+import com.bridgeit.inheritance2.MountainBicycle;
+import com.bridgeit.inheritance2.SwingBicycle;
 import com.bridgeit.model.Address;
 import com.bridgeit.model.Laptop;
 import com.bridgeit.model.Person;
@@ -173,7 +184,7 @@ public class AppDemo {
 		System.out.println(student.getStudentId()+" "+student.getStudentName()+" "+student.getStudentMarks());*/
 		
 		//To aliase aND IN parameter
-		List titleList=new ArrayList();
+		/*List titleList=new ArrayList();
 		titleList.add("abc21");
 		titleList.add("abc30");
 		Query query=session.createQuery("from Student where studentName in (:titleList)");
@@ -182,7 +193,117 @@ public class AppDemo {
 		for(Student student:students)
 		{
 			System.out.println("Student name list :"+student.getStudentId());
+		}*/
+		
+		//To check get() and load() diffrence
+		/*Student student=session.get(Student.class, 1);
+		System.out.println(student);*/
+		
+		//to check save and persist diffrence
+		/*
+		Student student=new Student();
+		student.setStudentName("aniket");
+		student.setStudentId(123);
+		student.setStudentMarks(100);
+		session.save(student);
+		//session.getTransaction().commit();
+		
+		
+		//session = HibernateUtil.getSessionFactory().openSession();
+		//session.beginTransaction();
+		student.setStudentId(124);
+		student.setStudentMarks(25);
+		session.save(student);
+		session.getTransaction().commit();
+		session.close();*/
+		
+		//To check table-per-class
+		/*Employee employee=new Employee();
+		employee.setName("john");
+		session.save(employee);
+		
+		Excecutive excecutive=new Excecutive();
+		excecutive.setExecutiveName("operater");
+		session.save(excecutive);
+		session.getTransaction().commit();
+		session.close();
+		*/
+		
+		//To check table-per-subclass
+		/*Bicycle bicycle=new Bicycle();
+		bicycle.setName("z1");
+		session.save(bicycle);
+		
+		MountainBicycle mountainBicycle=new MountainBicycle();
+		mountainBicycle.setName("Mz2");
+		session.save(mountainBicycle);
+		
+		SwingBicycle swingBicycle=new SwingBicycle();
+		swingBicycle.setName("swing fz");
+		session.save(swingBicycle);
+		
+		session.getTransaction().commit();
+		session.close();
+		*/
+		
+		//To check criteria in hibernate
+		//Get All Students
+		/*Criteria  criteria=session.createCriteria(Student.class);
+		List<Student> list=criteria.list();
+		for(Student student:list)
+		{
+			System.out.println("Student record :"+student.getStudentId()+" "+student.getStudentName()+" "+student.getStudentMarks());
 		}
+		*/
+		
+		//get with id
+		/*Criteria criteria=session.createCriteria(Student.class).add(Restrictions.eq("studentName", "abc40"));
+		Student student=(Student) criteria.uniqueResult();
+		System.out.println("Student Name :"+student.getStudentId()+" "+student.getStudentName()+" "+student.getStudentMarks());
+		*/
+		
+		//like example
+		Criteria criteria=session.createCriteria(Student.class).add(Restrictions.like("studentName", "%b%"));
+		List<Student> list=criteria.list();
+		for(Student student:list)
+		{
+			System.out.println("Student record with like example :"+student.getStudentId()+" "+student.getStudentName());
+		}
+		
+		//Projection Example
+		long count = (Long) session.createCriteria(Student.class)
+				.setProjection(Projections.rowCount())
+				.add(Restrictions.like("studentName", "%c%"))
+				.uniqueResult();
+		System.out.println("Number of employees with 'c' in name="+count);
+		
+		
+		//Join example for selecting few columns
+			/*	criteria = session.createCriteria(Employee.class, "employee");
+				criteria.setFetchMode("employee.address", FetchMode.JOIN);
+				criteria.createAlias("employee.address", "address"); // inner join by default
+
+				ProjectionList columns = Projections.projectionList()
+								.add(Projections.property("name"))
+								.add(Projections.property("address.city"));
+				criteria.setProjection(columns);
+
+				List<Object[]> list = criteria.list();
+				for(Object[] arr : list){
+					System.out.println(Arrays.toString(arr));
+				}*/
+		
+		System.out.println("join");
+		criteria=session.createCriteria(Student.class,"student");
+		criteria.setFetchMode("student.laptop", FetchMode.JOIN);
+		criteria.createAlias("student.laptop","Laptop" );
+		
+		List<Object> list2=criteria.list();
+		for(Object a:list)
+		{
+			System.out.println(a);
+		}
+		//System.out.println(student);
 		//retriving values from database
 		/*Session session2=HibernateUtil.getSessionFactory().openSession();
 		session2.beginTransaction();

@@ -16,8 +16,16 @@
  		<!-- <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property> -->
 		<!--<mapping class="com.bridgeit.model.User"/> <mapping class="com.bridgeit.model.Vehical"/> -->
 		<property name="hibernate.cache.use_query_cache">true</property>
-		<!-- <mapping class="com.bridgeit.model.Laptop"/> -->
+		<mapping class="com.bridgeit.model.Laptop"/>
 		<mapping class="com.bridgeit.model.Student" />
+		
+		<!-- <mapping class="com.bridgeit.inheritance.Employee"/>
+		<mapping class="com.bridgeit.inheritance.Excecutive"/> -->
+		
+	<!-- 	<mapping class="com.bridgeit.inheritance2.Bicycle"/>
+		<mapping class="com.bridgeit.inheritance2.MountainBicycle"/>
+		<mapping class="com.bridgeit.inheritance2.SwingBicycle"/> -->
+		
 		
 
 

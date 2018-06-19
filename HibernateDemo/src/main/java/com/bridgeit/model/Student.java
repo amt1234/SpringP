@@ -24,6 +24,7 @@ public class Student {
 	private String studentName;
 	private int studentMarks;
 
+	private Laptop laptop;
 	/*@OneToOne(cascade=CascadeType.ALL)
 	private Laptop laptop;
 	public Laptop getLaptop() {
@@ -53,6 +54,14 @@ public class Student {
 	public void setLaptops(List<Laptop> laptops) {
 		this.laptops = laptops;
 	}*/
+
+	public Laptop getLaptop() {
+		return laptop;
+	}
+
+	public void setLaptop(Laptop laptop) {
+		this.laptop = laptop;
+	}
 
 	public int getStudentId() {
 		return studentId;
