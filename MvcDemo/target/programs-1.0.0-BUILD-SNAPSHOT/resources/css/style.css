@@ -1,0 +1,38 @@
+div
+{
+	width:50%;
+	height:60%;
+	margin:auto;
+	text-align:center;
+	padding:6px;
+	border: 1px solid #ebebeb;
+}
+
+.button
+{
+	  width:80%;
+	  background-color: #4CAF50;
+	  
+}
+
+.bottonlogout{
+	
+	height:90%;
+	width:100%;
+	background-color: #4CAF50;	 
+}
+
+form{
+  width: 60%;
+  margin: 4em auto;
+  padding: 4em;
+  background: #fafafa;
+  border: 1px solid #ebebeb;
+    
+}
+
+table {
+  border-spacing: 20px;
+  width: max-content;
+  text-align: left;
+}
