@@ -1,12 +1,12 @@
 package com.bridgeit.springrest.model;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
-
+@Entity
 public class Employee {
 
+	@Id
 	private int id;
 	private String name;
 	private String createDate;

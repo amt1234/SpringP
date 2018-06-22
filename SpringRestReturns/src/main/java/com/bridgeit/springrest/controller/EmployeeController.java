@@ -7,15 +7,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,10 +27,9 @@ import com.bridgeit.springrest.model.Employee;
 @RestController
 public class EmployeeController {
 
-	Map<Integer, Employee> empData = new HashMap<Integer, Employee>();
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
+	@Autowired
 	EmployeeDao employeedao;
 	
 	@GetMapping("/")
@@ -71,16 +72,47 @@ public class EmployeeController {
 
 	}
 	*/
-	@GetMapping("/employee/{id}")
-	public @ResponseBody Employee getEmployee(@PathVariable("id") int id) {
-		LOGGER.info("Start getEmployee. ID="+id);
-		
-		if(employeedao.equals(id))
-		{
-			System.out.println("Employee id");
-		}
-		return new Employee();
 	
+	//To get the Employee list
+	@GetMapping("/listOfEmployee")
+	public  List<Employee> getEmployeeList()
+	{
+		LOGGER.info("LIST OF EMPLOYEE");
+		return employeedao.list();	
+	}
+	
+	//To get the Employee object based on the id
+	@GetMapping("/employee/{id}")
+	public ResponseEntity<?> getEmployee(@PathVariable("id") int empId)
+	{
+		LOGGER.info("Start getEmployee. ID="+empId);
+		
+		Employee employee=employeedao.getEmployeeid(empId);
+		if(employee==null)
+		{
+			return new ResponseEntity<String>("No Customer found for ID " + empId, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Employee>(employee, HttpStatus.OK);	
+	}
+	
+	
+	//To create the Employee object and store it
+	@PostMapping(value="/employee/create")
+	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee)
+	{
+		LOGGER.info("START CREATE NEW EMPLOYEE");
+		employeedao.createNewEmployee(employee);
+
+		return new ResponseEntity<>(employee,HttpStatus.OK);	
+	}
+	
+	//To delete employee by id
+	@PutMapping("/delete/{id}")
+	public ResponseEntity<String>  deleteEmployeeById(@PathVariable("id")int empId)
+	{
+		LOGGER.info("start delete employee");
+		 employeedao.deleteEmployee(empId);	
+		 return new ResponseEntity<String>("employee deleted",HttpStatus.OK);
 	}
 	
 }
