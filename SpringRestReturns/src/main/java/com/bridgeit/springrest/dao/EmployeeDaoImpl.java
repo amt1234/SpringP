@@ -3,12 +3,18 @@ package com.bridgeit.springrest.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.bridgeit.springrest.model.Employee;
-@Component
+@Repository
 public class EmployeeDaoImpl implements EmployeeDao {
 
+	
+	@Autowired
+	SessionFactory sessionFactory;
 	// Dummy database. Initialize with some dummy values.
 	private static List<Employee> empploeelist;
 	{

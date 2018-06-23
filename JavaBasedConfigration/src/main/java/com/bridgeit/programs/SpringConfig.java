@@ -42,6 +42,7 @@ public class SpringConfig implements WebMvcConfigurer{
 		return internalResourceViewResolver;	
 	}
 	
+	
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}

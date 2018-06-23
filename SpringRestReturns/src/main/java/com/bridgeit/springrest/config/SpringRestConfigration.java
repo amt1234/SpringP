@@ -22,8 +22,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
-import com.bridgeit.dao.IUserDao;
-import com.bridgeit.dao.UserDao;
 import com.bridgeit.springrest.dao.EmployeeDao;
 import com.bridgeit.springrest.dao.EmployeeDaoImpl;
 
