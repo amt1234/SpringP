@@ -4,9 +4,13 @@ import com.bridgeit.fundoonote.model.User;
 
 public interface UserDao {
 
-	public long save(User user);
+	public String save(User user);
+	
 	public boolean login(long userId);
 	
-	public boolean check(User user);
-	boolean check(String userEmail);
+	public User checkEmail(String userEmail);
+	
+	public boolean checkPassword(String password);
+	/*public User checkEmail2(String userEmail,String userPassword);*/
+
 }

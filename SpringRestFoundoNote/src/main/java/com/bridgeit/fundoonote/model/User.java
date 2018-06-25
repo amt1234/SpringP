@@ -5,16 +5,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "UserTable")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long userId;
+	@NotEmpty
+	@Size(min=2, message="Name should have atleast 2 characters")
 	private String userName;
+	
+	@NotEmpty 
+	@Email
 	private String userEmail;
+	
+	@NotEmpty
 	private String password;
 
 	public long getUserId() {
