@@ -11,12 +11,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "UserTable")
+@Table(name = "FoundooTable")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long userId;
+	
 	@NotEmpty
 	@Size(min=2, message="Name should have atleast 2 characters")
 	private String userName;
@@ -28,6 +29,28 @@ public class User {
 	@NotEmpty
 	private String password;
 
+	@NotEmpty
+	private long phoneNumber;
+	
+	@NotEmpty
+	private String dateOfBirth;
+	
+	public long getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	
 	public long getUserId() {
 		return userId;
 	}

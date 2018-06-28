@@ -1,9 +1,10 @@
 package com.bridgeit.fundoonote.services;
 
-import com.bridgeit.fundoonote.model.User;
+import com.bridgeit.fundoonote.model.RegistrationDTO;
 
 public interface UserService {
-	public String save(User user);
+	public boolean registationSave(RegistrationDTO registrationDTO);
 
 	public boolean check(String userEmail,String password);
+
 }

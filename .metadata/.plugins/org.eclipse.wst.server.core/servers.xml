@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <servers>
-  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v9.0 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v9.0 Server at localhost" name="Tomcat v9.0 Server at localhost" runtime-id="Apache Tomcat v9.0" server-type="org.eclipse.jst.server.tomcat.90" server-type-id="org.eclipse.jst.server.tomcat.90" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="5">
-    <list key="modules" value0="SpringRestFoundoNote::org.eclipse.jst.jee.server:SpringRestFoundoNote::jst.web::2.5"/>
-  </server>
-  <server auto-publish-setting="2" auto-publish-time="1" com.springsource.tcserver.asf="false" com.springsource.tcserver.name="spring-server" configuration-id="/Servers/spring-server - Pivotal tc Server v4.0 at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="spring-server - Pivotal tc Server v4.0 at localhost" instanceDir="/home/bridgelabz/Downloads/sts-bundle/pivotal-tc-server" name="spring-server - Pivotal tc Server v4.0 at localhost" runtime-id="Pivotal tc Server v4.0" saveSeparateContextFiles="true" server-type="com.pivotal.server.tc.90" server-type-id="com.pivotal.server.tc.90" start-timeout="120" stop-timeout="15" testEnvironment="false" timestamp="16">
-    <list key="modules" value0="SpringRestFoundoNote::org.eclipse.jst.jee.server:SpringRestFoundoNote::jst.web::2.5"/>
+  <server auto-publish-setting="2" auto-publish-time="1" com.springsource.tcserver.asf="false" com.springsource.tcserver.name="spring-server" configuration-id="/Servers/spring-server - Pivotal tc Server v4.0 at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="spring-server - Pivotal tc Server v4.0 at localhost" instanceDir="/home/bridgelabz/Downloads/sts-bundle/pivotal-tc-server" name="spring-server - Pivotal tc Server v4.0 at localhost" runtime-id="Pivotal tc Server v4.0" saveSeparateContextFiles="true" server-type="com.pivotal.server.tc.90" server-type-id="com.pivotal.server.tc.90" start-timeout="120" stop-timeout="15" testEnvironment="false" timestamp="35">
+    <list key="modules" value0="JmsWithRabbitMq::org.eclipse.jst.jee.server:JmsWithRabbitMq::jst.web::2.5"/>
   </server>
 </servers>
