@@ -59,7 +59,7 @@
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="658" key="DIALOG_WIDTH"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="716" key="DIALOG_HEIGHT"/>
+		<item value="744" key="DIALOG_HEIGHT"/>
 		<item value="321" key="DIALOG_X_ORIGIN"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
 	</section>
@@ -111,8 +111,8 @@
 		<item value="2" key="pageIndex"/>
 	</section>
 	<section name="completion_proposal_size">
-		<item value="214" key="contextSelector.size.y"/>
-		<item value="304" key="contextSelector.size.x"/>
+		<item value="202" key="contextSelector.size.y"/>
+		<item value="292" key="contextSelector.size.x"/>
 	</section>
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="SortOrdering"/>

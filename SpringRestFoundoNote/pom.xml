@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.bridgeit</groupId>
-	<artifactId>spring</artifactId>
+	<groupId>com.bridgeit.fundoonote</groupId>
+	<artifactId>SpringRestFoundoNote</artifactId>
 	<name>SpringRestFoundoNote</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -28,11 +28,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+
+		<!-- jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.6</version>
+		</dependency>
+
+		<!-- jjwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
 		</dependency>
 
 		<!-- spring-core -->
@@ -153,7 +161,7 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
+			<version>2.0.1.Final</version>
 		</dependency>
 		<!-- hibernate-validator -->
 		<dependency>
@@ -162,6 +170,14 @@
 			<version>5.4.1.Final</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.lettuce/lettuce-core -->
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>5.0.4.RELEASE</version>
+		</dependency>
+
+
 		<!--jbcrypt -->
 		<dependency>
 			<groupId>org.mindrot</groupId>
@@ -169,7 +185,36 @@
 			<version>0.3m</version>
 		</dependency>
 
+		<!--amqp-client -->
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>5.3.0</version>
+		</dependency>
 
+
+		<!--spring-amqp -->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-amqp</artifactId>
+			<version>2.0.4.RELEASE</version>
+		</dependency>
+
+
+		<!-- spring-rabbit -->
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<version>2.0.4.RELEASE</version>
+		</dependency>
+
+
+		<!-- javax.mail -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.0</version>
+		</dependency>
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

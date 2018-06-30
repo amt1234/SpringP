@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aop-reference-model>
-<aop-project name="JmsWithRabbitMq"/>
+<aop-project name="Rabbit"/>
+<aop-project name="SpringRestReturns"/>
+<aop-project name="SpringRestFoundoNote"/>
 </aop-reference-model>

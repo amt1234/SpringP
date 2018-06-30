@@ -5,7 +5,179 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-06-28T08:00:17Z</updated>
+  <updated>2018-06-28T15:30:00Z</updated>
+  <entry>
+    <title>Spring Cloud Stream Fishtown.M1 /2.1.0.M1 Release Announcement</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/28/spring-cloud-stream-fishtown-m1-2-1-0-m1-release-announcement" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Oleg Zhurakousky</name>
+    </author>
+    <id>tag:spring.io,2018-06-28:3318</id>
+    <updated>2018-06-28T15:30:00Z</updated>
+    <content type="html">&lt;p&gt;We are pleased to announce the first Milestone of the Spring Cloud Stream Fishtown release train - Fishtown.M1/2.1.0.M1.&lt;/p&gt;
+&lt;p&gt;Spring Cloud Stream Fishtown 2.1.0.M1 is available for use in the &lt;a href="http://repo.spring.io/libs-milestone-local/org/springframework/cloud/spring-cloud-stream/2.1.0.M1/"&gt;Spring Milestone&lt;/a&gt; repository. The &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-starters/releases/tag/vFishtown.M1"&gt;release notes&lt;/a&gt; include relevant information about version compatibility with Spring Boot, Spring Cloud, Spring AMQP, and Spring for Apache Kafka. &lt;/p&gt;
+&lt;p&gt;The following section provides a brief summary of features and improvements included in this release.&lt;/p&gt;&lt;h3&gt;&lt;a href="#notable-features-improvements-amp-enhancements" class="anchor" name="notable-features-improvements-amp-enhancements"&gt;&lt;/a&gt;Notable Features, Improvements &amp;amp; enhancements&lt;/h3&gt;&lt;h4&gt;&lt;a href="#core" class="anchor" name="core"&gt;&lt;/a&gt;Core&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Support for Message Listener container customization by simply registering implementation of &lt;code&gt;ListenerContainerCustomizer&lt;/code&gt; bean.&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;Binding properties precedence support. This feature allows default binding properties to be overriden with specific binding properties. For example.&lt;/p&gt;
+  &lt;pre&gt;&lt;code class="prettyprint"&gt;spring.cloud.stream.default.contentType=text/plain&#xD;
+spring.cloud.stream.default.producer.partitionCount=1&#xD;
+spring.cloud.stream.bindings.output.producer.partitionCount=4
+&lt;/code&gt;&lt;/pre&gt;In the above, the default content type for all bindings is set to &lt;code&gt;text/plain&lt;/code&gt;. Also, all producer bindings &lt;code&gt;partitionCount&lt;/code&gt; is set to &lt;code&gt;1&lt;/code&gt; with the exception of &lt;em&gt;output&lt;/em&gt; destination bindings where it is set to &lt;code&gt;4&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;In addition to the existing &lt;em&gt;input&lt;/em&gt; binding actuator endpoints, support for &lt;em&gt;output&lt;/em&gt; binding actuator endpoints was added as well.&lt;/li&gt;
+&lt;/ul&gt;&lt;h4&gt;&lt;a href="#rabbit-binder" class="anchor" name="rabbit-binder"&gt;&lt;/a&gt;Rabbit Binder&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Exposed support for setting queue length as and overflow policy&lt;/li&gt;
+  &lt;li&gt;Multiplex support&lt;/li&gt;
+&lt;/ul&gt;&lt;h4&gt;&lt;a href="#kafka-binder" class="anchor" name="kafka-binder"&gt;&lt;/a&gt;Kafka Binder&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Wild cards are now supported in kafka topic names in the binder [kafka binder]&lt;/li&gt;
+  &lt;li&gt;New annotation &lt;code&gt;KafkaStreamsStateStore&lt;/code&gt; for creating state stores in lower level processor API in kafka streams [kafka streams binder]&lt;/li&gt;
+  &lt;li&gt;Removing the creation of unnecessary repartition topics in the kafka streams binder&lt;/li&gt;
+  &lt;li&gt;Consuming from multiple topics in kafka streams binder&lt;/li&gt;
+  &lt;li&gt;Improvements in in interactive query support in kafka streams binder - Multiple consumers and querying across them are now supported.&lt;/li&gt;
+  &lt;li&gt;&lt;code&gt;QueryableStoreRegistry&lt;/code&gt; is deprecated and a new API is provided called &lt;code&gt;InteractiveQueryService&lt;/code&gt;. In addition to provide ability to query state stores, this API also gives information about the host where the consumer is running.&lt;/li&gt;
+  &lt;li&gt;Multiplex support&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Various other enhancements and bug &lt;a href="https://github.com/spring-cloud/spring-cloud-stream/milestone/43?closed=1"&gt;fixes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Once again huge thanks to all the community contributors!!! &lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE:&lt;br/&gt;If the applications are created from Spring Initializr, they need to add this BOM snippet in maven dependency management before the spring-cloud BOM declaration:&lt;/p&gt;
+  &lt;pre&gt;&lt;code class="prettyprint"&gt;&amp;lt;dependency&amp;gt;&#xD;
+           &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+           &amp;lt;artifactId&amp;gt;spring-cloud-stream-dependencies&amp;lt;/artifactId&amp;gt;&#xD;
+           &amp;lt;version&amp;gt;Fishtown.M1&amp;lt;/version&amp;gt;&#xD;
+           &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;&#xD;
+           &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;&#xD;
+&amp;lt;/dependency&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;&lt;h4&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h4&gt;
+&lt;p&gt;The M2 is planned for the end of July and will contain primarily new binding features as well as integration with &lt;a href="https://cloud.spring.io/spring-cloud-function/"&gt;Spring Cloud Function&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As always, we welcome feedback and contributions, so please reach out to us on &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-stream"&gt;Stackoverflow&lt;/a&gt; or &lt;a href="https://github.com/spring-cloud/spring-cloud-stream/"&gt;GitHub&lt;/a&gt; or via &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Gitter&lt;/a&gt;. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Cloud GCP 1.0.0.RC1 Now Available</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/06/28/spring-cloud-gcp-1-0-0-rc1-now-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Artem Bilan</name>
+    </author>
+    <id>tag:spring.io,2018-06-28:3319</id>
+    <updated>2018-06-28T13:11:00Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;Dear Spring Community!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Today, together with Google team, it&amp;#8217;s my pleasure to announce the First Release Candidate of &lt;a href="https://projects.spring.io/spring-cloud/"&gt;Spring Cloud&lt;/a&gt; for &lt;a href="https://cloud.google.com/"&gt;Google Cloud Platform&lt;/a&gt; project of version &lt;code&gt;1.0&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The artifacts available from &lt;a href="http://repo.spring.io/milestone/"&gt;Spring Milestone&lt;/a&gt; repository via BOM:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-xml" data-lang="xml"&gt;&amp;lt;dependencyManagement&amp;gt;
+    &amp;lt;dependencies&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;spring-cloud-gcp-dependencies&amp;lt;/artifactId&amp;gt;
+            &amp;lt;version&amp;gt;1.0.0.RC1&amp;lt;/version&amp;gt;
+            &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;
+            &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+    &amp;lt;/dependencies&amp;gt;
+&amp;lt;/dependencyManagement&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Since the previously announced &lt;a href="https://spring.io/blog/2018/04/16/what-s-new-in-spring-cloud-gcp-1-0-0-milestone-3"&gt;Milestone 3&lt;/a&gt;, Spring Cloud GCP is based on the latest &lt;a href="https://spring.io/blog/2018/06/19/spring-cloud-finchley-release-is-available"&gt;Spring Cloud Finchley&lt;/a&gt; and provides these features:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="messaging"&gt;&lt;a class="anchor" href="#messaging"&gt;&lt;/a&gt;Messaging&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;All the Spring Messaging support is located in the &lt;code&gt;spring-cloud-gcp-pubsub&lt;/code&gt; and &lt;code&gt;spring-cloud-gcp-pubsub-stream-binder&lt;/code&gt; modules and based on the &lt;a href="https://spring.io/projects/spring-integration"&gt;Spring Integration&lt;/a&gt; and &lt;a href="https://cloud.spring.io/spring-cloud-stream/"&gt;Spring Cloud Stream&lt;/a&gt;.
+There are &lt;code&gt;PubSubTemplate&lt;/code&gt; for low level, plain messaging with &lt;a href="https://cloud.google.com/pubsub/docs/overview"&gt;Google Cloud Pub/Sub&lt;/a&gt;.
+The Spring Integration Channel Adapters, based on the &lt;code&gt;PubSubTemplate&lt;/code&gt; foundation, are &lt;code&gt;PubSubInboundChannelAdapter&lt;/code&gt; and &lt;code&gt;PubSubMessageHandler&lt;/code&gt;.
+In this Release Candidate, we implemented for them consistent message conversion via &lt;code&gt;PubSubMessageConverter&lt;/code&gt; abstraction and also added a header mapping via &lt;code&gt;PubSubHeaderMapper&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The Spring Cloud Stream integration is represented via &lt;code&gt;PubSubMessageChannelBinder&lt;/code&gt; with smooth binding properties based on the Spring Boot auto-configuration provided in the &lt;code&gt;spring-cloud-gcp-autoconfigure&lt;/code&gt; module.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="database"&gt;&lt;a class="anchor" href="#database"&gt;&lt;/a&gt;Database&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://cloud.google.com/sql/"&gt;Google Cloud SQL&lt;/a&gt; support is implemented as a plain Spring Boot auto-configuration provided in the &lt;code&gt;spring-cloud-gcp-autoconfigure&lt;/code&gt; module and everything else is just standard Spring JDBC support!
+The &lt;code&gt;spring-cloud-gcp-starter-sql-mysql&lt;/code&gt; and &lt;code&gt;spring-cloud-gcp-starter-sql-postgresql&lt;/code&gt; are aimed to help you transparently auto-configure Google Cloud SQL services in your Spring Boot application.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="file-storage"&gt;&lt;a class="anchor" href="#file-storage"&gt;&lt;/a&gt;File Storage&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://cloud.google.com/storage/"&gt;Google Cloud Storage&lt;/a&gt; integration is implemented via &lt;code&gt;GoogleStorageProtocolResolver&lt;/code&gt;, when you can refer to your Google Cloud resource with the &lt;code&gt;gs://&lt;/code&gt; prefix classical Spring &lt;code&gt;Resource&lt;/code&gt; abstraction.
+In addition, &lt;code&gt;GcsInboundFileSynchronizingMessageSource, `GcsStreamingMessageSource&lt;/code&gt; and &lt;code&gt;GcsMessageHandler&lt;/code&gt; Spring Integration Channel Adapters are provided for handling Google Cloud resources with messaging.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="logging"&gt;&lt;a class="anchor" href="#logging"&gt;&lt;/a&gt;Logging&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://cloud.google.com/logging/"&gt;Google Cloud Stackdriver Logging&lt;/a&gt; integration is represented with various auto-configured utils, which can be enabled in your logging configs with our predefined &lt;code&gt;logback-appender.xml&lt;/code&gt; and &lt;code&gt;logback-json-appender.xml&lt;/code&gt; templates.
+The &lt;code&gt;spring-cloud-gcp-starter-logging&lt;/code&gt; Spring Boot Starter helps to manage proper dependencies for your application.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="trace"&gt;&lt;a class="anchor" href="#trace"&gt;&lt;/a&gt;Trace&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Together with the &lt;a href="https://cloud.spring.io/spring-cloud-sleuth/"&gt;Spring Cloud Sleuth&lt;/a&gt;, the Spring Cloud GCP provides an integration for the &lt;a href="https://cloud.google.com/trace/docs/"&gt;Google Cloud Stackdriver Trace&lt;/a&gt;.
+The &lt;code&gt;spring-cloud-gcp-starter-trace&lt;/code&gt; helps you to auto-configure the proper Spring Cloud and &lt;a href="https://zipkin.io/"&gt;Open Zipkin&lt;/a&gt; dependencies for this integration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="authentication"&gt;&lt;a class="anchor" href="#authentication"&gt;&lt;/a&gt;Authentication&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For the proper authentication into your &lt;a href="https://cloud.google.com/iam/docs/service-accounts"&gt;Google Cloud Accounts&lt;/a&gt;, the Spring Boot auto-configuration is provided via &lt;code&gt;Credentials&lt;/code&gt; and &lt;code&gt;GcpProjectIdProvider&lt;/code&gt; abstractions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="try-it-out"&gt;&lt;a class="anchor" href="#try-it-out"&gt;&lt;/a&gt;Try it out!&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Check out the &lt;a href="https://github.com/spring-cloud/spring-cloud-gcp/tree/master/spring-cloud-gcp-samples"&gt;code samples&lt;/a&gt; in the &lt;a href="https://github.com/spring-cloud/spring-cloud-gcp/"&gt;Spring Cloud GCP GitHub repository&lt;/a&gt;, read the Spring Cloud GCP Reference documentation for more details, and try it hands on with &lt;a href="https://codelabs.developers.google.com/spring"&gt;code labs&lt;/a&gt;.
+Most importantly, let us know your feedback and report any issues while we are aiming towards to GA release!
+Meanwhile we have started on bringing you more integrations in the future.
+Currently, you can try out our beta support for Spring &lt;a href="https://docs.spring.io/spring-cloud-gcp/docs/1.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#_spring_data_cloud_spanner"&gt;Data Cloud Spanner&lt;/a&gt; and &lt;a href="https://docs.spring.io/spring-cloud-gcp/docs/1.1.0.BUILD-SNAPSHOT/reference/htmlsingle/#_spring_cloud_config"&gt;Spring Cloud Config&lt;/a&gt; in the work-in-progress version &lt;code&gt;1.1&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;From the Spring Cloud GCP Team&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="quoteblock"&gt;
+&lt;blockquote&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Don&amp;#8217;t miss &lt;a href="https://springoneplatform.io/"&gt;SpringOne Platform&lt;/a&gt; conference in Washington, D.C. this September!
+Together with Google team I&amp;#8217;m going to represent these and more other features in the Spring Cloud for Google Cloud Platform project.
+Checkout the &lt;a href="https://springoneplatform.io/2018/sessions"&gt;sessions&lt;/a&gt; and register!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="https://cloud.spring.io/spring-cloud-gcp"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-gcp/issues"&gt;issues&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-cloud-gcp/docs/1.0.0.RC1/reference/htmlsingle"&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Hands on MongoDB 4.0 transactions with Spring Data</title>
     <link rel="alternate" href="https://spring.io/blog/2018/06/28/hands-on-mongodb-4-0-transactions-with-spring-data" />
@@ -14,7 +186,7 @@
       <name>Christoph Strobl</name>
     </author>
     <id>tag:spring.io,2018-05-30:3291</id>
-    <updated>2018-06-28T08:00:17Z</updated>
+    <updated>2018-06-28T08:00:00Z</updated>
     <content type="html">&lt;div class="paragraph"&gt;
 &lt;p&gt;With &lt;a href="https://www.mongodb.com/transactions"&gt;MongoDB 4.0&lt;/a&gt;, ACID transactions have arrived in the &lt;code&gt;Document&lt;/code&gt; store, enforcing all-or-nothing execution and maintaining data integrity.
 So, let&amp;#8217;s get straight to it by looking at both the synchronous and the reactive execution models.&lt;/p&gt;
@@ -26,7 +198,7 @@ So, let&amp;#8217;s get straight to it by looking at both the synchronous and th
 &lt;div class="content"&gt;
 &lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;try (ClientSession session = client.startSession()) {
 
-    clientSession.startTransaction();
+    session.startTransaction();
 
     try {
 
@@ -1240,88 +1412,5 @@ dependencies {
 &lt;a href="http://docs.spring.io/spring-security/site/docs/5.0x/reference/htmlsingle/"&gt;Reference&lt;/a&gt;
 | &lt;a href="http://stackoverflow.com/questions/tagged/spring-security"&gt;Help&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Cloud Pipelines 1.0.0.M8 Released</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/06/13/spring-cloud-pipelines-1-0-0-m8-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Marcin Grzejszczak</name>
-    </author>
-    <id>tag:spring.io,2018-06-13:3303</id>
-    <updated>2018-06-13T13:52:45Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;On behalf of the Spring Cloud team, it is my pleasure to announce a new milestone release of Spring Cloud Pipelines - &lt;code&gt;1.0.0.M8&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="what-s-new"&gt;&lt;a class="anchor" href="#what-s-new"&gt;&lt;/a&gt;What&amp;#8217;s new?&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;This release adds a lot of new features and quality and testing improvements. As for main features, we&amp;#8217;ve added support for a project with multiple modules, and for mono-repos (projects with standalone application sources in it). As for quality and testing, we&amp;#8217;re approaching 200 Bash tests (we&amp;#8217;ve written missing tests for the Concourse pipeline). We&amp;#8217;ve started publishing the project&amp;#8217;s sources as a downloadable artifact. That way instead of cloning the repo or downloading the ~25mb archive, you can fetch around 150kb of sources. &lt;a href="http://cloud.spring.io/spring-cloud-static/spring-cloud-pipelines/1.0.0.M8/"&gt;The docs for &lt;code&gt;1.0.0.M8&lt;/code&gt; are available here&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;From now on, we&amp;#8217;re attaching the distributions in &lt;code&gt;tar.gz&lt;/code&gt; and &lt;code&gt;zip&lt;/code&gt; formats, with sources only to each release.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-pipelines/releases/tag/v1.0.0.M8"&gt;Click here to read more detailed release notes.&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="thanks"&gt;&lt;a class="anchor" href="#thanks"&gt;&lt;/a&gt;Thanks&lt;/h3&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Super special thanks go to the one and only &lt;a href="https://twitter.com/ciberkleid"&gt;@ciberkleid&lt;/a&gt; for all her hard work on the project (look at that!!! - &lt;a href="https://github.com/spring-cloud/spring-cloud-pipelines/pull/130"&gt;#130&lt;/a&gt;) and to &lt;a href="https://twitter.com/jugglinhats"&gt;@jugglinhats&lt;/a&gt; (&lt;a href="https://github.com/spring-cloud/spring-cloud-pipelines/pull/148"&gt;#148&lt;/a&gt;) Kudos Cora and Oleg and everybody involved in the project!&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="feedback-needed"&gt;&lt;a class="anchor" href="#feedback-needed"&gt;&lt;/a&gt;Feedback needed&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;If you&amp;#8217;re already using Spring Cloud Pipelines please comment under &lt;a href="https://github.com/spring-cloud/spring-cloud-pipelines/issues/55"&gt;this issue&lt;/a&gt; with steps you needed to take to customize the project to suit your company&amp;#8217;s needs. Without your feedback we won&amp;#8217;t be able to automate the customization process!&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="presentation"&gt;&lt;a class="anchor" href="#presentation"&gt;&lt;/a&gt;Presentation&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;If you&amp;#8217;re interested in more information about the project please check out the  &lt;a href="https://content.pivotal.io/springone-platform-2017/continuous-deployment-to-the-cloud-marcin-grzejszczak-cora-iberkleid"&gt;Cora Iberkleid and Marcin Grzejszczak&amp;#8217;s presentation from Spring One&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="links"&gt;&lt;a class="anchor" href="#links"&gt;&lt;/a&gt;Links&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Please check out any of these links for more information or to contact us:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://cloud.spring.io/spring-cloud-pipelines/"&gt;Project page&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://cloud.spring.io/spring-cloud-static/spring-cloud-pipelines/1.0.0.M8/"&gt;Project 1.0.0.M8 documentation&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://gitter.im/spring-cloud/spring-cloud-pipelines"&gt;Spring Cloud Pipelines Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Framework 5.0.7 and 4.3.18 available now</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/06/13/spring-framework-5-0-7-and-4-3-18-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Stéphane Nicoll</name>
-    </author>
-    <id>tag:spring.io,2018-06-12:3298</id>
-    <updated>2018-06-13T06:54:04Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the team, I am pleased to announce that the Spring Framework 5.0.7 and 4.3.18 maintenance releases &lt;a href="http://projects.spring.io/spring-framework"&gt;are available now&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Spring Framework 5.0.7 &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=10000&amp;version=16753"&gt;includes 39 fixes and selected improvements&lt;/a&gt; while Spring Framework 4.3.18 &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=10000&amp;version=16805"&gt;includes 15 fixes and selected improvements&lt;/a&gt;. Those are the base for the upcoming Spring Boot 2.0.3 and 1.5.14 maintenance releases later this week.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://spring.io/projects/spring-framework"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-framework"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/SPR"&gt;Issues&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/spring-framework-reference"&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

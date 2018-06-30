@@ -9,7 +9,7 @@ public class RegistrationDTO {
 	private String password;
 	@Transient
 	private String confirmPassword;
-	private long phoneNumber;
+	private String phoneNumber;
 	private String dateOfBirth;
 
 	public String getConfirmPassword() {
@@ -44,12 +44,12 @@ public class RegistrationDTO {
 		this.password = password;
 	}
 
-	public long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(long phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setPhoneNumber(String phoneNumber) {
+		 this.phoneNumber = phoneNumber;
 	}
 
 	public String getDateOfBirth() {

@@ -178,10 +178,12 @@
 	</list>
 	<section name="CleanDialogSettings">
 		<item value="583" key="DIALOG_WIDTH"/>
+		<item value="true" key="BUILD_ALL"/>
 		<item value="false" key="TOGGLE_SELECTED"/>
-		<item value="432" key="DIALOG_HEIGHT"/>
+		<item value="493" key="DIALOG_HEIGHT"/>
 		<item value="434" key="DIALOG_X_ORIGIN"/>
 		<item value="136" key="DIALOG_Y_ORIGIN"/>
+		<item value="true" key="BUILD_NOW"/>
 	</section>
 	<section name="ResourceNavigator">
 		<item value="" key="ResourceWorkingSetFilter.STORE_WORKING_SET"/>

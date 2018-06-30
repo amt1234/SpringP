@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.bridgeit.fundoonote.validation.Phone;
+
 @Entity
 @Table(name = "FoundooTable")
 public class User {
@@ -29,17 +31,17 @@ public class User {
 	@NotEmpty
 	private String password;
 
-	@NotEmpty
-	private long phoneNumber;
+	@Phone
+	private String phoneNumber;
 	
 	@NotEmpty
 	private String dateOfBirth;
 	
-	public long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(long phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

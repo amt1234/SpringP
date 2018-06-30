@@ -16,16 +16,6 @@ import org.springframework.stereotype.Component;
 	@Component
 	public class Receiver {
 
-	   /* private CountDownLatch latch = new CountDownLatch(1);
-
-	    public void receiveMessage(String message) {
-	        System.out.println("Received <" + message + ">");
-	        latch.countDown();
-	    }
-
-	    public CountDownLatch getLatch() {
-	        return latch;
-	    }*/
 		public static void sendEmail(Session session, String toEmail, String subject, String body){
 			try
 		    {
@@ -60,7 +50,7 @@ import org.springframework.stereotype.Component;
 		public static void receiverMessageDemo(String message)
 		{
 			final String fromEmail = "poonamgadugale2017@gmail.com"; // requires valid gmail id
-			final String password = "fdgg"; // correct password for gmail id
+			final String password = "icanwin@9"; // correct password for gmail id
 			final String toEmail = "poonamgadugale16@gmail.com"; // can be any email id
 
 			System.out.println("SSLEmail Start");

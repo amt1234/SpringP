@@ -14,8 +14,6 @@ public class Runner  {
 	public void runMethod() {
 		System.out.println("sending messages...");
 		rabbitTemplate.convertAndSend(RabbitJavaBasedConfigration.topicExchangeName,"lazy.orange.rabbit","hello from rabbitMq");
-//		rabbitTemplate.convertAndSend("lazy.orange.rabbit","hello from rabbitMq");
-	//	rabbitTemplate.convertAndSend("lazy.orange.rabbit");
 		
 	}
 }
