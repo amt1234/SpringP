@@ -22,6 +22,8 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,7 +42,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import com.bridgeit.fundoonote.jwt.Receiver;
+import com.bridgeit.fundoonote.model.EmailInfo;
 import com.bridgeit.fundoonote.model.User;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @ComponentScan(basePackages="com.bridgeit.fundoonote")
@@ -111,7 +117,7 @@ public class FundooNoteConfigration {
 		return transactionManager;
 	}
 
-	//RabbitMQ configration
+	/*--------------------RabbitMQ configration-----------------*/
 	@Bean
 	Queue queue() {
 		return new Queue(QueueName,false);
@@ -144,13 +150,26 @@ public class FundooNoteConfigration {
 	        connectionFactory.setPassword("guest");
 	        return connectionFactory;
 	    }
+	 
+	 public MessageConverter jsonMessageConverter() {
+		 return new Jackson2JsonMessageConverter();
+	 }
 
 	    @Bean
 	    public MessageListener exampleListener() {
 	        return new MessageListener() {
 	            public void onMessage(Message message) {
 	            	System.out.println(new String(message.getBody(), StandardCharsets.UTF_8));
-	            	Receiver.receiverMessageDemo(new String(message.getBody(), StandardCharsets.UTF_8));
+	            	//here objectMapper reades json object and again convert it into pojotext
+	            	try {
+						Receiver.receiverMessageDemo(new ObjectMapper().readValue(new String(message.getBody(), StandardCharsets.UTF_8), EmailInfo.class));
+					} catch (JsonParseException e) {
+						e.printStackTrace();
+					} catch (JsonMappingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 	            }
 
 	        };
@@ -170,6 +189,7 @@ public class FundooNoteConfigration {
 		{
 			RabbitTemplate rabbitTemplate=new RabbitTemplate(rabbitConnectionFactory());
 			RetryTemplate retryTemplate = new RetryTemplate();
+			rabbitTemplate.setMessageConverter(jsonMessageConverter());
 		    ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
 		    backOffPolicy.setInitialInterval(500);
 		    backOffPolicy.setMultiplier(10.0);

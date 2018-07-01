@@ -1,10 +1,8 @@
 package com.bridgeit.fundoonote.services;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
 import javax.transaction.Transactional;
 
+import org.hibernate.Criteria;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,19 +31,18 @@ public class UserServiceImpl implements UserService {
 
 	RabbitTemplate rabbitTemplate;
 
+	EmailInfo emailInfo;
+
 	public UserServiceImpl(RabbitTemplate rabbitTemplate) {
 		this.rabbitTemplate = rabbitTemplate;
 	}
-
-	EmailInfo emailinfo;
-	
 
 	@Override
 	public boolean registationSave(RegistrationDTO registrationDTO) {
 
 		LOGGER.info("START Registration service method");
 		User user = new User();
-		
+
 		user.setUserName(registrationDTO.getUserName());
 		user.setUserEmail(registrationDTO.getUserEmail());
 		user.setPassword(registrationDTO.getConfirmPassword());
@@ -62,19 +59,28 @@ public class UserServiceImpl implements UserService {
 			String token = jwtProgram.createJWT(id, "poonam", "token_Generation", 1000);
 			System.out.println("Token : " + token);
 
+			System.out.println("user email id :" + user.getUserEmail());
+			emailInfo = new EmailInfo(user.getUserEmail(), token);
+			emailInfo.setToken(token);
+			emailInfo.setEmail(user.getUserEmail());
 			RedisClient redisClient = RedisClient.create("redis://@localhost:6379/");
-			// RedisClient redisClient = RedisClient.create(new RedisURI("localhost", 6379,
-			// 120,TimeUnit.SECONDS));
+			// RedisClient redisClient = RedisClient.create(new RedisURI("localhost",
+			// 6379,120,TimeUnit.SECONDS));
 			StatefulRedisConnection<String, String> connection = redisClient.connect();
 			RedisCommands<String, String> syncCommands = connection.sync();
-			String key = userDao.userEmailRadies(user);
-			LOGGER.info("key..." + key);
-			syncCommands.set(key, token);
 
+			String tokenkey = emailInfo.getEmail();
+			LOGGER.info("TokenKey" + tokenkey);
+
+			syncCommands.set(tokenkey, token);
 			LOGGER.info("server running");
+
 			if (id > 0) {
 				System.out.println("HELLO ID");
-				rabbitTemplate.convertAndSend(FundooNoteConfigration.topicExchangeName, "lazy.orange.rabbit", token);
+				System.out.println("emailInfo ..." + emailInfo.getEmail() + " " + emailInfo.getToken());
+				rabbitTemplate.convertAndSend(FundooNoteConfigration.topicExchangeName, "lazy.orange.rabbit",
+						emailInfo);
+
 				return true;
 			} else {
 				return false;
@@ -85,14 +91,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public boolean getUserTokenVerify(String token) {
 		RedisClient redisClient = RedisClient.create("redis://@localhost:6379/");
 		StatefulRedisConnection<String, String> connection = redisClient.connect();
 		RedisCommands<String, String> syncCommands = connection.sync();
-		
-		if (token.equals(syncCommands.get("key")))
+
+		LOGGER.info("emailInfo... :" + emailInfo.getEmail());
+		System.out.println("looger... " + emailInfo.getEmail());
+		System.out.println("email token is.." + emailInfo.getToken());
+
+		System.out.println("synCommand :" + syncCommands.get(emailInfo.getEmail()));
+		String synCommand = syncCommands.get(emailInfo.getEmail());
+		System.out.println("token in verified user " + token);
+		if (token.equals(synCommand)) {
+			System.out.println("update isActive status");
+			User user = new User();
+			// user.setActiveUser(userDao.updateUser(isActiveUser));
 			return true;
-		else
+		} else
 			return false;
 	}
 
@@ -105,4 +122,25 @@ public class UserServiceImpl implements UserService {
 		return BCrypt.checkpw(password, user.getPassword());
 	}
 
+	@Override
+	public boolean forgotUserPassword(RegistrationDTO registrationDTO, String emailId,String token) {
+		LOGGER.info("forgot password in service");
+		if(getUserTokenVerify(token)) 
+		{
+			if (userDao.checkEmail(emailId).equals(registrationDTO.getUserEmail())) {
+			User user = new User();
+			user.setPassword(registrationDTO.getConfirmPassword());
+			String pw_hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+			user.setPassword(pw_hash);
+			long id = userDao.save(user);
+
+			if (id > 0)
+				return true;
+			else
+				return false;
+		}
+		return false;
+	}
+		return false;
+	}
 }

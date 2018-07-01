@@ -13,9 +13,10 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.stereotype.Component;
 
+import com.bridgeit.fundoonote.model.EmailInfo;
+
 @Component
 public class Receiver {
-
 
 	public static void sendEmail(Session session, String toEmail, String subject, String body){
 		try
@@ -26,13 +27,13 @@ public class Receiver {
 	      msg.addHeader("format", "flowed");
 	      msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-	      msg.setFrom(new InternetAddress("poonamgadugale2017@gmail.com", "NoReply-JD"));
+	      msg.setFrom(new InternetAddress("poonamgadugale2017@gmail.com", "poonam gadugale"));
 
 	      msg.setReplyTo(InternetAddress.parse(toEmail, false));
 
 	      msg.setSubject(subject, "UTF-8");
 
-	      msg.setText("http://localhost:8080/user/verifyAccount/"+body, "UTF-8");
+	      msg.setText("http://localhost:8080/SpringRestFoundoNote/user/forgotpassword/"+body, "UTF-8");
 
 	      msg.setSentDate(new Date());
 
@@ -48,11 +49,12 @@ public class Receiver {
 	    }
 	}
 	
-	public static void receiverMessageDemo(String message)
+	public static void receiverMessageDemo(EmailInfo emailInfo)
 	{
+		
 		final String fromEmail = "poonamgadugale2017@gmail.com"; // requires valid gmail id
 		final String password = "icanwin@9"; // correct password for gmail id
-		final String toEmail = "poonamgadugale16@gmail.com"; // can be any email id
+		final String toEmail = emailInfo.getEmail();// can be any email id
 
 		System.out.println("SSLEmail Start");
 		Properties props = new Properties();
@@ -71,7 +73,7 @@ public class Receiver {
 
 		Session session = Session.getDefaultInstance(props, auth);
 		System.out.println("Session created");
-		sendEmail(session, toEmail, "SSLEmail Testing Subject", message);
+		sendEmail(session, toEmail, "SSLEmail Testing Subject", emailInfo.getToken());
 
 	}
 	

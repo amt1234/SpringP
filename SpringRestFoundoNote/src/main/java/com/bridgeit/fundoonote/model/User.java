@@ -37,6 +37,16 @@ public class User {
 	@NotEmpty
 	private String dateOfBirth;
 	
+	private boolean isActiveUser;
+	
+	public boolean isActiveUser() {
+		return isActiveUser;
+	}
+
+	public void setActiveUser(boolean isActiveUser) {
+		this.isActiveUser = isActiveUser;
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}

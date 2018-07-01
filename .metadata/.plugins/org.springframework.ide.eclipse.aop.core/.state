@@ -3,4 +3,5 @@
 <aop-project name="Rabbit"/>
 <aop-project name="SpringRestReturns"/>
 <aop-project name="SpringRestFoundoNote"/>
+<aop-project name="JavaMail"/>
 </aop-reference-model>

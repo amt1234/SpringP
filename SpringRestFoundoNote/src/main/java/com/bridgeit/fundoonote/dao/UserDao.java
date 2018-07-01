@@ -9,6 +9,8 @@ public interface UserDao {
 	public boolean login(long userId);
 	
 	public User checkEmail(String userEmail);
-	public String userEmailRadies(User user);
+	//public int updateUser(String isActiveUser);
+
+	public boolean updateUser(boolean isActiveUser);
 
 }

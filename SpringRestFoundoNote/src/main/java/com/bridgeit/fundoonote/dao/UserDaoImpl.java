@@ -4,6 +4,7 @@ package com.bridgeit.fundoonote.dao;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,26 @@ public class UserDaoImpl implements UserDao {
 		User user=(User)criteria.uniqueResult();
 		return user;
 	}
-	public String userEmailRadies(User user)
+	
+	/*public User passwordInfo(User user)
 	{
 		System.out.println("user.."+user.getUserEmail());
 		return user.getUserEmail();
 		
-	}
+	}*/
+	
+	@Override
+	 public boolean updateUser(boolean isActiveUser) {
+         
+      /*Query query = sessionFacetory.getCurrentSession().createQuery("update FoundooTable set isActiveUser =:isActive where isActiveUser = :isNotActive");
+      query.setBoolean("isActive", true); 
+      query.setBoolean("isNotActive", false);  
+      int result = query.executeUpdate();
+      return result;*/
+		//String query="update FoundooTable set isActiveUser=1 where isActiveUser=0;";
+		sessionFacetory.getCurrentSession().update(isActiveUser);
+		return true;
+     }
 	/*@Override
 	public boolean checkPassword(String password) {
 		if (BCrypt.checkpw(password, password))
@@ -52,5 +67,6 @@ public class UserDaoImpl implements UserDao {
 		else
 			return false;
 	}*/
+
 
 }

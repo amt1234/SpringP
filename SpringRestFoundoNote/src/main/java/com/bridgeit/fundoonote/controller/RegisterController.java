@@ -10,13 +10,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.fundoonote.jwt.Sender;
-import com.bridgeit.fundoonote.model.EmailInfo;
 import com.bridgeit.fundoonote.model.LoginDTO;
 import com.bridgeit.fundoonote.model.RegistrationDTO;
 import com.bridgeit.fundoonote.services.UserService;
@@ -26,8 +25,6 @@ import com.bridgeit.fundoonote.services.UserService;
 @RequestMapping(value="/user")
 public class RegisterController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RegisterController.class);
-
-	private static final int String = 0;
 
 	@Autowired
 	UserService userService;
@@ -57,14 +54,24 @@ public class RegisterController {
 	}
 	
 	
-	@GetMapping(value="/verifyAccount/{token}")
-	public ResponseEntity<?> userVerification(@PathVariable("token") String token)
+	@GetMapping(value="/verifyAccount/{token:.+}")
+	public ResponseEntity<?> isUserActive(@PathVariable("token") String token)
 	{
-		//String value = syncommands.get(key);
 		if(userService.getUserTokenVerify(token))
 		return new ResponseEntity<String>("verified user",HttpStatus.OK);
 		else
 		return new ResponseEntity<String>("not verified user",HttpStatus.NOT_FOUND);
+		
+	}
+	
+	@GetMapping(value="/forgotpassword/{emailId}")
+	public ResponseEntity<String> forgotPassword(@PathVariable("emailId") String token,String emailId,RegistrationDTO registrationDTO)
+	{
+		//if(userService.getUserTokenVerify(token, isActiveUser))
+		if(userService.forgotUserPassword(registrationDTO, emailId,token))
+		return new ResponseEntity<String>("reset password",HttpStatus.OK);
+		else
+		return new ResponseEntity<String>("Invalid user",HttpStatus.CONFLICT);
 		
 	}
 	
