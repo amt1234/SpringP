@@ -9,7 +9,8 @@ public class JwtMain {
 	System.out.println("Token : "+token);
 	
 	String tokenToKey=jwtProgram.parseJWT(token);
-	System.out.println("Key : "+tokenToKey);
+	//System.out.println("Key : "+tokenToKey);
+	
 	}
 
 }

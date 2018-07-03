@@ -1,0 +1,16 @@
+package com.bridgeit.fundoonote.userservice.dao;
+
+import com.bridgeit.fundoonote.userservice.model.User;
+
+public interface UserDao {
+
+	public long save(User user);
+
+	public boolean login(long userId);
+
+	public User checkEmail(String userEmail);
+
+	public boolean updateUser(User user);
+
+	public User checkId(long userId);
+}
