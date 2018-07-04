@@ -5,6 +5,7 @@ public class EmailInfo {
 	
 	private String email;
 	private long userId;
+	private String url;
 	
 	private String token;
 	
@@ -19,6 +20,12 @@ public class EmailInfo {
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	public EmailInfo()
 	{

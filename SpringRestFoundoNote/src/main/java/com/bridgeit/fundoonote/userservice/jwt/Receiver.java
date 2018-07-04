@@ -18,6 +18,7 @@ import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 @Component
 public class Receiver {
 
+	
 	public static void sendEmail(Session session, String toEmail, String subject, String body){
 		try
 	    {
@@ -29,19 +30,16 @@ public class Receiver {
 
 	      msg.setFrom(new InternetAddress("poonamgadugale2017@gmail.com", "poonam gadugale"));
 
-	      //msg.setReplyTo(InternetAddress.parse(toEmail, false));
-
 	      msg.setSubject(subject, "UTF-8");
 
-	     msg.setText("http://localhost:8080/SpringRestFoundoNote/user/resetpassword/"+body, "UTF-8");
-	      //msg.setText("http://localhost:8080/SpringRestFoundoNote/user/verifyAccount/"+body, "UTF-8");
-
+	     msg.setText(body, "UTF-8");
+	  
 	      msg.setSentDate(new Date());
 
 	      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
 	 
 	      System.out.println("Message is ready");
-    	  Transport.send(msg);  
+	      Transport.send(msg);  
 
 	      System.out.println("EMail Sent Successfully!!");
 	    }
@@ -53,8 +51,8 @@ public class Receiver {
 	public static void receiverMessageDemo(EmailInfo emailInfo)
 	{
 		
-		final String fromEmail = "poonamgadugale2017@gmail.com"; // requires valid gmail id
-		final String password = "icanwin@9"; // correct password for gmail id
+		final String fromEmail = "fundoo.note12@gmail.com"; // requires valid gmail id
+		final String password = "fundoonote12"; // correct password for gmail id
 		final String toEmail = emailInfo.getEmail();// can be any email id
 
 		System.out.println("SSLEmail Start");
@@ -74,8 +72,18 @@ public class Receiver {
 
 		Session session = Session.getDefaultInstance(props, auth);
 		System.out.println("Session created");
-		sendEmail(session, toEmail, "SSLEmail Testing Subject", emailInfo.getToken());
-
+		sendEmail(session, toEmail, "SSLEmail Testing Subject", emailInfo.getUrl()+emailInfo.getToken());
 	}
-	
+	 /*public static void sendMail(final EmailInfo emailInfo) {  
+         
+	        MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {  
+	              
+	                public void prepare(MimeMessage mimeMessage) throws Exception {  
+	                   mimeMessage.setRecipient(Message.RecipientType.TO,new InternetAddress(emailInfo.getEmail()));  
+	                   mimeMessage.setSubject("Verification");  
+	                   mimeMessage.setText(emailInfo.getUrl()+emailInfo.getToken());  
+	                }  
+	        };  
+	        mailSender.send(messagePreparator);  
+	    }  */
 }

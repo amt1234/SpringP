@@ -12,36 +12,47 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.bridgeit.fundoonote.userservice.validation.Phone;
 
-
 @Entity
 @Table(name = "FoundooTable")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
-	
+
 	@NotEmpty
-	@Size(min=2, message="Name should have atleast 2 characters")
+	@Size(min = 2, message = "Name should have atleast 2 characters")
 	private String userName;
-	
-	@NotEmpty 
+
+	@NotEmpty
 	@Email
 	private String userEmail;
-	
+
 	@NotEmpty
 	private String password;
 
 	@Phone
 	private String phoneNumber;
-	
+
 	@NotEmpty
 	private String dateOfBirth;
-	
+
 	private boolean isActiveUser;
-	
-	public User() {}
-	
+
+	/*@OneToMany
+	private List<Note> note = new ArrayList<Note>();
+
+	public List<Note> getNote() {
+		return note;
+	}
+
+	public void setNote(List<Note> note) {
+		this.note = note;
+	}*/
+
+	public User() {
+	}
+
 	public User(RegistrationDTO registrationDto) {
 		this.userName = registrationDto.getUserName();
 		this.userEmail = registrationDto.getUserEmail();
@@ -49,7 +60,7 @@ public class User {
 		this.phoneNumber = registrationDto.getPhoneNumber();
 		this.dateOfBirth = registrationDto.getDateOfBirth();
 	}
-	
+
 	public boolean isActiveUser() {
 		return isActiveUser;
 	}
@@ -73,7 +84,7 @@ public class User {
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
+
 	public long getUserId() {
 		return userId;
 	}

@@ -41,48 +41,47 @@ public class UserController {
 		LOGGER.info("START CREATE NEW EMPLOYEE");
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-		/*String url = request.getRequestURL().toString();
-		String link = url.substring(url.lastIndexOf("/")).concat("/verifyaccount/"+token);*/
-		if (userService.registationSave(registrationDTO))
+		
+		String url = request.getRequestURL().toString();
+		String link = url.substring(0, url.lastIndexOf("/")).concat("/verifyaccount/");
+		
+		if (userService.registationSave(registrationDTO, link))
 			return new ResponseEntity<String>("Registration sucessfully done", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Already existing user", HttpStatus.CONFLICT);
+		return new ResponseEntity<String>("Already existing user", HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/login")
 	public ResponseEntity<String> userLogin(@Validated @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
 		LOGGER.info("check valid user");
-		System.out.println("password check in controller " + loginDTO.getPassword() + " " + loginDTO.getUserEmail());
-		if (userService.check(loginDTO.getUserEmail(), loginDTO.getPassword()))
-			return new ResponseEntity<String>("Login sucessfully done", HttpStatus.ACCEPTED);
-		else
-			return new ResponseEntity<String>("Not valid user", HttpStatus.CONFLICT);
+		String token;
+		if ((token=userService.check(loginDTO.getUserEmail(), loginDTO.getPassword()))!=null )
+			
+			return new ResponseEntity<String>("Login sucessfully done "+token, HttpStatus.ACCEPTED);
+		return new ResponseEntity<String>("Not valid user", HttpStatus.CONFLICT);
 	}
 
-	@GetMapping(value = "/verifyAccount/{token:.+}")
+	@GetMapping(value = "/verifyaccount/{token:.+}")
 	public ResponseEntity<?> isUserActive(@PathVariable("token") String token) {
 		if (userService.getUserTokenVerify(token))
 			return new ResponseEntity<String>("verified user", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("not verified user", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>("not verified user", HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping(value = "/forgotpassword")
-	public ResponseEntity<String> forgotPassword(@RequestBody EmailInfo emailInfo) {
-
-		if (userService.resetUserPassword(emailInfo))
+	public ResponseEntity<String> forgotPassword(@RequestBody EmailInfo emailInfo, HttpServletRequest request) {
+		String url = request.getRequestURL().toString();
+		String link = url.substring(0, url.lastIndexOf("/")).concat("/resetpassword/");
+		if (userService.resetUserPassword(emailInfo, link))
 			return new ResponseEntity<String>("Link send to reset password", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Invalid user", HttpStatus.OK);
+		return new ResponseEntity<String>("Invalid user", HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/resetpassword/{token:.+}")
-	public ResponseEntity<?> resetPasswordMethod(@PathVariable("token") String token, @RequestBody Map<String, String> password) {
-		//String password=loginDto.getPassword();
+	public ResponseEntity<?> resetPasswordMethod(@PathVariable("token") String token,
+			@RequestBody Map<String, String> password) {
 		if (userService.forgotUserPassword(token, password.get("password")))
 			return new ResponseEntity<String>("reset password sucessfully", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Invalid user", HttpStatus.CONFLICT);
+		return new ResponseEntity<String>("Invalid user", HttpStatus.CONFLICT);
 	}
 
 }

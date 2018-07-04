@@ -1,22 +1,74 @@
 package com.bridgeit.fundoonote.noteservice.model;
 
+import javax.jws.soap.SOAPBinding.Use;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.bridgeit.fundoonote.userservice.model.User;
+
+@Entity
+@Table(name="NoteTable")
 public class Note {
 
-	private int noteId;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long noteId;
+	
+	@NotEmpty
 	private String noteTitle;
-	private String noteBody;
+	@NotEmpty
+	private String noteDescribtion;
 	
 	private boolean noteTrash;
 	private boolean noteArchiev;
-	private boolean notePin;
+	private boolean notePinned;
 	
+	private String createdDate;
+	private String updatedDate;
 	private String color;
+	
+	@ManyToOne
+	@JoinColumn(referencedColumnName="userId")
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
 
-	public int getNoteId() {
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String date) {
+		this.createdDate = date;
+	}
+
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	
+
+	public long getNoteId() {
 		return noteId;
 	}
 
-	public void setNoteId(int noteId) {
+	public void setNoteId(long noteId) {
 		this.noteId = noteId;
 	}
 
@@ -28,12 +80,12 @@ public class Note {
 		this.noteTitle = noteTitle;
 	}
 
-	public String getNoteBody() {
-		return noteBody;
+	public String getNoteDescribtion() {
+		return noteDescribtion;
 	}
 
-	public void setNoteBody(String noteBody) {
-		this.noteBody = noteBody;
+	public void setNoteDescribtion(String noteDescribtion) {
+		this.noteDescribtion = noteDescribtion;
 	}
 
 	public boolean isNoteTrash() {
@@ -52,12 +104,12 @@ public class Note {
 		this.noteArchiev = noteArchiev;
 	}
 
-	public boolean isNotePin() {
-		return notePin;
+	public boolean isNotePinned() {
+		return notePinned;
 	}
 
-	public void setNotePin(boolean notePin) {
-		this.notePin = notePin;
+	public void setNotePinned(boolean notePinned) {
+		this.notePinned = notePinned;
 	}
 
 	public String getColor() {

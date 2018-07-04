@@ -5,7 +5,63 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-07-03T05:08:48Z</updated>
+  <updated>2018-07-03T14:00:00Z</updated>
+  <entry>
+    <title>Spring Social End of Life Announcement</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/07/03/spring-social-end-of-life-announcement" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Craig Walls</name>
+    </author>
+    <id>tag:spring.io,2018-07-02:3322</id>
+    <updated>2018-07-03T14:00:00Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;Today it is with an optimistic look to the future that I am announcing the end of life for Spring Social, a project that I have had the pleasure to work with over the past eight years.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;With the release of Spring Security 5, much of the functionality offered by Spring Social’s connection framework—which I consider the most valuable piece of Spring Social—is now part of Spring Security. In fact, I shared how to use Spring Security’s new support for client-side OAuth2 in a &lt;a href="https://spring.io/blog/2018/03/06/using-spring-security-5-to-integrate-with-oauth-2-secured-services-such-as-facebook-and-github"&gt;blog article&lt;/a&gt; from back in March. And as Spring Security continues to evolve its client-side OAuth support, Spring Social’s connection framework will continue to become more unnecessary. It simply no longer makes sense to have Spring’s OAuth story spread across so many projects—it’s time for a single cohesive OAuth story for Spring developers.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;But what about Spring Social’s API bindings?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="the-unwieldy-api-binding"&gt;&lt;a class="anchor" href="#the-unwieldy-api-binding"&gt;&lt;/a&gt;The unwieldy API binding&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This end of life announcement also covers Spring Social’s API bindings, including the API bindings for Facebook, Twitter, and LinkedIn.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Social’s API bindings were originally intended to be little more than a showcase of how one might use the connection produced by the connection framework. But then they grew and took on a life of their own.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;While the API bindings are generally useful for applications that need to interact with the APIs that they serve, they are rather bulky, complex, and unwieldy for practical use. To that point, the Facebook API binding offers roughly 180 distinct operations, even though it’d be rare to find an application that requires more than a half-dozen of those operations.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;It has also proven difficult to keep the API bindings in sync with the APIs that they serve. As APIs (such as Facebook’s Graph API) continue to evolve, Spring Social’s API bindings need to be revisited (and in some cases completely rewritten with breaking changes) to maintain compatibility with their respective APIs. Considering the aforementioned size of the API bindings, this requires an enormous development and testing effort—for something that was originally intended as merely an example of how API bindings could be written.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Finally, now that Spring Framework 5 has unleashed a reactive programming model on Spring developers, there has been a demand for reactive counterparts to Spring Social’s API bindings. While this is certainly possible and understandably desirable, it would require an effort that is proportional to the size of the existing API bindings and that essentially duplicates most of the operations offered in the non-reactive API bindings. This would effectively double the size of the API bindings, making the maintenance of such bindings that much more challenging.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Instead, may I suggest that application developers write their own API binding implementations? In doing so, you’ll be able to work with an API binding that is more focused to the needs of your application and that is easier to maintain than the behemoth API bindings offered by Spring Social. Moreover, if you wish to apply reactive types in your API binding, you are welcome to do so. I suggested an approach to this in the article I published in March.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="sunsetting-spring-social"&gt;&lt;a class="anchor" href="#sunsetting-spring-social"&gt;&lt;/a&gt;Sunsetting Spring Social&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Social isn’t going away immediately. I intend to continue working on minor bug fixes and releasing maintenance releases as needed. But unless there is a significant and compelling requirement to do so, there are no plans for any further GA releases of Spring Social.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Social (and the aforementioned Spring Social API binding modules) will continue to be supported for 12 months from today, with the support period ending on July 3, 2019.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;I sincerely thank everyone who has worked with and contributed to Spring Social over the past 8 years. It has been a fun project to work on and it is with a small amount of sadness that I am announcing its eventual demise. Be assured that it wasn’t a decision made lightly. But I encourage you to check out Spring Security 5’s client-side OAuth support and continue to work with us through suggestions and pull requests to help write this new chapter in Spring’s OAuth story.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>This Week in Spring - July 3rd, 2018</title>
     <link rel="alternate" href="https://spring.io/blog/2018/07/03/this-week-in-spring-july-3rd-2018" />
@@ -1479,35 +1535,5 @@ dependencies {&#xD;
 &lt;p&gt;Spring Boot 1.5.14 includes &lt;a href="https://github.com/spring-projects/spring-boot/milestone/111?closed=1"&gt;42 fixes, improvements and dependency updates&lt;/a&gt;. Thanks to all that have contributed with issue reports and pull requests.&lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
 &lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="http://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://spring.io/projects/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.5.14.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Announcing Reactor Bismuth-SR10</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/06/14/announcing-reactor-bismuth-sr10" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Simon Baslé</name>
-    </author>
-    <id>tag:spring.io,2018-06-11:3296</id>
-    <updated>2018-06-14T15:01:00Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the Reactor team, I have the pleasure of announcing a first shipment of Reactor goodness this week: Reactor &lt;code&gt;Bismuth-SR10&lt;/code&gt; is out &#x1f6a2;&lt;/p&gt;
-&lt;p&gt;Stay tuned for a Reactor Californium milestone later this week &#x1f575;&#x1f3fb;‍♂️&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-bismuth-sr10" class="anchor" name="reactor-bismuth-sr10"&gt;&lt;/a&gt;Reactor Bismuth-SR10&lt;/h1&gt;
-&lt;p&gt;The latest maintenance BOM of the 3.1.x line, &lt;code&gt;Bismuth-SR10&lt;/code&gt;, is out. It includes two new artifacts (click on the version numbers to see the release notes on GitHub):&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;reactor-core&lt;/code&gt; &lt;a href="https://github.com/reactor/reactor-core/releases/tag/v3.1.8.RELEASE"&gt;&lt;code&gt;3.1.8.RELEASE&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;reactor-netty&lt;/code&gt; &lt;a href="https://github.com/reactor/reactor-netty/releases/tag/v0.7.8.RELEASE"&gt;&lt;code&gt;0.7.8.RELEASE&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;One update considerations though: &lt;code&gt;Flux.last()&lt;/code&gt; used to skip throwing a &lt;code&gt;NoSuchElementException&lt;/code&gt; on some category of empty sources (&lt;code&gt;Flux&lt;/code&gt; or &lt;code&gt;Mono&lt;/code&gt; that are &lt;code&gt;Callable&lt;/code&gt;, like &lt;code&gt;Flux.empty()&lt;/code&gt;). This is a bug and it correctly does throw now.&lt;/p&gt;
-&lt;p&gt;Otherwise, this release mainly contains backports of bugfixes from the ongoing development effort on &lt;code&gt;Californium&lt;/code&gt;&amp;rsquo;s first release in the master branch.&lt;/p&gt;&lt;h1&gt;&lt;a href="#change-in-process-for-backporting-fixing-issues-in-maintenance-releases" class="anchor" name="change-in-process-for-backporting-fixing-issues-in-maintenance-releases"&gt;&lt;/a&gt;Change in process for backporting/fixing issues in maintenance releases&lt;/h1&gt;
-&lt;p&gt;Speaking of backports: for those of you who have or are interested in contributing (❤️), note that we are about to change triage and branching strategies. Inspired by what the Spring Boot team does, we&amp;rsquo;ll now:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;affect triaged issues to a backlog milestone&lt;/li&gt;
-  &lt;li&gt;decide at the earliest whether an issue/PR should be fixed in a maintenance branch or the current dev branch (the backlog milestone chosen will reflect that)&lt;/li&gt;
-  &lt;li&gt;fix the issue in the &lt;em&gt;earliest maintenance branch&lt;/em&gt; in which it is supposed to ship&lt;/li&gt;
-  &lt;li&gt;forward-merge the root maintenance branch into &lt;code&gt;master&lt;/code&gt; (and when we have more maintenance branches, into more recent maintenance branches as well)&lt;/li&gt;
-  &lt;li&gt;only move issues to precise milestones (like &lt;code&gt;3.2.0.M2&lt;/code&gt;) &lt;em&gt;once they&amp;rsquo;ve been merged and forwarded&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This will reduce the ceremony around backporting issues (removing the need for confusing tracker issues). We believe it will also help users know wether an issue has been fixed in a maintenance version, by having the github milestone show the earliest maintenance release a fix has been shipped in. Finally, it will help while looking at the fix&amp;rsquo;s code because there will now be a single reference commit for the fix (plus a merge commit that might contain adjustments necessary to make it compatible with newest breaking changes).&lt;/p&gt;
-&lt;p&gt;As we are at a point where a release just happened in both &lt;code&gt;3.1.x&lt;/code&gt; and &lt;code&gt;master&lt;/code&gt;, now is a good time to implement that change in process. See &lt;a href="https://github.com/reactor/reactor-core/issues/1225"&gt;#1225&lt;/a&gt; for more details&lt;/p&gt;
-&lt;p&gt;Happy reactive coding!&lt;/p&gt;</content>
   </entry>
 </feed>
