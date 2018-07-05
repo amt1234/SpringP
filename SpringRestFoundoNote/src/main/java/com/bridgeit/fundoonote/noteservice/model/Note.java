@@ -1,5 +1,7 @@
 package com.bridgeit.fundoonote.noteservice.model;
 
+import java.util.Date;
+
 import javax.jws.soap.SOAPBinding.Use;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,16 +23,16 @@ public class Note {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long noteId;
 	
-	@NotEmpty
+	//@NotEmpty
 	private String noteTitle;
-	@NotEmpty
+	//@NotEmpty
 	private String noteDescribtion;
 	
 	private boolean noteTrash;
 	private boolean noteArchiev;
 	private boolean notePinned;
 	
-	private String createdDate;
+	private Date createdDate;
 	private String updatedDate;
 	private String color;
 	
@@ -46,12 +48,12 @@ public class Note {
 		this.user = user;
 	}
 
-	public String getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(String date) {
-		this.createdDate = date;
+	public void setCreatedDate(Date date) {
+		this.createdDate = new Date();
 	}
 
 	public String getUpdatedDate() {
