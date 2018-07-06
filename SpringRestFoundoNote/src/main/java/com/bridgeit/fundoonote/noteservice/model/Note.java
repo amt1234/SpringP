@@ -2,7 +2,6 @@ package com.bridgeit.fundoonote.noteservice.model;
 
 import java.util.Date;
 
-import javax.jws.soap.SOAPBinding.Use;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,30 +15,30 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.bridgeit.fundoonote.userservice.model.User;
 
 @Entity
-@Table(name="NoteTable")
+@Table(name = "NoteTable")
 public class Note {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long noteId;
-	
-	//@NotEmpty
+
+	@NotEmpty
 	private String noteTitle;
-	//@NotEmpty
+	@NotEmpty
 	private String noteDescribtion;
-	
+
 	private boolean noteTrash;
 	private boolean noteArchiev;
 	private boolean notePinned;
-	
-	private Date createdDate;
-	private String updatedDate;
+
+	private Date createdDate = new Date();
+	private Date updatedDate = new Date();
 	private String color;
-	
+
 	@ManyToOne
-	@JoinColumn(referencedColumnName="userId")
+	@JoinColumn(referencedColumnName = "userId")
 	private User user;
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -56,15 +55,13 @@ public class Note {
 		this.createdDate = new Date();
 	}
 
-	public String getUpdatedDate() {
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(String updatedDate) {
-		this.updatedDate = updatedDate;
+	public void setUpdatedDate(Date date) {
+		this.updatedDate = date;
 	}
-
-	
 
 	public long getNoteId() {
 		return noteId;
@@ -120,5 +117,22 @@ public class Note {
 
 	public void setColor(String color) {
 		this.color = color;
-	}	
+	}
+
+	public Note(long noteId, String noteTitle, String noteDescribtion, boolean noteTrash, boolean noteArchiev,
+			boolean notePinned, Date createdDate, Date updatedDate, String color) {
+		this.noteId = noteId;
+		this.noteTitle = noteTitle;
+		this.noteDescribtion = noteDescribtion;
+		this.noteTrash = noteTrash;
+		this.noteArchiev = noteArchiev;
+		this.notePinned = notePinned;
+		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+		this.color = color;
+	}
+
+	public Note() {
+	}
+
 }

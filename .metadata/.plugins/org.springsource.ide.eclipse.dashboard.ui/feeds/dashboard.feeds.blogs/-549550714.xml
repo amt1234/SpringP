@@ -5,7 +5,130 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-07-05T08:34:30Z</updated>
+  <updated>2018-07-05T21:36:00Z</updated>
+  <entry>
+    <title>Spring Cloud Data Flow 1.6 M1 and 1.5.2 released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/07/05/spring-cloud-data-flow-1-6-m1-and-1-5-2-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mark Pollack</name>
+    </author>
+    <id>tag:spring.io,2018-07-03:3325</id>
+    <updated>2018-07-05T21:36:00Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://cloud.spring.io/spring-cloud-dataflow/"&gt;Spring Cloud Data Flow&lt;/a&gt; team is pleased to announce the &lt;code&gt;1.6&lt;/code&gt; M1 release and &lt;code&gt;1.5.2&lt;/code&gt; release.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For 1.6 M1, follow the &lt;em&gt;Getting Started&lt;/em&gt; guides for &lt;a href="https://docs.spring.io/spring-cloud-dataflow/docs/1.6.0.M1/reference/htmlsingle/#getting-started"&gt;Local Server&lt;/a&gt;, &lt;a href="https://docs.spring.io/spring-cloud-dataflow-server-cloudfoundry/docs/1.6.0.M1/reference/htmlsingle/#getting-started"&gt;Cloud Foundry&lt;/a&gt;, and &lt;a href="https://docs.spring.io/spring-cloud-dataflow-server-kubernetes/docs/1.6.0.M1/reference/htmlsingle/#kubernetes-getting-started"&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For 1.5.2, follow the &lt;em&gt;Getting Started&lt;/em&gt; guides for &lt;a href="https://docs.spring.io/spring-cloud-dataflow/docs/1.5.2.RELEASE/reference/htmlsingle/#getting-started"&gt;Local Server&lt;/a&gt;, &lt;a href="https://docs.spring.io/spring-cloud-dataflow-server-cloudfoundry/docs/1.5.2.RELEASE/reference/htmlsingle/#getting-started"&gt;Cloud Foundry&lt;/a&gt;, and &lt;a href="https://docs.spring.io/spring-cloud-dataflow-server-kubernetes/docs/1.5.2.RELEASE/reference/htmlsingle/#kubernetes-getting-started"&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="areas-of-improvement-for-1-6-m1"&gt;&lt;a class="anchor" href="#areas-of-improvement-for-1-6-m1"&gt;&lt;/a&gt;Areas of improvement for 1.6 M1:&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;DSL and deployment property parsing&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Task Execution status&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Composed Task Runner security&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Dashboard&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kubernetes deployments&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="dsl-and-deployment-property-parsing"&gt;&lt;a class="anchor" href="#dsl-and-deployment-property-parsing"&gt;&lt;/a&gt;DSL and deployment property parsing&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Launching Tasks with custom arguments is a great approach to influence the Task application with differing behaviors at runtime. Imagine influencing the batch-job (running as a Task) that accepts timezone as an argument to perform timezone specific data processing. In this release, we have adapted the parsing logic to include key-value pairs as values.  Thanks to the community for reporting, giving us feedback, and sharing of their use-cases.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;While reviewing the parsing rules for in-line vs. property files based properties for stream and task definitions, the community has found a difference in behavior, and that we have documented it for &lt;a href="http://docs.spring.io/spring-cloud-dataflow/docs/1.6.0.M1/reference/htmlsingle/#_property_files_rules"&gt;general guidance&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="task-execution-status"&gt;&lt;a class="anchor" href="#task-execution-status"&gt;&lt;/a&gt;Task execution status&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Previously the task execution status was stored but not displayed in the shell or the UI.  Now it is displayed :)&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="composed-task-runner-security"&gt;&lt;a class="anchor" href="#composed-task-runner-security"&gt;&lt;/a&gt;Composed Task Runner security&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;With continuing interest from community, we have added support to enable secured access between Composed Task Runner and the Data Flow server.  We have added basic authentication support and will add the other security options supported by Data Flow in upcoming releases.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="dashboard-improvements"&gt;&lt;a class="anchor" href="#dashboard-improvements"&gt;&lt;/a&gt;Dashboard improvements&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The Task/Jobs and About tabs have been redesigned to be consistent with rest of the UI sections. The bulk operations, paginations, layout, and the general look and feel of the views have been modernized.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The routing and navigation between the Task tabs, sub-tabs and page views have gone through a update. You will notice improvements in state management navigating between the list to details page, and vice versa.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="kubernetes-deployments"&gt;&lt;a class="anchor" href="#kubernetes-deployments"&gt;&lt;/a&gt;Kubernetes deployments&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;A few improvements including the support for deploying Boot Apps with secured actuators, so the liveness and readiness probes can resolved at runtime.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The ability to pass custom &lt;code&gt;Service Account Name&lt;/code&gt; is now possible for each stream/task deployment. This in particular is useful for scenarios where different stream/task deployments require different security permissions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="areas-of-improvement-for-1-5-2"&gt;&lt;a class="anchor" href="#areas-of-improvement-for-1-5-2"&gt;&lt;/a&gt;Areas of improvement for 1.5.2:&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Kubernetes support as in 1.6.0.M1&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Small bug fixes&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="what-is-coming-next"&gt;&lt;a class="anchor" href="#what-is-coming-next"&gt;&lt;/a&gt;What is coming next&amp;#8230;&amp;#8203;&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The integration of the &lt;a href="https://network.pivotal.io/products/p-scheduler"&gt;PCF Scheduler&lt;/a&gt; in Data Flow for Cloud Foundry is in the works. Stay tuned for the next milestone in the coming week.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="stay-in-touch"&gt;&lt;a class="anchor" href="#stay-in-touch"&gt;&lt;/a&gt;Stay in touch&amp;#8230;&amp;#8203;&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;As always, we welcome feedback and contributions, so please reach out to us on &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-dataflow"&gt;Stackoverflow&lt;/a&gt; or &lt;a href="https://github.com/spring-cloud/spring-cloud-dataflow/issues"&gt;GitHub&lt;/a&gt; or via &lt;a href="https://gitter.im/spring-cloud/spring-cloud-dataflow"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Spring Tool Suite 3.9.5 released</title>
     <link rel="alternate" href="https://spring.io/blog/2018/07/05/spring-tool-suite-3-9-5-released" />
@@ -1532,19 +1655,5 @@ dependencies {&#xD;
 &lt;/ul&gt;
 &lt;p&gt;Fixes for those vulnerabilities have been released with &lt;a href="https://spring.io/blog/2018/06/13/spring-framework-5-0-7-and-4-3-18-available-now"&gt;Spring Framework 5.0.7 &amp;amp; 4.3.18&lt;/a&gt;, &lt;a href="https://spring.io/blog/2018/06/14/spring-boot-1-5-14-available-now"&gt;Spring Boot 1.5.14&lt;/a&gt; and &lt;a href="https://spring.io/blog/2018/06/14/spring-boot-2-0-3-available-now"&gt;Spring Boot 2.0.3&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Please, review the information in the CVE reports and upgrade immediately.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.0.3 available now</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/06/14/spring-boot-2-0-3-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Brian Clozel</name>
-    </author>
-    <id>tag:spring.io,2018-06-14:3308</id>
-    <updated>2018-06-14T20:14:00Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the team, I am pleased to announce that Spring Boot 2.0.3 has been released and is is now available from &lt;a href="http://repo.spring.io/release"&gt;repo.spring.io&lt;/a&gt; and &lt;a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.springframework.boot%22"&gt;Maven Central&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Spring Boot 2.0.3 includes &lt;a href="https://github.com/spring-projects/spring-boot/milestone/112?closed=1"&gt;99 fixes, improvements and dependency updates&lt;/a&gt;. Thanks to all that have contributed with issue reports and pull requests.&lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="http://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://spring.io/projects/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

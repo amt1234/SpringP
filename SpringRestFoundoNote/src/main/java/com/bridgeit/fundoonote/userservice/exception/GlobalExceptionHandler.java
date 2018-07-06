@@ -9,9 +9,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
+	
+	
+	
 	@ExceptionHandler(value=RuntimeException.class)
 	public ResponseEntity<?> getMet(RuntimeException runtimeException)
 	{
 		return new ResponseEntity<>(runtimeException.getMessage(),HttpStatus.BAD_REQUEST);
 	}
+	
 }

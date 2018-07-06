@@ -1,6 +1,5 @@
 package com.bridgeit.fundoonote.noteservice.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -19,64 +18,69 @@ import com.bridgeit.fundoonote.userservice.utility.IJwtProgram;
 public class NoteService implements INoteService {
 
 	@Autowired
-	private INoteDao iNoteDao;
+	private INoteDao noteDao;
+	
 	@Autowired
 	UserDao userDao;
+	
 	@Autowired
-	IJwtProgram ijwtprogram;
+	IJwtProgram jwtToken;
 
 	@Override
 	public Note createUserNote(Note note, String token) {
-		Date date = new Date();
-		note.setCreatedDate(date);
 
 		// getting userId from token
-		long id = ijwtprogram.parseJWT(token);
+		long id = jwtToken.parseJWT(token);
 		User user = userDao.checkId(id);
 
 		note.setUser(user);
 
 		// getting noteId
-		long noteid = iNoteDao.create(note);
-		note = iNoteDao.checkNoteId(noteid);
+		long noteid = noteDao.create(note);
+		note = noteDao.checkNoteId(noteid);
 		return note;
 	}
 
 	@Override
 	@Transactional
 	public boolean updateUserNote(Note note, String token) {
-		Date date = new Date();
-		note.setCreatedDate(date);
 
 		// getting userId from token
-		long id = ijwtprogram.parseJWT(token);
+		long id = jwtToken.parseJWT(token);
 		User user = userDao.checkId(id);
 
 		// getting userid from note table
-		Note note2 = iNoteDao.checkNoteId(note.getNoteId());
+		Note oldNote = noteDao.checkNoteId(note.getNoteId());
 
-		if ((note2.getUser().getUserId()) == (user.getUserId())) {
-			note2.setColor(note.getColor());
-			//note2.setNoteDescribtion(note.getNoteDescribtion());
-			iNoteDao.updateNote(note2);
+		if ((oldNote.getUser().getUserId()) == (user.getUserId())) {
+			noteDao.updateNote(oldNote);
 			return true;
 		} else
 			return false;
 	}
 
 	@Override
-	public List<Note> listofNote(String token) {
-		// getting userId from token
-		long id = ijwtprogram.parseJWT(token);
-		User user = userDao.checkId(id);
+	public List<Note> listOfNote(String token) {
 		
-		List<Note> notelist=iNoteDao.notesList(user.getUserId());
-		for(Note n:notelist)
-		{
-			System.out.println("list of user :"+n.getNoteId()+" "+n.getNoteTitle()+" "+n.getColor());
-		}
-		return notelist;
+		// getting userId from token
+		long id = jwtToken.parseJWT(token);
+		User user = userDao.checkId(id);
 
+		// passing user as parameter because in pojo there is user field
+		List<Note> listOfNote = noteDao.notesList(user);
+		return listOfNote;
 	}
 
+	@Override
+	public boolean deleteUserNote(String token, long noteid) {
+		long id = jwtToken.parseJWT(token);
+		User user = userDao.checkId(id);
+
+		Note note = noteDao.checkNoteId(noteid);
+		if ((note.getUser().getUserId())==(user.getUserId())) {
+			if (noteDao.deleteNoteOfUser(noteid))
+				return true;
+		}
+		return false;
+	}
 }

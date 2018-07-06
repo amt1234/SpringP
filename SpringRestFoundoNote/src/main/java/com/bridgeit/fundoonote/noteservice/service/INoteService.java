@@ -8,6 +8,7 @@ public interface INoteService {
 
 	public Note createUserNote(Note note,String token);
 	public boolean updateUserNote(Note note,String token);
-	public List<Note> listofNote(String token);
+	public List<Note> listOfNote(String token);
+	public boolean deleteUserNote(String token, long noteid);
 	
 }
