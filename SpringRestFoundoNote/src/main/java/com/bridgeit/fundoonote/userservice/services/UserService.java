@@ -1,10 +1,12 @@
 package com.bridgeit.fundoonote.userservice.services;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 import com.bridgeit.fundoonote.userservice.model.RegistrationDTO;
 
 public interface UserService {
-	public boolean registationSave(RegistrationDTO registrationDTO,String link);
+	public boolean registationSave(RegistrationDTO registrationDTO, String link);
 
 	public String check(String userEmail, String password);
 
@@ -12,6 +14,8 @@ public interface UserService {
 
 	public boolean forgotUserPassword(String token, String password);
 
-	public boolean resetUserPassword(EmailInfo emailInfo,String link);
+	public boolean forgotUserPasswordlink(String token, HttpServletResponse response);
+
+	public boolean resetUserPassword(EmailInfo emailInfo, String link);
 
 }

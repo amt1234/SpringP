@@ -17,7 +17,7 @@ public class NoteDao implements INoteDao {
 	@Autowired
 	SessionFactory sessionFacetory;
 
-	@Override
+	@Override 
 	public long create(Note note) {
 		System.out.println("dao of note");
 		return (long) sessionFacetory.getCurrentSession().save(note);

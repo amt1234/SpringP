@@ -3,6 +3,7 @@ package com.bridgeit.fundoonote.userservice.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,9 +78,17 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/resetpassword/{token:.+}")
-	public ResponseEntity<?> resetPasswordMethod(@PathVariable("token") String token,
+	public ResponseEntity<?> changePassword(@PathVariable("token") String token,
 			@RequestBody Map<String, String> password) {
 		if (userService.forgotUserPassword(token, password.get("password")))
+			return new ResponseEntity<String>("reset password sucessfully", HttpStatus.OK);
+		return new ResponseEntity<String>("Invalid user", HttpStatus.CONFLICT);
+	}
+	
+	@GetMapping(value = "/resetpassword/{token:.+}")
+	public ResponseEntity<?> resetPasswordMethod(@PathVariable("token") String token,
+			HttpServletResponse response) {
+		if (userService.forgotUserPasswordlink(token, response))
 			return new ResponseEntity<String>("reset password sucessfully", HttpStatus.OK);
 		return new ResponseEntity<String>("Invalid user", HttpStatus.CONFLICT);
 	}

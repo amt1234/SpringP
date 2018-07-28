@@ -1,5 +1,8 @@
 package com.bridgeit.fundoonote.userservice.services;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -108,16 +111,16 @@ public class UserServiceImpl implements UserService {
 	public String check(String userEmail, String password) {
 		LOGGER.info("START check service method");
 		User user = userDao.checkEmail(userEmail);
-		
+
 		if (user != null) {
 			long id = user.getUserId();
 			user.setActiveUser(true);
 			String token = iJwtProgram.createJWT(id, "poonam", "token_Generation", 86400000);
 			System.out.println("Token : " + token);
 			BCrypt.checkpw(password, user.getPassword());
-			System.out.println("token from login service "+token);
+			System.out.println("token from login service " + token);
 			return token;
-		} else 
+		} else
 			throw new RuntimeException("Invalid username");
 	}
 
@@ -135,8 +138,33 @@ public class UserServiceImpl implements UserService {
 
 		if (token.equals(synCommand)) {
 			User user = userDao.checkId(id);
+
 			String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
 			user.setPassword(pw_hash);
+			return true;
+
+		} else
+			return false;
+	}
+
+	@Override
+	public boolean forgotUserPasswordlink(String token, HttpServletResponse response) {
+		LOGGER.info("forgot password in service");
+
+		System.out.println("user token service");
+
+		long id = iJwtProgram.parseJWT(token);
+
+		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
+
+		System.out.println("token in verified user " + token);
+
+		if (token.equals(synCommand)) {
+			try {
+				response.sendRedirect("http://127.0.0.1:8081/#!/reset?token=" + token);
+			} catch (IOException e) {
+				System.out.println(e);
+			}
 			return true;
 
 		} else
