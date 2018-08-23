@@ -13,15 +13,15 @@ import com.bridgeit.fundoonote.noteservice.service.NoteService;
 @ComponentScan(basePackages="com.bridgeit.fundoonote")
 public class NoteConfigration {
 
-	@Bean
-	INoteService iNoteService() {
-		NoteService noteService=new NoteService();
-		return noteService;
-	}
-	
-	@Bean
-	INoteDao iNoteDao() {
-		NoteDao noteDao=new NoteDao();
-		return noteDao;
-	}
+//	@Bean
+//	INoteService iNoteService() {
+//		NoteService noteService=new NoteService();
+//		return noteService;
+//	}
+//	
+//	@Bean
+//	INoteDao iNoteDao() {
+//		NoteDao noteDao=new NoteDao();
+//		return noteDao;
+//	}
 }

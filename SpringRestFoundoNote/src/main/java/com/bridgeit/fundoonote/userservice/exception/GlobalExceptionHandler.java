@@ -12,10 +12,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	
 	
-	@ExceptionHandler(value=RuntimeException.class)
-	public ResponseEntity<?> getMet(RuntimeException runtimeException)
-	{
-		return new ResponseEntity<>(runtimeException.getMessage(),HttpStatus.BAD_REQUEST);
-	}
+//	@ExceptionHandler(value=Exception.class)
+//	public ResponseEntity<?> getMet(Exception runtimeException)
+//	{
+//		return new ResponseEntity<>(runtimeException.getMessage(),HttpStatus.BAD_REQUEST);
+//	}
 	
 }

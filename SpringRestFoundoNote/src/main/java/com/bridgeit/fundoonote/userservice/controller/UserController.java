@@ -57,7 +57,7 @@ public class UserController {
 		String token;
 		if ((token=userService.check(loginDTO.getUserEmail(), loginDTO.getPassword()))!=null )
 			
-			return new ResponseEntity<String>("Login sucessfully done "+token, HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>(token, HttpStatus.ACCEPTED);
 		return new ResponseEntity<String>("Not valid user", HttpStatus.CONFLICT);
 	}
 

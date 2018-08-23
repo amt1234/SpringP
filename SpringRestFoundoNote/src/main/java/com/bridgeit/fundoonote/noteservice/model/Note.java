@@ -1,18 +1,24 @@
 package com.bridgeit.fundoonote.noteservice.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import com.bridgeit.fundoonote.labelservice.model.Label;
 import com.bridgeit.fundoonote.userservice.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "NoteTable")
@@ -22,9 +28,7 @@ public class Note {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long noteId;
 
-	@NotEmpty
 	private String noteTitle;
-	@NotEmpty
 	private String noteDescribtion;
 
 	private boolean noteTrash;
@@ -33,10 +37,33 @@ public class Note {
 
 	private Date createdDate = new Date();
 	private Date updatedDate = new Date();
-	private String color;
+	private Date reminderDate = new Date();
+	private String reminderTime;
+	private String image;
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	@ManyToMany(mappedBy="notes")
+	@LazyCollection(value=LazyCollectionOption.FALSE)
+	private Set<Label> labels=new HashSet<Label>();
+	
+	public Set<Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Set<Label> labels) {
+		this.labels = labels;
+	}
 
 	@ManyToOne
 	@JoinColumn(referencedColumnName = "userId")
+	@JsonIgnore
 	private User user;
 
 	public User getUser() {
@@ -60,7 +87,7 @@ public class Note {
 	}
 
 	public void setUpdatedDate(Date date) {
-		this.updatedDate = date;
+		this.updatedDate = new Date();
 	}
 
 	public long getNoteId() {
@@ -111,6 +138,24 @@ public class Note {
 		this.notePinned = notePinned;
 	}
 
+	public String getReminderTime() {
+		return reminderTime;
+	}
+
+	public void setReminderTime(String reminderTime) {
+		this.reminderTime = reminderTime;
+	}
+
+	private String color;
+
+	public Date getReminderDate() {
+		return reminderDate;
+	}
+
+	public void setReminderDate(Date reminderDate) {
+		this.reminderDate = reminderDate;
+	}
+
 	public String getColor() {
 		return color;
 	}
@@ -120,7 +165,8 @@ public class Note {
 	}
 
 	public Note(long noteId, String noteTitle, String noteDescribtion, boolean noteTrash, boolean noteArchiev,
-			boolean notePinned, Date createdDate, Date updatedDate, String color) {
+			boolean notePinned, Date createdDate, Date updatedDate, Date reminderDate, String reminderTime,
+			String color) {
 		this.noteId = noteId;
 		this.noteTitle = noteTitle;
 		this.noteDescribtion = noteDescribtion;
@@ -129,6 +175,8 @@ public class Note {
 		this.notePinned = notePinned;
 		this.createdDate = createdDate;
 		this.updatedDate = updatedDate;
+		this.reminderDate = reminderDate;
+		this.reminderTime = reminderTime;
 		this.color = color;
 	}
 

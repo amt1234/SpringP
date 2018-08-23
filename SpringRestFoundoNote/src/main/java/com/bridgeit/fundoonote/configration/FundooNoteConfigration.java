@@ -30,6 +30,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,6 +41,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
@@ -78,6 +81,15 @@ public class FundooNoteConfigration {
 	@Bean
 	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
 		return new MappingJackson2HttpMessageConverter();
+	}
+	
+	@Bean
+	public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+		ByteArrayHttpMessageConverter byteArrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+		List<MediaType> properties = new ArrayList<>();
+		properties.add(MediaType.IMAGE_JPEG);
+		byteArrayHttpMessageConverter.setSupportedMediaTypes(properties);
+		return byteArrayHttpMessageConverter;
 	}
 
 	@Bean
@@ -234,4 +246,12 @@ public class FundooNoteConfigration {
 	 * }
 	 */
 
+//------------------	file upload multipartResolver  -----------------------------------//
+	
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver multipartResolver() {
+	    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+	    multipartResolver.setMaxUploadSize(1202179);
+	    return multipartResolver;
+	}
 }
