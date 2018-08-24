@@ -83,6 +83,7 @@ public class NoteService implements INoteService {
 			oldNote.setNoteArchiev(note.isNoteArchiev());
 			oldNote.setNotePinned(note.isNotePinned());
 			oldNote.setNoteTrash(note.isNoteTrash());
+			oldNote.setImage(note.getImage());
 			noteDao.updateNote(oldNote);
 			return true;
 		} else
@@ -135,8 +136,8 @@ public class NoteService implements INoteService {
 		return false;
 	}
 	
-	String imagePath="/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile";
-	private final Path rootPath=Paths.get(imagePath);
+	//String imagePath="/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile";
+	private final Path rootPath=Paths.get("/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile/");
 	
 	@Override
 	public String uploadFile(MultipartFile file) {
@@ -145,7 +146,7 @@ public class NoteService implements INoteService {
 				byte[] bytes = file.getBytes();
 
 				// Creating the directory to store file
-				File dir = new File(imagePath);
+				File dir = new File("/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile");
 				if (!dir.exists())
 					dir.mkdirs();
 
@@ -168,13 +169,11 @@ public class NoteService implements INoteService {
 	
 	@Override
 	public Resource loadFile(String filename) {
-		
-		try {
-           Path file = rootPath.resolve(filename);
-           LOGGER.info("image in note service...."+file.toUri());
+        try {
+//            Path file = rootPath.resolve(filename);
+        	Path file = rootPath.resolve(filename).normalize();
             Resource resource = new UrlResource(file.toUri());
-            if(resource.exists() || resource.isReadable()) {
-            	System.out.println("image...l,ml,");
+            if(resource.exists()) {
                 return resource;
             }else{
             	throw new RuntimeException("FAIL!");
@@ -182,5 +181,5 @@ public class NoteService implements INoteService {
         } catch (MalformedURLException e) {
         	throw new RuntimeException("FAIL!");
         }
-	}
+    }
 }

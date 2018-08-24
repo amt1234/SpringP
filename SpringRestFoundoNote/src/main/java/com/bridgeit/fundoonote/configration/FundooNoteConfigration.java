@@ -70,29 +70,6 @@ public class FundooNoteConfigration {
 	Environment environment;
 
 	@Bean
-	public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
-		RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
-		List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-		messageConverters.add(mappingJackson2HttpMessageConverter());
-		requestMappingHandlerAdapter.setMessageConverters(messageConverters);
-		return requestMappingHandlerAdapter;
-	}
-
-	@Bean
-	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-		return new MappingJackson2HttpMessageConverter();
-	}
-	
-	@Bean
-	public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
-		ByteArrayHttpMessageConverter byteArrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
-		List<MediaType> properties = new ArrayList<>();
-		properties.add(MediaType.IMAGE_JPEG);
-		byteArrayHttpMessageConverter.setSupportedMediaTypes(properties);
-		return byteArrayHttpMessageConverter;
-	}
-
-	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 

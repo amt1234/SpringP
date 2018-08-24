@@ -23,6 +23,7 @@ import com.bridgeit.fundoonote.userservice.jwt.Sender;
 import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 import com.bridgeit.fundoonote.userservice.model.LoginDTO;
 import com.bridgeit.fundoonote.userservice.model.RegistrationDTO;
+import com.bridgeit.fundoonote.userservice.model.Response;
 import com.bridgeit.fundoonote.userservice.services.UserService;
 
 @RestController
@@ -42,55 +43,53 @@ public class UserController {
 		LOGGER.info("START CREATE NEW EMPLOYEE");
 		if (bindingResult.hasErrors())
 			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-		
+
 		String url = request.getRequestURL().toString();
 		String link = url.substring(0, url.lastIndexOf("/")).concat("/verifyaccount/");
-		
+
 		if (userService.registationSave(registrationDTO, link))
-			return new ResponseEntity<String>("Registration sucessfully done", HttpStatus.OK);
-		return new ResponseEntity<String>("Already existing user", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200", "Registration sucessfully done"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "Already existing user"), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<String> userLogin(@Validated @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
+	public ResponseEntity<?> userLogin(@Validated @RequestBody LoginDTO loginDTO, BindingResult bindingResult) {
 		LOGGER.info("check valid user");
 		String token;
-		if ((token=userService.check(loginDTO.getUserEmail(), loginDTO.getPassword()))!=null )
-			
-			return new ResponseEntity<String>(token, HttpStatus.ACCEPTED);
-		return new ResponseEntity<String>("Not valid user", HttpStatus.CONFLICT);
+		if ((token = userService.check(loginDTO.getUserEmail(), loginDTO.getPassword())) != null)
+			return new ResponseEntity<>(new Response("200", token), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(new Response("406", "Not valid user"), HttpStatus.CONFLICT);
 	}
 
 	@GetMapping(value = "/verifyaccount/{token:.+}")
 	public ResponseEntity<?> isUserActive(@PathVariable("token") String token) {
 		if (userService.getUserTokenVerify(token))
-			return new ResponseEntity<String>("verified user", HttpStatus.OK);
-		return new ResponseEntity<String>("not verified user", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new Response("200", "verified user"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("404", "not verified user"), HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping(value = "/forgotpassword")
-	public ResponseEntity<String> forgotPassword(@RequestBody EmailInfo emailInfo, HttpServletRequest request) {
+	public ResponseEntity<?> forgotPassword(@RequestBody EmailInfo emailInfo, HttpServletRequest request) {
 		String url = request.getRequestURL().toString();
 		String link = url.substring(0, url.lastIndexOf("/")).concat("/resetpassword/");
 		if (userService.resetUserPassword(emailInfo, link))
-			return new ResponseEntity<String>("Link send to reset password", HttpStatus.OK);
-		return new ResponseEntity<String>("Invalid user", HttpStatus.OK);
+			return new ResponseEntity<>(new Response("200", "Link send to reset password"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "Invalid user"), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/resetpassword/{token:.+}")
 	public ResponseEntity<?> changePassword(@PathVariable("token") String token,
 			@RequestBody Map<String, String> password) {
 		if (userService.forgotUserPassword(token, password.get("password")))
-			return new ResponseEntity<String>("reset password sucessfully", HttpStatus.OK);
-		return new ResponseEntity<String>("Invalid user", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200", "reset password sucessfully"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "Invalid user"), HttpStatus.CONFLICT);
 	}
-	
+
 	@GetMapping(value = "/resetpassword/{token:.+}")
-	public ResponseEntity<?> resetPasswordMethod(@PathVariable("token") String token,
-			HttpServletResponse response) {
+	public ResponseEntity<?> resetPasswordMethod(@PathVariable("token") String token, HttpServletResponse response) {
 		if (userService.forgotUserPasswordlink(token, response))
-			return new ResponseEntity<String>("reset password sucessfully", HttpStatus.OK);
-		return new ResponseEntity<String>("Invalid user", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200", "reset password sucessfully"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "Invalid user"), HttpStatus.CONFLICT);
 	}
 
 }

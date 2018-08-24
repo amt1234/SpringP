@@ -166,7 +166,7 @@ public class Note {
 
 	public Note(long noteId, String noteTitle, String noteDescribtion, boolean noteTrash, boolean noteArchiev,
 			boolean notePinned, Date createdDate, Date updatedDate, Date reminderDate, String reminderTime,
-			String color) {
+			String color,String image) {
 		this.noteId = noteId;
 		this.noteTitle = noteTitle;
 		this.noteDescribtion = noteDescribtion;
@@ -178,6 +178,7 @@ public class Note {
 		this.reminderDate = reminderDate;
 		this.reminderTime = reminderTime;
 		this.color = color;
+		this.image=image;
 	}
 
 	public Note() {

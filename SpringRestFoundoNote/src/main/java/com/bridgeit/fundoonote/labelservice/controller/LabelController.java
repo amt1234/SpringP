@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgeit.fundoonote.labelservice.model.Label;
 import com.bridgeit.fundoonote.labelservice.model.LabelDto;
 import com.bridgeit.fundoonote.labelservice.service.ILableService;
+import com.bridgeit.fundoonote.userservice.model.Response;
 
 @RestController
 @RequestMapping(value = "/label")
@@ -31,13 +32,13 @@ public class LabelController {
 	ILableService lableService;
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<String> createLabel(@RequestBody LabelDto labelDto, HttpServletRequest request) {
+	public ResponseEntity<?> createLabel(@RequestBody LabelDto labelDto, HttpServletRequest request) {
 		LOGGER.info("CREATE LABLE");
 
 		String token = request.getHeader("userid");
 		if (lableService.createLable(labelDto, token))
-			return new ResponseEntity<String>("Lable created", HttpStatus.ACCEPTED);
-		return new ResponseEntity<String>("Lable already created", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("202","Lable created"), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(new Response("406","Lable already created"), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/update")
@@ -46,8 +47,8 @@ public class LabelController {
 
 		String token = request.getHeader("userid");
 		if (lableService.updateLabels(token, label))
-			return new ResponseEntity<String>("Label update", HttpStatus.OK);
-		return new ResponseEntity<String>("Label not update", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200","Label update"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406","Label not update"), HttpStatus.CONFLICT);
 	}
 
 	@GetMapping(value = "/list")
@@ -57,7 +58,7 @@ public class LabelController {
 		String token = request.getHeader("userid");
 		List<LabelDto> list = lableService.listOfAllLabels(token);
 		if (list != null)
-			return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(new Response("202",list), HttpStatus.ACCEPTED);
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
@@ -67,21 +68,21 @@ public class LabelController {
 
 		String token = request.getHeader("userid");
 		if (lableService.deleteLabels(token, id))
-			return new ResponseEntity<String>("label delete", HttpStatus.OK);
-		return new ResponseEntity<String>("label not delete", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200","label delete"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406","label not delete"), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/addLabel/{id}")
 	public ResponseEntity<?> addLabel(@PathVariable("id") long id, @RequestBody LabelDto labelDto) {
 		if (lableService.addLabels(id, labelDto))
-			return new ResponseEntity<String>("label add on note", HttpStatus.OK);
-		return new ResponseEntity<String>("label not add on note", HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200","label add on note"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406","label not add on note"), HttpStatus.CONFLICT);
 	}
 	
 	@PostMapping(value="/removeLabel/{id}")
 	public ResponseEntity<?> removeLabel(@PathVariable("id") long id, @RequestBody LabelDto labelDto){
 		if(lableService.removeLables(id, labelDto))
-			return new ResponseEntity<String>("label remove on note",HttpStatus.OK);
-		return new ResponseEntity<String>("label not remove on note",HttpStatus.CONFLICT);	
+			return new ResponseEntity<>(new Response("200","label remove on note"),HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406","label not remove on note"),HttpStatus.CONFLICT);	
 	}
 }
