@@ -11,6 +11,15 @@ public class RegistrationDTO {
 	private String confirmPassword;
 	private String phoneNumber;
 	private String dateOfBirth;
+	private String UserProfileImage;
+
+	public String getUserProfileImage() {
+		return UserProfileImage;
+	}
+
+	public void setUserProfileImage(String userProfileImage) {
+		UserProfileImage = userProfileImage;
+	}
 
 	public String getConfirmPassword() {
 		return confirmPassword;

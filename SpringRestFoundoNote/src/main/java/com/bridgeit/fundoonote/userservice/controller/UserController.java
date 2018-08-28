@@ -1,5 +1,6 @@
 package com.bridgeit.fundoonote.userservice.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 import com.bridgeit.fundoonote.userservice.model.LoginDTO;
 import com.bridgeit.fundoonote.userservice.model.RegistrationDTO;
 import com.bridgeit.fundoonote.userservice.model.Response;
+import com.bridgeit.fundoonote.userservice.model.UserProfile;
 import com.bridgeit.fundoonote.userservice.services.UserService;
 
 @RestController
@@ -92,4 +94,26 @@ public class UserController {
 		return new ResponseEntity<>(new Response("406", "Invalid user"), HttpStatus.CONFLICT);
 	}
 
+	@PostMapping(value = "/update")
+	public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody UserProfile userProfile) {
+		String token=request.getHeader("userid");
+		if (userService.updateUser(token, userProfile)!=null)
+			return new ResponseEntity<>(new Response("200", userProfile), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "Invalid user"), HttpStatus.NOT_FOUND);
+	}
+	
+	@GetMapping(value="/userInfo")
+	public ResponseEntity<?> userInfo(HttpServletRequest request){
+		String token=request.getHeader("userid");
+		UserProfile userProfile=userService.userInformation(token);
+		return new ResponseEntity<>(new Response("200",userProfile),HttpStatus.OK);	
+	}
+	
+	@GetMapping(value="/list")
+	public ResponseEntity<?> listOfUser(){
+		System.out.println("user CoNTROLLER LIST.......");
+		List<UserProfile> list=userService.userList();
+		System.out.println("user list ..."+list);
+		return new ResponseEntity<>(new Response("200",list),HttpStatus.OK);	
+	}
 }

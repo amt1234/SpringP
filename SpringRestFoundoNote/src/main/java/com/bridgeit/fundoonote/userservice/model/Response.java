@@ -5,14 +5,7 @@ public class Response {
 	private String status;
 	private Object payload;
 	
-	public Response() {
-		// TODO Auto-generated constructor stub
-	}
-	public Response(String status, Object payload) {
-		super();
-		this.status = status;
-		this.payload = payload;
-	}
+	
 	public String getStatus() {
 		return status;
 	}
@@ -25,6 +18,12 @@ public class Response {
 	public void setPayload(Object payload) {
 		this.payload = payload;
 	}
-	
-	
+public Response() {
+		
+	}
+	public Response(String status, Object payload) {
+		super();
+		this.status = status;
+		this.payload = payload;
+	}
 }

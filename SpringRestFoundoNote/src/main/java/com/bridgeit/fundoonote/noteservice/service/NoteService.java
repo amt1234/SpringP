@@ -1,18 +1,13 @@
 package com.bridgeit.fundoonote.noteservice.service;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import javax.transaction.Transactional;
 
@@ -24,7 +19,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bridgeit.fundoonote.noteservice.controller.NoteController;
 import com.bridgeit.fundoonote.noteservice.dao.INoteDao;
 import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.noteservice.model.ResponseDto;
@@ -144,21 +138,30 @@ public class NoteService implements INoteService {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
+				
+				System.out.println("fileToImage :......."+file);
 
 				// Creating the directory to store file
 				File dir = new File("/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile");
 				if (!dir.exists())
 					dir.mkdirs();
 
+				String filename=file.getOriginalFilename();
+				int index=filename.lastIndexOf('.');
+				long time=System.currentTimeMillis();
+				String filename2=filename.substring(index,filename.length());
+				String newfile=time+filename2;
+				System.out.println("filename 2 newfile :"+newfile);
+				
 				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				File serverFile = new File(dir.getAbsolutePath() +dir.separator +newfile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
 
 				LOGGER.info("Server File Location=" + serverFile.getAbsolutePath());
 
-				return "http://localhost:8080/SpringRestFoundoNote/note/loadFile/" + file.getOriginalFilename();
+				return "http://localhost:8080/SpringRestFoundoNote/note/loadFile/" + newfile;
 			} catch (Exception e) {
 				return "You failed to upload ";
 			}
@@ -170,7 +173,7 @@ public class NoteService implements INoteService {
 	@Override
 	public Resource loadFile(String filename) {
         try {
-//            Path file = rootPath.resolve(filename);
+
         	Path file = rootPath.resolve(filename).normalize();
             Resource resource = new UrlResource(file.toUri());
             if(resource.exists()) {

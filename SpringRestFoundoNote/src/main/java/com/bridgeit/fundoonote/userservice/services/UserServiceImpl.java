@@ -1,6 +1,8 @@
 package com.bridgeit.fundoonote.userservice.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -17,6 +19,7 @@ import com.bridgeit.fundoonote.userservice.dao.UserDao;
 import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 import com.bridgeit.fundoonote.userservice.model.RegistrationDTO;
 import com.bridgeit.fundoonote.userservice.model.User;
+import com.bridgeit.fundoonote.userservice.model.UserProfile;
 import com.bridgeit.fundoonote.userservice.utility.IJwtProgram;
 import com.bridgeit.fundoonote.userservice.utility.RedisConfigration;
 
@@ -111,7 +114,7 @@ public class UserServiceImpl implements UserService {
 	public String check(String userEmail, String password) {
 		LOGGER.info("START check service method");
 		User user = userDao.checkEmail(userEmail);
-
+		
 		if (user != null) {
 			long id = user.getUserId();
 			user.setActiveUser(true);
@@ -127,9 +130,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean forgotUserPassword(String token, String password) {
 		LOGGER.info("forgot password in service");
-
-		System.out.println("user token service");
-
 		long id = iJwtProgram.parseJWT(token);
 
 		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
@@ -150,9 +150,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean forgotUserPasswordlink(String token, HttpServletResponse response) {
 		LOGGER.info("forgot password in service");
-
-		System.out.println("user token service");
-
 		long id = iJwtProgram.parseJWT(token);
 
 		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
@@ -188,5 +185,49 @@ public class UserServiceImpl implements UserService {
 
 		rabbitTemplate.convertAndSend(FundooNoteConfigration.topicExchangeName, "lazy.orange.rabbit", emailInfo);
 		return true;
+	}
+
+	@Override
+	public UserProfile updateUser(String token, UserProfile userProfile) {
+		
+		long id = iJwtProgram.parseJWT(token);
+
+			User user = userDao.checkId(id);
+			user.setUserProfileImage(userProfile.getUserProfileImage());
+			if(userDao.updateUser(user))
+			{
+				userProfile.setUserProfileImage(user.getUserProfileImage());
+				return userProfile;
+			}else 
+				return null;
+	}
+	
+	@Override
+	public UserProfile userInformation(String token) {
+		UserProfile userProfile=new UserProfile();
+		long id = iJwtProgram.parseJWT(token);
+		User user=userDao.checkId(id);
+		userProfile.setUserName(user.getUserName());
+		userProfile.setUserEmail(user.getUserEmail());
+		userProfile.setUserProfileImage(user.getUserProfileImage());
+		return userProfile;
+		
+	}
+	
+	@Override
+	public List<UserProfile> userList(){
+		List<UserProfile> userProfiles=new ArrayList<>();
+		List<User> user= userDao.userList();
+		for(User user2:user) {
+			UserProfile userProfile=new UserProfile();
+			userProfile.setUserName(user2.getUserName());
+			userProfile.setUserEmail(user2.getUserEmail());
+			userProfile.setUserProfileImage(user2.getUserProfileImage());
+			
+			userProfiles.add(userProfile);
+		}
+		
+		return userProfiles;
+		
 	}
 }

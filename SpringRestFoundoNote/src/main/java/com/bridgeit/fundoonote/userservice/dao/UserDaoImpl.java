@@ -1,5 +1,7 @@
 package com.bridgeit.fundoonote.userservice.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bridgeit.fundoonote.userservice.model.User;
+import com.bridgeit.fundoonote.userservice.model.UserProfile;
 
 
 @Repository
@@ -55,6 +58,17 @@ public class UserDaoImpl implements UserDao {
 		User user = (User) criteria.uniqueResult();
 		System.out.println("user in dao..." + userId);
 		return user;
+	}
+	
+	@Override
+	public List<User> userList(){
+		Criteria criteria=sessionFacetory.getCurrentSession().createCriteria(User.class);
+		System.out.println("user list.....");
+		List<User> list= criteria.list();
+//		for(User user:list) {
+//			System.out.println("list of user in dao : "+user.getUserEmail() +" "+user.getUserName());
+//		}
+		 return list;
 	}
 
 }

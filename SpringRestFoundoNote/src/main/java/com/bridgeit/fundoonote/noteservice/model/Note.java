@@ -1,9 +1,12 @@
 package com.bridgeit.fundoonote.noteservice.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +54,7 @@ public class Note {
 
 	@ManyToMany(mappedBy="notes")
 	@LazyCollection(value=LazyCollectionOption.FALSE)
+	@JsonIgnore
 	private Set<Label> labels=new HashSet<Label>();
 	
 	public Set<Label> getLabels() {
@@ -59,6 +63,20 @@ public class Note {
 
 	public void setLabels(Set<Label> labels) {
 		this.labels = labels;
+	}
+	
+	//for collaborator
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(value=LazyCollectionOption.FALSE)
+	@JsonIgnore
+	private List<User> users=new ArrayList<User>();
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@ManyToOne
