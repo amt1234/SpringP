@@ -1,9 +1,7 @@
 package com.bridgeit.fundoonote.noteservice.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -68,15 +66,14 @@ public class Note {
 	//for collaborator
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(value=LazyCollectionOption.FALSE)
-	@JsonIgnore
-	private List<User> users=new ArrayList<User>();
+	private Set<User> userset=new HashSet<User>();
 
-	public List<User> getUsers() {
-		return users;
+	public Set<User> getUserset() {
+		return userset;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUserset(Set<User> userset) {
+		this.userset = userset;
 	}
 
 	@ManyToOne

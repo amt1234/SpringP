@@ -129,32 +129,35 @@ public class NoteService implements INoteService {
 		}
 		return false;
 	}
-	
-	//String imagePath="/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile";
-	private final Path rootPath=Paths.get("/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile/");
-	
+
+	// String
+	// imagePath="/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile";
+	private final Path rootPath = Paths.get(
+			"/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile/");
+
 	@Override
 	public String uploadFile(MultipartFile file) {
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
-				
-				System.out.println("fileToImage :......."+file);
+
+				System.out.println("fileToImage :......." + file);
 
 				// Creating the directory to store file
-				File dir = new File("/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile");
+				File dir = new File(
+						"/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile");
 				if (!dir.exists())
 					dir.mkdirs();
 
-				String filename=file.getOriginalFilename();
-				int index=filename.lastIndexOf('.');
-				long time=System.currentTimeMillis();
-				String filename2=filename.substring(index,filename.length());
-				String newfile=time+filename2;
-				System.out.println("filename 2 newfile :"+newfile);
-				
+				String filename = file.getOriginalFilename();
+				int index = filename.lastIndexOf('.');
+				long time = System.currentTimeMillis();
+				String filename2 = filename.substring(index, filename.length());
+				String newfile = time + filename2;
+				System.out.println("filename 2 newfile :" + newfile);
+
 				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath() +dir.separator +newfile);
+				File serverFile = new File(dir.getAbsolutePath() + dir.separator + newfile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
@@ -169,20 +172,19 @@ public class NoteService implements INoteService {
 			return "You failed to upload ";
 		}
 	}
-	
+
 	@Override
 	public Resource loadFile(String filename) {
-        try {
-
-        	Path file = rootPath.resolve(filename).normalize();
-            Resource resource = new UrlResource(file.toUri());
-            if(resource.exists()) {
-                return resource;
-            }else{
-            	throw new RuntimeException("FAIL!");
-            }
-        } catch (MalformedURLException e) {
-        	throw new RuntimeException("FAIL!");
-        }
-    }
+		try {
+			Path file = rootPath.resolve(filename).normalize();
+			Resource resource = new UrlResource(file.toUri());
+			if (resource.exists()) {
+				return resource;
+			} else {
+				throw new RuntimeException("FAIL!");
+			}
+		} catch (MalformedURLException e) {
+			throw new RuntimeException("FAIL!");
+		}
+	}
 }

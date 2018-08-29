@@ -19,8 +19,14 @@ public interface UserService {
 	public boolean forgotUserPasswordlink(String token, HttpServletResponse response);
 
 	public boolean resetUserPassword(EmailInfo emailInfo, String link);
-	
+
 	public UserProfile updateUser(String token, UserProfile userProfile);
+
 	public UserProfile userInformation(String token);
+
 	public List<UserProfile> userList();
+
+	public boolean addCollaboratorOnNote(long id, UserProfile userProfile);
+
+	public boolean removeCollaborator(long id, UserProfile userProfile);
 }

@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bridgeit.fundoonote.userservice.model.User;
-import com.bridgeit.fundoonote.userservice.model.UserProfile;
-
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -59,16 +57,12 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("user in dao..." + userId);
 		return user;
 	}
-	
-	@Override
-	public List<User> userList(){
-		Criteria criteria=sessionFacetory.getCurrentSession().createCriteria(User.class);
-		System.out.println("user list.....");
-		List<User> list= criteria.list();
-//		for(User user:list) {
-//			System.out.println("list of user in dao : "+user.getUserEmail() +" "+user.getUserName());
-//		}
-		 return list;
-	}
 
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@Override
+	public List<User> userList() {
+		Criteria criteria = sessionFacetory.getCurrentSession().createCriteria(User.class);
+		List<User> list = criteria.list();
+		return list;
+	}
 }

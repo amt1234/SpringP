@@ -149,7 +149,6 @@ public class LableService implements ILableService {
 			noteset = label.getNotes();
 			for (Note note2 : noteset) {
 				if ((note2.getNoteId()) == noteId) {
-					System.out.println("noteId :" + noteId);
 					noteset.remove(note2);
 					break;
 				}

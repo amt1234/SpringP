@@ -1,7 +1,7 @@
 package com.bridgeit.fundoonote.userservice.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +18,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.userservice.validation.Phone;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "FoundooTable")
@@ -49,20 +50,19 @@ public class User {
 	private String userProfileImage;
 	
 	//for collaborator
-	@ManyToMany(mappedBy="users")
+	@ManyToMany(mappedBy="userset")
 	@LazyCollection(value=LazyCollectionOption.FALSE)
-	private List<Note> notes=new ArrayList<Note>();
+	@JsonIgnore
+	private Set<Note> noteset=new HashSet<Note>();
 
-	public List<Note> getNotes() {
-		return notes;
+	public Set<Note> getNoteset() {
+		return noteset;
 	}
 
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
+	public void setNoteset(Set<Note> noteset) {
+		this.noteset = noteset;
 	}
 
-	
-	
 	public String getUserProfileImage() {
 		return userProfileImage;
 	}

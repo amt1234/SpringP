@@ -2,7 +2,9 @@ package com.bridgeit.fundoonote.userservice.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bridgeit.fundoonote.configration.FundooNoteConfigration;
+import com.bridgeit.fundoonote.noteservice.dao.INoteDao;
+import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.userservice.dao.UserDao;
 import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 import com.bridgeit.fundoonote.userservice.model.RegistrationDTO;
@@ -32,6 +36,8 @@ public class UserServiceImpl implements UserService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private INoteDao iNoteDao;
 
 	RabbitTemplate rabbitTemplate;
 
@@ -91,8 +97,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public boolean getUserTokenVerify(String token) {
 
-		System.out.println("user token service");
-
 		long id = iJwtProgram.parseJWT(token);
 
 		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
@@ -114,14 +118,13 @@ public class UserServiceImpl implements UserService {
 	public String check(String userEmail, String password) {
 		LOGGER.info("START check service method");
 		User user = userDao.checkEmail(userEmail);
-		
+
 		if (user != null) {
 			long id = user.getUserId();
 			user.setActiveUser(true);
 			String token = iJwtProgram.createJWT(id, "poonam", "token_Generation", 86400000);
 			System.out.println("Token : " + token);
 			BCrypt.checkpw(password, user.getPassword());
-			System.out.println("token from login service " + token);
 			return token;
 		} else
 			throw new RuntimeException("Invalid username");
@@ -189,45 +192,95 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserProfile updateUser(String token, UserProfile userProfile) {
-		
+
 		long id = iJwtProgram.parseJWT(token);
 
-			User user = userDao.checkId(id);
-			user.setUserProfileImage(userProfile.getUserProfileImage());
-			if(userDao.updateUser(user))
-			{
-				userProfile.setUserProfileImage(user.getUserProfileImage());
-				return userProfile;
-			}else 
-				return null;
+		User user = userDao.checkId(id);
+		user.setUserProfileImage(userProfile.getUserProfileImage());
+		if (userDao.updateUser(user)) {
+			userProfile.setUserProfileImage(user.getUserProfileImage());
+			return userProfile;
+		} else
+			return null;
 	}
-	
+
 	@Override
 	public UserProfile userInformation(String token) {
-		UserProfile userProfile=new UserProfile();
+		UserProfile userProfile = new UserProfile();
 		long id = iJwtProgram.parseJWT(token);
-		User user=userDao.checkId(id);
+		User user = userDao.checkId(id);
 		userProfile.setUserName(user.getUserName());
 		userProfile.setUserEmail(user.getUserEmail());
 		userProfile.setUserProfileImage(user.getUserProfileImage());
 		return userProfile;
-		
 	}
-	
+
 	@Override
-	public List<UserProfile> userList(){
-		List<UserProfile> userProfiles=new ArrayList<>();
-		List<User> user= userDao.userList();
-		for(User user2:user) {
-			UserProfile userProfile=new UserProfile();
+	public List<UserProfile> userList() {
+		List<UserProfile> userProfiles = new ArrayList<>();
+		List<User> user = userDao.userList();
+		for (User user2 : user) {
+			UserProfile userProfile = new UserProfile();
 			userProfile.setUserName(user2.getUserName());
 			userProfile.setUserEmail(user2.getUserEmail());
 			userProfile.setUserProfileImage(user2.getUserProfileImage());
-			
+
 			userProfiles.add(userProfile);
 		}
-		
 		return userProfiles;
+	}
+
+	@Override
+	public boolean addCollaboratorOnNote(long id, UserProfile userProfile) {
+		Note note = iNoteDao.checkNoteId(id);
+		System.out.println("user profile" + userProfile);
+		User user = userDao.checkEmail(userProfile.getUserEmail());
+
+		Set<Note> notes = new HashSet<Note>();
+		Set<User> users = new HashSet<User>();
+
+		notes = user.getNoteset();
+		notes.add(note);
+		user.setNoteset(notes);
+		userDao.updateUser(user);
+
+		users = note.getUserset();
+		users.add(user);
+		note.setUserset(users);
+		iNoteDao.updateNote(note);
+
+		return true;
+	}
+
+	@Override
+	public boolean removeCollaborator(long id, UserProfile userProfile) {
+		Note note = iNoteDao.checkNoteId(id);
+		User user = userDao.checkEmail(userProfile.getUserEmail());
+
+		Set<Note> notes = new HashSet<Note>();
+		Set<User> users = new HashSet<User>();
+
+		notes=user.getNoteset();
+		for(Note note2:notes) {
+			if(note2.getNoteId()==id) {
+				System.out.println("note id :"+note2.getNoteId());
+				notes.remove(note2);
+				break;
+			}
+		}
+		user.setNoteset(notes);
 		
+		users=note.getUserset();
+		for(User user2:users) {
+			if(user2.getUserId()==user.getUserId()) {
+				System.out.println("note id .....: "+user2.getUserId());
+				users.remove(user2);
+				break;
+			}
+		}
+		note.setUserset(users);
+		userDao.updateUser(user);
+		iNoteDao.updateNote(note);
+		return true;
 	}
 }
