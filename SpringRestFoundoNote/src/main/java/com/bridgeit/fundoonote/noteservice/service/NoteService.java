@@ -7,7 +7,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -24,6 +26,7 @@ import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.noteservice.model.ResponseDto;
 import com.bridgeit.fundoonote.userservice.dao.UserDao;
 import com.bridgeit.fundoonote.userservice.model.User;
+import com.bridgeit.fundoonote.userservice.model.UserProfile;
 import com.bridgeit.fundoonote.userservice.utility.IJwtProgram;
 
 @Service
@@ -186,5 +189,33 @@ public class NoteService implements INoteService {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("FAIL!");
 		}
+	}
+	
+	@Override
+	public List<Note> getCollaboratedNotes(String token){
+		List<Note> notelist=new ArrayList<>();
+		//User user=userDao.checkEmail(userProfile.getUserEmail());
+		long id = jwtToken.parseJWT(token);
+		User user = userDao.checkId(id);
+		
+		System.out.println("user profile..."+user.getUserEmail());
+		String email;
+		String userEmail=user.getUserEmail();
+		List<Note> list=noteDao.collaboratedNoteList();
+		for(Note note:list) {
+			System.out.println(note.getUserset().toString());
+			Set<User> userset=new HashSet<>();
+			userset=note.getUserset();
+			for(User user2:userset) {
+				System.out.println("user from userset ........."+user2.getUserEmail());
+			 email=user2.getUserEmail();
+				if(userEmail.equals(email)) {
+					long noteId=note.getNoteId();
+					Note note2=noteDao.checkNoteId(noteId);
+					notelist.add(note2);	
+				}
+			}
+		}
+		return notelist;	
 	}
 }

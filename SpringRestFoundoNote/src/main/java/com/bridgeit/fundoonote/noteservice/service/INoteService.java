@@ -15,4 +15,5 @@ public interface INoteService {
 	public boolean deleteUserNote(String token, long noteid);
 	public String uploadFile(MultipartFile file);
 	public Resource loadFile(String filename);
+	public List<Note> getCollaboratedNotes(String token);
 }

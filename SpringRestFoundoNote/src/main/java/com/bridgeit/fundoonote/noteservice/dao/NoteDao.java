@@ -37,6 +37,7 @@ public class NoteDao implements INoteDao {
 		return note;
 
 	}
+	
 
 	@Override
 	public boolean updateNote(Note note) {
@@ -55,6 +56,13 @@ public class NoteDao implements INoteDao {
 	}
 
 	@Override
+	public List<Note> collaboratedNoteList(){
+		Criteria criteria=sessionFacetory.getCurrentSession().createCriteria(Note.class);
+		List<Note> list=criteria.list();
+		return list;
+		
+	}
+	@Override
 	public boolean deleteNoteOfUser(long noteId) {
 		System.out.println("note id in dao" + noteId);
 		Note note = checkNoteId(noteId);
@@ -62,16 +70,4 @@ public class NoteDao implements INoteDao {
 		return true;
 	}
 
-	public boolean uploadFile(byte[] bytes, File serverFile) {
-		try {
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			stream.write(bytes);
-			
-			stream.close();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return true;
-
-	}
 }

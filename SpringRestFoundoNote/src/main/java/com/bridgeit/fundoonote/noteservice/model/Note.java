@@ -52,7 +52,6 @@ public class Note {
 
 	@ManyToMany(mappedBy="notes")
 	@LazyCollection(value=LazyCollectionOption.FALSE)
-	@JsonIgnore
 	private Set<Label> labels=new HashSet<Label>();
 	
 	public Set<Label> getLabels() {

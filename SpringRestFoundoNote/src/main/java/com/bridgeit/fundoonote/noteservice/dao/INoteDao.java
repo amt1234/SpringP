@@ -12,4 +12,5 @@ public interface INoteDao {
 	public boolean updateNote(Note note);
 	public List<Note> notesList(User user);
 	public boolean deleteNoteOfUser(long noteid);
+	public List<Note> collaboratedNoteList();
 }

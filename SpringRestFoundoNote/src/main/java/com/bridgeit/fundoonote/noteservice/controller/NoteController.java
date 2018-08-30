@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.noteservice.service.INoteService;
 import com.bridgeit.fundoonote.userservice.model.Response;
+import com.bridgeit.fundoonote.userservice.model.UserProfile;
 
 @RestController
 @RequestMapping(value = "/note")
@@ -89,9 +90,14 @@ public class NoteController {
 				.body(file);
 	}
 	
-	
-	public ResponseEntity<?> addCollaborator(){
-		return null;
+	@GetMapping(value="/getCollaboratedNotes")
+	public ResponseEntity<?> getCollaboratedNotes(HttpServletRequest request){
+		LOGGER.info(" Collaborator list ");
+		String token=request.getHeader("userid");
+		List<Note> list=iNoteService.getCollaboratedNotes(token);
+		if(list!=null)
+			return new ResponseEntity<>(new Response("200",list),HttpStatus.OK);
+		return new ResponseEntity<>(new Response("404","No collaborated note"),HttpStatus.CONFLICT);
 		
 	}
 }

@@ -5,7 +5,274 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-08-28T23:36:20Z</updated>
+  <updated>2018-08-30T00:00:00Z</updated>
+  <entry>
+    <title>Bootiful GCP: Integration with Google Cloud Pub/Sub (4/8)</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/30/bootiful-gcp-integration-with-google-cloud-pub-sub-4-8" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2018-08-18:3366</id>
+    <updated>2018-08-30T00:00:00Z</updated>
+    <content type="html">&lt;blockquote&gt;
+  &lt;p&gt;Hi Spring fans! In this brief 8 part series we’re going to look at the Spring Cloud integration for Google Cloud Platform, called Spring Cloud GCP. &lt;a href="https://cloud.spring.io/spring-cloud-gcp/"&gt;Spring Cloud GCP&lt;/a&gt; represents a joint effort between Google and Pivotal that endeavors to provide a first class experience for Spring Cloud developers when using the Google Cloud Platform. Pivotal Cloud Foundry users will enjoy an even &lt;a href="https://docs.pivotal.io/partners/gcp-sb/index.html"&gt;easier integration with the GCP service broker&lt;/a&gt;. I wrote these installments with input from Google Cloud Developer Advocate, and my buddy, &lt;a href="http://twitter.com/saturnism"&gt;Ray Tsang&lt;/a&gt;. You can also catch a walkthrough of Spring Cloud GCP in our Google Next 2018 session, &lt;a href="https://www.youtube.com/watch?v=2Jo3vy7iQf8"&gt;Bootiful Google Cloud Platform&lt;/a&gt;. Thanks buddy! As always, &lt;a href="http://twitter.com/starbuxman"&gt;I&amp;rsquo;d love to hear from you if you have feedback&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Let’s look at application integration with Google Cloud Pub/Sub. Google Cloud Pub/Sub supports a number of classic enterprise application integration use cases at Google scale. The &lt;a href="https://cloud.google.com/pubsub/docs/overview"&gt;Google Cloud website for Pub/Sub&lt;/a&gt; lists some:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Balancing workloads in network clusters&lt;/strong&gt;. For example, a large queue of tasks can be efficiently distributed among multiple workers, such as Google Compute Engine instances.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Implementing asynchronous workflows&lt;/strong&gt;. For example, an order processing application can place an order on a topic, from which it can be processed by one or more workers.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Distributing event notifications&lt;/strong&gt;. For example, a service that accepts user signups can send notifications whenever a new user registers, and downstream services can subscribe to receive notifications of the event.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Refreshing distributed caches&lt;/strong&gt;. For example, an application can publish invalidation events to update the IDs of objects that have changed.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Logging to multiple systems&lt;/strong&gt;. For example, a Google Compute Engine instance can write logs to the monitoring system, to a database for later querying, and so on.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Data streaming from various processes or devices&lt;/strong&gt;. For example, a residential sensor can stream data to backend servers hosted in the cloud.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;&lt;strong&gt;Reliability improvement&lt;/strong&gt;. For example, a single-zone Compute Engine service can operate in additional zones by subscribing to a common topic, to recover from failures in a zone or region.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The flow when using Google Cloud Pub/Sub is exactly as you’d expect: a message is sent to a topic in the Pub/Sub broker (hosted in the cloud by GCP) which then persists it for you. Subscribers can either have messages pushed to it (through a webhook) or they can poll for the mesages from the broker. The subscriber receives messages from the broker and acknowledges each one. When a subscriber acknowledges a message it is removed from the subscriber’s subscription queue. Any client that can speak HTTPS can use this service. There’s no other API required.&lt;/p&gt;
+&lt;p&gt;The domain model is fairly straightforward if you’ve ever used any other messaging system (JMS, AMQP, Apache Kafka, Kestrel): a topic is the thing to which messages are published. A subscription represents the stream of messages from a specific topic that are to be delivered to a specific client application. A topic can have multiple subscriptions. A subscription can have many subscribers. If you want to distribute different messages around to different subscribers, then all the subscribers must be subscribing to the same subscription. If you want to publish the same messages to all the subscribers, then each subscriber needs to subscribe to its own subscription.&lt;/p&gt;
+&lt;p&gt;Pub/Sub delivery is at-least once. Hence, you must deal with idempotency and/or de-duplicate messages if you cannot process the same message more than once.&lt;/p&gt;
+&lt;p&gt;A message stores a combination of data and (optional) attributes that are conducted by Google Cloud Pub/Sub from a publisher to a subscriber. A message attribute, which you might better understand as a &lt;em&gt;header&lt;/em&gt;, is a key value pair in a message. You might have a header the describes the language of the payload. You might have a header that describes the content-type.&lt;/p&gt;
+&lt;p&gt;Let’s add Google Cloud Pub/Sub to an application and tie them together.&lt;/p&gt;
+&lt;p&gt;As before, we need to enable the Google Cloud Pub/Sub API for use.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud services enable pubsub.googleapis.com
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You’ll then need to create a new topic, &lt;code&gt;reservations&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud pubsub topics create reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The topic represents where we will send messages. We still need to create a subscription that consumes messages from that topic. The following command creates a subscription, &lt;code&gt;reservations-subscription&lt;/code&gt;, to connect to the &lt;code&gt;reservations&lt;/code&gt; topic.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint shell"&gt;gcloud pubsub subscriptions create reservations-subscription --topic=reservations
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Those pieces in place, we can use them from our application. Add the Spring Cloud GCP Pub/Sub starter, &lt;code&gt;org.springframework.cloud&lt;/code&gt; : &lt;code&gt;spring-cloud-gcp-starter-pubsub&lt;/code&gt;, to your build. This introduces auto-configuration for the Google Cloud &lt;code&gt;PubSubTemplate&lt;/code&gt;. The &lt;code&gt;PubSubTemplate&lt;/code&gt; should feel familiar if you’ve ever used the &lt;code&gt;JmsTemplate&lt;/code&gt; or &lt;code&gt;KafkaTemplate&lt;/code&gt;. It’s an easy-to-use client for producing and consuming messages with Google Cloud Pub/Sub. If you’re just getting started with GCP Pub/Sub and messaging in general, a &lt;code&gt;*Template&lt;/code&gt; object in the Spring universe is a good place to start.&lt;/p&gt;
+&lt;p&gt;Let’s look at a simple example that publishes a message whenever you issue HTTP &lt;code&gt;POST&lt;/code&gt; calls to an HTTP endpoint running in the Spring Boot application. Then we’ll setup a subscriber to consume the messages sent.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.template;&#xD;
+&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.web.bind.annotation.PathVariable;&#xD;
+import org.springframework.web.bind.annotation.PostMapping;&#xD;
+import org.springframework.web.bind.annotation.RestController;&#xD;
+&#xD;
+@Configuration&#xD;
+@RestController&#xD;
+class PublisherConfig {&#xD;
+&#xD;
+        private final PubSubTemplate template;&#xD;
+        private final String topic;&#xD;
+&#xD;
+        PublisherConfig(PubSubTemplate template, @Value(&amp;quot;${reservations.topic:reservations}&amp;quot;) String t) {&#xD;
+                this.template = template;&#xD;
+                this.topic = t;&#xD;
+        }&#xD;
+&#xD;
+        &#xD;
+        @PostMapping(&amp;quot;/publish/{name}&amp;quot;)&#xD;
+        void publish(@PathVariable String name) {&#xD;
+                this.template.publish(this.topic, &amp;quot;Hello &amp;quot; + name + &amp;quot;!&amp;quot;);&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;we use the injected &lt;code&gt;PubSubTemplate&lt;/code&gt; to send a message - a String - to the configured topic.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now, let’s look at a simple application that might as easily run in another node that consumes messages from the subscription linked to the topic.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.template;&#xD;
+&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.boot.context.event.ApplicationReadyEvent;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.context.event.EventListener;&#xD;
+&#xD;
+@Slf4j&#xD;
+@Configuration&#xD;
+class SubscriberConfig {&#xD;
+&#xD;
+        private final PubSubTemplate template;&#xD;
+        private final String subscription;&#xD;
+&#xD;
+        SubscriberConfig(PubSubTemplate template, @Value(&amp;quot;${reservations.subscription:reservations-subscription}&amp;quot;) String s) {&#xD;
+                this.template = template;&#xD;
+                this.subscription = s;&#xD;
+        }&#xD;
+&#xD;
+        @EventListener(ApplicationReadyEvent.class)&#xD;
+        public void start() {&#xD;
+                &#xD;
+                this.template.subscribe(this.subscription, (pubsubMessage, ackReply ) -&amp;gt; {&#xD;
+                        log.info(&amp;quot;consumed new message: [&amp;quot; + pubsubMessage.getData().toStringUtf8() + &amp;quot;]&amp;quot;);&#xD;
+                        ackReply.ack();&#xD;
+                });&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;Once the application is up and running we explicitly subscribe, connecting our client to the right endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This example uses the &lt;code&gt;PubSubTemplate&lt;/code&gt; (to great effect). It’s simple, short and sweet. As integration becomes more complex, however, it becomes useful to decouple components involved in the flow of messages from one system to another. We introduce stages - links in a chain of components - through which messages must pass to arrive at downstream components. This staging allows us to write handling code that can be swapped out, indifferent to the origin or destination of a given message. This promotes testing, because components need only be written in terms of their immediate pre- and post-conditions: a component can say it only accepts Spring Framework &lt;code&gt;Message&amp;lt;File&amp;gt;&lt;/code&gt; types, and nothing else. This interface indirection is &lt;em&gt;very&lt;/em&gt; handy, especially as we start to tie together real world systems that may handle work at different cadences. It becomes trivial to introduce a broker to buffer work before it reaches downstream components where it may otherwise bottleneck. This approach - of isolating components involved in a messaging flow and introducing a buffer to protect downstream components - is called a &lt;em&gt;staged event driven architecture&lt;/em&gt; (SEDA), and it is more valuable now as the world moves to microservices and highly distributed systems than ever.&lt;/p&gt;
+&lt;p&gt;Spring Integration is a framework that’s designed to promote this indirection. It has at its heart the concept of a &lt;code&gt;MessageChannel&lt;/code&gt;, which you can think of us an in-memory &lt;code&gt;Queue&lt;/code&gt;; a pipe through which messages flow. On each side of the &lt;code&gt;MessageChannel&lt;/code&gt; are sat components. You can imagine one component outputting messages of a certain type and sending them into this &lt;code&gt;MessageChannel&lt;/code&gt;, oblivious to where it’ll go. On the other end is another component that consumes messages of a certain type, utterly oblivious to the origin of any given message. Today there may be one service involved in the production of the message. Tomorrow there may be ten! The upstream and downstream components need not change. This indirection gives us a lot of possibilities. We change routing for a given message, stringing it through different services, splitting it, aggregating it, etc. We can transform other sources of data and adapt them to the messaging flow upstream (that’s called an inbound adapter). We can introduce new sinks for the data, adapting the Spring Framework &lt;code&gt;Message&amp;lt;T&amp;gt;&lt;/code&gt; into the right type (that’s called an &lt;em&gt;outbound adapter&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;Let’s look at Spring Integration and the Google Cloud Pub/Sub inbound and outbound adapters. We’ll keep the same approach as before: an HTTP endpoint will publish messages which then get delivered to Google Cloud Pub/Sub. The code could run in different nodes. You’ll also need the Spring Integration types on the classpath for this example to work. Add &lt;code&gt;org.springframework.boot&lt;/code&gt; : &lt;code&gt;spring-boot-starter-integration&lt;/code&gt; to the build.&lt;/p&gt;
+&lt;p&gt;Let’s look at a publisher that publishes messages whenever an HTTP POST is made. In this case, the publisher sends requests into a &lt;code&gt;MessageChannel&lt;/code&gt; which then delivers it to a &lt;code&gt;PubSubMessageHandler&lt;/code&gt;. Today it’s going directly to Pub/Sub, but tomorrow it could go to a database, an FTP server, XMPP, Salesforce, or literally anything else, and &lt;em&gt;then&lt;/em&gt; off to Pub/Sub.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.integration;&#xD;
+&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.cloud.gcp.pubsub.integration.outbound.PubSubMessageHandler;&#xD;
+import org.springframework.context.annotation.Bean;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.integration.dsl.IntegrationFlow;&#xD;
+import org.springframework.integration.dsl.IntegrationFlows;&#xD;
+import org.springframework.integration.dsl.channel.MessageChannels;&#xD;
+import org.springframework.messaging.SubscribableChannel;&#xD;
+import org.springframework.messaging.support.MessageBuilder;&#xD;
+import org.springframework.web.bind.annotation.PathVariable;&#xD;
+import org.springframework.web.bind.annotation.PostMapping;&#xD;
+import org.springframework.web.bind.annotation.RestController;&#xD;
+&#xD;
+@Slf4j&#xD;
+@RestController&#xD;
+@Configuration&#xD;
+class PublisherConfig {&#xD;
+&#xD;
+        private final String topic;&#xD;
+        private final PubSubTemplate template;&#xD;
+&#xD;
+        public PublisherConfig(&#xD;
+            @Value(&amp;quot;${reservations.topic:reservations}&amp;quot;) String t,&#xD;
+            PubSubTemplate template) {&#xD;
+                this.topic = t;&#xD;
+                this.template = template;&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        IntegrationFlow publisherFlow() {&#xD;
+                return IntegrationFlows&#xD;
+                    .from(this.outgoing()) &#xD;
+                    .handle(this.pubSubMessageHandler()) &#xD;
+                    .get();&#xD;
+        }&#xD;
+&#xD;
+        @PostMapping(&amp;quot;/publish/{name}&amp;quot;)&#xD;
+        void publish(@PathVariable String name) {&#xD;
+                &#xD;
+                outgoing().send(MessageBuilder.withPayload(name).build());&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        SubscribableChannel outgoing() {&#xD;
+                return MessageChannels.direct().get();&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        PubSubMessageHandler pubSubMessageHandler() {&#xD;
+                return new PubSubMessageHandler(template, this.topic);&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;the &lt;code&gt;IntegrationFlow&lt;/code&gt; describes, well, the &lt;em&gt;flow&lt;/em&gt; of messages in an integration. Messages sent into the &lt;code&gt;outgoing&lt;/code&gt; &lt;code&gt;MessageChannel&lt;/code&gt; are delivered to the &lt;code&gt;PubSubMessageHandler&lt;/code&gt; which then writes it to Google Cloud Pub/Sub using the specified &lt;code&gt;topic&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;In the Spring MVC HTTP endpint we obtain a reference to the &lt;code&gt;MessageChannel&lt;/code&gt; and publish a message (which we build with the &lt;code&gt;MessageBuilder&lt;/code&gt;) into it. NB: calling &lt;code&gt;outgoing()&lt;/code&gt; as I do in this example is fine because Spring memoizes the result of the method invocation; I’ll always obtain the same pre-instantiated singleton of the &lt;code&gt;MessageChannel&lt;/code&gt; bean.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the consumer side, we do the same thing in reverse, adapting incoming messages and then logging them in an &lt;code&gt;IntegrationFlow&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;package com.example.gcp.pubsub.integration;&#xD;
+&#xD;
+import com.google.cloud.pubsub.v1.AckReplyConsumer;&#xD;
+import lombok.extern.slf4j.Slf4j;&#xD;
+import org.springframework.beans.factory.annotation.Value;&#xD;
+import org.springframework.cloud.gcp.pubsub.core.PubSubTemplate;&#xD;
+import org.springframework.cloud.gcp.pubsub.integration.AckMode;&#xD;
+import org.springframework.cloud.gcp.pubsub.integration.inbound.PubSubInboundChannelAdapter;&#xD;
+import org.springframework.cloud.gcp.pubsub.support.GcpPubSubHeaders;&#xD;
+import org.springframework.context.annotation.Bean;&#xD;
+import org.springframework.context.annotation.Configuration;&#xD;
+import org.springframework.integration.dsl.IntegrationFlow;&#xD;
+import org.springframework.integration.dsl.IntegrationFlows;&#xD;
+import org.springframework.integration.dsl.channel.MessageChannels;&#xD;
+import org.springframework.messaging.MessageChannel;&#xD;
+&#xD;
+@Slf4j&#xD;
+@Configuration&#xD;
+class SubscriberConfig {&#xD;
+&#xD;
+        private final String subscription;&#xD;
+        private final PubSubTemplate template;&#xD;
+&#xD;
+        SubscriberConfig(&#xD;
+            @Value(&amp;quot;${reservations.subscription:reservations-subscription}&amp;quot;) String s,&#xD;
+            PubSubTemplate t) {&#xD;
+                this.subscription = s;&#xD;
+                this.template = t;&#xD;
+        }&#xD;
+&#xD;
+        @Bean &#xD;
+        public PubSubInboundChannelAdapter messageChannelAdapter() {&#xD;
+                PubSubInboundChannelAdapter adapter = new PubSubInboundChannelAdapter(&#xD;
+                    template, this.subscription);&#xD;
+                adapter.setOutputChannel(this.incoming());&#xD;
+                adapter.setAckMode(AckMode.MANUAL);&#xD;
+                return adapter;&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        MessageChannel incoming() {&#xD;
+                return MessageChannels.publishSubscribe().get();&#xD;
+        }&#xD;
+&#xD;
+        @Bean&#xD;
+        IntegrationFlow subscriberFlow() {&#xD;
+                return IntegrationFlows&#xD;
+                    .from(this.incoming()) &#xD;
+                    .handle(message -&amp;gt; { &#xD;
+                            log.info(&amp;quot;consumed new message: [&amp;quot; + message.getPayload() + &amp;quot;]&amp;quot;);&#xD;
+                            AckReplyConsumer consumer = message.getHeaders()&#xD;
+                                .get(GcpPubSubHeaders.ACKNOWLEDGEMENT, AckReplyConsumer.class);&#xD;
+                            consumer.ack();&#xD;
+                    })&#xD;
+                    .get();&#xD;
+        }&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+  &lt;p&gt;the &lt;code&gt;PubSubInboundChannelAdapter&lt;/code&gt; adapts messages from the subscription and sends them into the &lt;code&gt;incoming&lt;/code&gt; &lt;code&gt;MessageChannel&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+  &lt;li&gt;
+  &lt;p&gt;the &lt;code&gt;IntegrationFlow&lt;/code&gt; takes incoming messages and routes them to a &lt;code&gt;MessageHandler&lt;/code&gt; (which we’ve contributed with lambda syntax) that a) logs the incoming message and b) manually acknowledges the receipt of the message.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The nice thing about &lt;code&gt;IntegrationFlow&lt;/code&gt; in both examples is that you can chain calls together. Here, we specify only where a message comes from (&lt;code&gt;.from()&lt;/code&gt;) and what handles it (&lt;code&gt;.handle()&lt;/code&gt;), but we could as easily after the &lt;code&gt;.handle()&lt;/code&gt; call also route, split, transform, etc., the messages. The message sent as the output of one component (the adapters, the message handlers, transformers, etc.) become the input to any downstream components.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Security OAuth2 Boot Auto-config 2.0.4 &amp; 2.1.0.M2 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/29/spring-security-oauth2-boot-auto-config-2-0-4-2-1-0-m2-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Josh Cummings</name>
+    </author>
+    <id>tag:spring.io,2018-08-29:3378</id>
+    <updated>2018-08-29T18:43:16Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;I&amp;#8217;m pleased to announce on behalf of the community &lt;a href="https://github.com/spring-projects/spring-security-oauth2-boot"&gt;Spring Security OAuth2 Boot Auto-config&lt;/a&gt; 2.0.4 and 2.1.0.M2.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Both releases primarily deliver bug fixes and dependency version updates along with some minor improvements. Of particular note is that these align with &lt;a href="https://github.com/spring-projects/spring-boot/releases/tag/v2.1.0.M2"&gt;recent&lt;/a&gt; &lt;a href="https://github.com/spring-projects/spring-boot/releases/tag/v2.0.4.RELEASE"&gt;releases&lt;/a&gt; of Spring Boot.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For a complete list of changes, please refer to the 2.0.4 &lt;a href="https://github.com/spring-projects/spring-security-oauth2-boot/milestone/7?closed=1"&gt;changelog&lt;/a&gt; and 2.1.0.M2 &lt;a href="https://github.com/spring-projects/spring-security-oauth2-boot/milestone/9?closed=1"&gt;changelog&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="https://projects.spring.io/spring-security/"&gt;Project Site&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-security-oauth2-boot/docs/current/reference/htmlsingle/"&gt;Reference&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-security"&gt;Help&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>This Week in Spring - August 28, 2018</title>
     <link rel="alternate" href="https://spring.io/blog/2018/08/28/this-week-in-spring-august-28-2018" />
@@ -1440,262 +1707,5 @@ Checkout the &lt;a href="https://springoneplatform.io/2018/sessions"&gt;sessions
 &lt;p&gt;&lt;code&gt;MonoProcessor&lt;/code&gt; will likely follow in these steps by becoming a (simpler) interface, with the concrete implementation being renamed to &lt;code&gt;MonoNextProcessor&lt;/code&gt;. We are also looking at offering a stand-alone implementation of a &lt;code&gt;MonoSink&lt;/code&gt; that users can directly manipulate without the need to use &lt;code&gt;Mono.create()&lt;/code&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#conclusion" class="anchor" name="conclusion"&gt;&lt;/a&gt;Conclusion&lt;/h1&gt;
 &lt;p&gt;Cool people don&amp;rsquo;t wait for the GA release! Go kick the tires on that shiny milestone, and, as always, feedback is welcome. :)&lt;/p&gt;
 &lt;p&gt;Happy reactive coding!&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Cloud Finchley.SR1 Is Available</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/01/spring-cloud-finchley-sr1-is-available" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Ryan Baxter</name>
-    </author>
-    <id>tag:spring.io,2018-08-01:3354</id>
-    <updated>2018-08-01T18:10:16Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the community, I am pleased to announce that SR1 (Service Release) of the &lt;a href="https://cloud.spring.io"&gt;Spring Cloud Finchley&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href="http://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/Finchley.SR1/"&gt;Maven Central&lt;/a&gt;. You can check out the Finchley &lt;a href="https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Finchley-Release-Notes"&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-gateway" class="anchor" name="spring-cloud-gateway"&gt;&lt;/a&gt;Spring Cloud Gateway&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/milestone/15?closed=1"&gt;Bug Fixes&lt;/a&gt;. Those dealing with an empty body and no content type are of note.&lt;/li&gt;
-  &lt;li&gt;Supports CORS Configuration &lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/issues/229"&gt;#229&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Response Timeout Configuration &lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/issues/371"&gt;#371&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Auto configuration and DSL support for Cloud Foundry route services &lt;a href="https://github.com/spring-cloud/spring-cloud-gateway/pull/294"&gt;#294&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Better error messages and error logging in certain cases.&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-sleuth" class="anchor" name="spring-cloud-sleuth"&gt;&lt;/a&gt;Spring Cloud Sleuth&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-sleuth/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-config" class="anchor" name="spring-cloud-config"&gt;&lt;/a&gt;Spring Cloud Config&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-config/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-netflix" class="anchor" name="spring-cloud-netflix"&gt;&lt;/a&gt;Spring Cloud Netflix&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-netflix/issues?q=milestone%3A2.0.1.RELEASE+is%3Aclosed"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-commons" class="anchor" name="spring-cloud-commons"&gt;&lt;/a&gt;Spring Cloud Commons&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-commons/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-contract" class="anchor" name="spring-cloud-contract"&gt;&lt;/a&gt;Spring Cloud Contract&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-contract/pull/684"&gt;Fixed the ordering of parsing YAML based contracts&lt;/a&gt;. Now your custom parsers will be read first.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-contract/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-stream" class="anchor" name="spring-cloud-stream"&gt;&lt;/a&gt;Spring Cloud Stream&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-stream-starters/releases/tag/vElmhurst.SR1"&gt;Release Notes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-vault" class="anchor" name="spring-cloud-vault"&gt;&lt;/a&gt;Spring Cloud Vault&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-vault/issues?q=is%3Aclosed+milestone%3A2.0.1"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-openfeign" class="anchor" name="spring-cloud-openfeign"&gt;&lt;/a&gt;Spring Cloud Openfeign&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-cloud/spring-cloud-openfeign/issues?q=is%3Aclosed+milestone%3A2.0.1.RELEASE"&gt;Bug Fixes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;h3&gt;&lt;a href="#spring-cloud-consul" class="anchor" name="spring-cloud-consul"&gt;&lt;/a&gt;Spring Cloud Consul&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Adds support for configuring Consul Client &lt;code&gt;TLSConfig&lt;/code&gt; &lt;a href="https://github.com/spring-cloud/spring-cloud-consul/issues/360"&gt;#360&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The following modules were updated as part of Finchley.SR1&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Module &lt;/th&gt;
-      &lt;th&gt;Version &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Consul &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Gateway &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Sleuth &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Config &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Netflix &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Commons &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Contract &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Stream &lt;/td&gt;
-      &lt;td&gt;Elmhurst.SR1 &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Vault &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Spring Cloud Openfeign &lt;/td&gt;
-      &lt;td&gt;2.0.1.RELEASE &lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;As always, we welcome feedback on &lt;a href="https://github.com/spring-cloud/"&gt;GitHub&lt;/a&gt;, on &lt;a href="https://gitter.im/spring-cloud/spring-cloud"&gt;Gitter&lt;/a&gt;, on &lt;a href="http://stackoverflow.com/questions/tagged/spring-cloud"&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href="https://twitter.com/SpringCloud"&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint"&gt;&lt;br/&gt;&amp;lt;dependencyManagement&amp;gt;&#xD;
-    &amp;lt;dependencies&amp;gt;&#xD;
-        &amp;lt;dependency&amp;gt;&#xD;
-            &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-            &amp;lt;artifactId&amp;gt;spring-cloud-dependencies&amp;lt;/artifactId&amp;gt;&#xD;
-            &amp;lt;version&amp;gt;Finchley.SR1&amp;lt;/version&amp;gt;&#xD;
-            &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;&#xD;
-            &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;&#xD;
-        &amp;lt;/dependency&amp;gt;&#xD;
-    &amp;lt;/dependencies&amp;gt;&#xD;
-&amp;lt;/dependencyManagement&amp;gt;&#xD;
-&amp;lt;dependencies&amp;gt;&#xD;
-    &amp;lt;dependency&amp;gt;&#xD;
-        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-        &amp;lt;artifactId&amp;gt;spring-cloud-starter-config&amp;lt;/artifactId&amp;gt;&#xD;
-    &amp;lt;/dependency&amp;gt;&#xD;
-    &amp;lt;dependency&amp;gt;&#xD;
-        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
-        &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-client&amp;lt;/artifactId&amp;gt;&#xD;
-    &amp;lt;/dependency&amp;gt;&#xD;
-    ...&#xD;
-&amp;lt;/dependencies&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;or with Gradle:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint"&gt;buildscript {&#xD;
-    dependencies {&#xD;
-        classpath &amp;quot;io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE&amp;quot;&#xD;
-    }&#xD;
-}&#xD;
-&#xD;
-&#xD;
-&#xD;
-apply plugin: &amp;quot;io.spring.dependency-management&amp;quot;&#xD;
-&#xD;
-dependencyManagement {&#xD;
-    imports {&#xD;
-        mavenBom &amp;#39;org.springframework.cloud:spring-cloud-dependencies:Finchley.SR1&amp;#39;&#xD;
-    }&#xD;
-}&#xD;
-&#xD;
-dependencies {&#xD;
-    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-config&amp;#39;&#xD;
-    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&amp;#39;&#xD;
-    ...&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;</content>
-  </entry>
-  <entry>
-    <title>New Spring Integration, AMQP, Kafka Maintenance and Milestone Releases</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/01/new-spring-integration-amqp-kafka-maintenance-and-milestone-releases" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Gary Russell</name>
-    </author>
-    <id>tag:spring.io,2018-07-27:3343</id>
-    <updated>2018-08-01T17:21:23Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;We are pleased to announce the following maintenance releases are now available.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;strong&gt;All users are encouraged to upgrade to these versions&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-integration"&gt;&lt;a class="anchor" href="#spring-integration"&gt;&lt;/a&gt;Spring Integration&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration/releases/tag/v5.0.7.RELEASE"&gt;5.0.7.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-integration/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-integration"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/INT"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-integration/docs/5.0.7.RELEASE/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-integration"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-integration"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-amqp-spring-for-rabbitmq"&gt;&lt;a class="anchor" href="#spring-amqp-spring-for-rabbitmq"&gt;&lt;/a&gt;Spring AMQP (Spring for RabbitMQ)&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-amqp/releases/tag/v2.0.5.RELEASE"&gt;2.0.5.RELEASE&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-amqp/releases/tag/v1.7.9.RELEASE"&gt;1.7.9.RELEASE&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-amqp/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-amqp"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/AMQP"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-amqp/docs/2.0.5.RELEASE/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-amqp"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-amqp"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-for-apache-kafka"&gt;&lt;a class="anchor" href="#spring-for-apache-kafka"&gt;&lt;/a&gt;Spring for Apache Kafka&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-kafka/releases/tag/v2.1.8.RELEASE"&gt;2.1.8.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-kafka/releases/tag/v1.3.6.RELEASE"&gt;1.3.6.RELEASE&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-kafka/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-kafka/docs/2.1.8.RELEASE/reference/html/"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-kafka"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-kafka"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;strong&gt;In addition, the first milestones of the next generations are also available:&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-integration-2"&gt;&lt;a class="anchor" href="#spring-integration-2"&gt;&lt;/a&gt;Spring Integration&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration/releases/tag/v5.1.0.M1"&gt;5.1.0.M1&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://docs.spring.io/spring-integration/docs/5.1.0.M1/reference/html/whats-new.html"&gt;What&amp;#8217;s New?&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-integration/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-integration"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/INT"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-integration/docs/5.1.0.M1/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-integration"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-integration"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-amqp-spring-for-rabbitmq-2"&gt;&lt;a class="anchor" href="#spring-amqp-spring-for-rabbitmq-2"&gt;&lt;/a&gt;Spring AMQP (Spring for RabbitMQ)&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-amqp/releases/tag/v2.1.0.M1"&gt;2.1.0.M1&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://docs.spring.io/spring-amqp/docs/2.1.0.M1/reference/html/_introduction.html#_changes_in_2_1_since_2_0"&gt;What&amp;#8217;s New?&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-amqp/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-amqp"&gt;GitHub&lt;/a&gt; | &lt;a href="https://jira.spring.io/browse/AMQP"&gt;JIRA&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-amqp/docs/2.1.0.M1/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-amqp"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-amqp"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect2"&gt;
-&lt;h3 id="spring-for-apache-kafka-2"&gt;&lt;a class="anchor" href="#spring-for-apache-kafka-2"&gt;&lt;/a&gt;Spring for Apache Kafka&lt;/h3&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-kafka/releases/tag/v2.2.0.M1"&gt;2.2.0.M1&lt;/a&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="https://docs.spring.io/spring-kafka/docs/2.2.0.M1/reference/html/whats-new-part.html#spring-kafka-intro-new"&gt;What&amp;#8217;s New?&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-kafka/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-kafka/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-kafka/docs/2.1.8.RELEASE/reference/html/"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-kafka"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-kafka"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;</content>
   </entry>
 </feed>
