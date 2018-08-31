@@ -22,11 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bridgeit.fundoonote.noteservice.dao.INoteDao;
+import com.bridgeit.fundoonote.noteservice.jsoup.JsoupWithRegex;
 import com.bridgeit.fundoonote.noteservice.model.Note;
-import com.bridgeit.fundoonote.noteservice.model.ResponseDto;
+import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 import com.bridgeit.fundoonote.userservice.dao.UserDao;
 import com.bridgeit.fundoonote.userservice.model.User;
-import com.bridgeit.fundoonote.userservice.model.UserProfile;
 import com.bridgeit.fundoonote.userservice.utility.IJwtProgram;
 
 @Service
@@ -43,6 +43,9 @@ public class NoteService implements INoteService {
 	@Autowired
 	IJwtProgram jwtToken;
 
+	@Autowired
+	JsoupWithRegex jsoupWithRegex;
+
 	@Override
 	public Note createUserNote(Note note, String token) {
 
@@ -51,10 +54,17 @@ public class NoteService implements INoteService {
 		User user = userDao.checkId(id);
 
 		note.setUser(user);
-
-		// getting noteId
+		List<WebScrap> webScraplist = jsoupWithRegex.listOfLink(note);
+		
 		long noteid = noteDao.create(note);
 		note = noteDao.checkNoteId(noteid);
+		
+		for (WebScrap webScrap : webScraplist) {
+			webScrap.setWebScrapNote(note);
+			noteDao.createWebscrap(webScrap);
+		}
+		note.setWebScrapList(webScraplist);
+		noteDao.updateNote(note);
 		return note;
 	}
 
@@ -90,7 +100,7 @@ public class NoteService implements INoteService {
 	@Override
 	public List<Note> listOfNote(String token) {
 
-		List<ResponseDto> listOfResponseDto = new ArrayList<>();
+		// List<ResponseDto> listOfResponseDto = new ArrayList<>();
 		// getting userId from token
 		long id = jwtToken.parseJWT(token);
 		User user = userDao.checkId(id);
@@ -160,7 +170,7 @@ public class NoteService implements INoteService {
 				System.out.println("filename 2 newfile :" + newfile);
 
 				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath() + dir.separator + newfile);
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + newfile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
@@ -190,32 +200,33 @@ public class NoteService implements INoteService {
 			throw new RuntimeException("FAIL!");
 		}
 	}
-	
+
 	@Override
-	public List<Note> getCollaboratedNotes(String token){
-		List<Note> notelist=new ArrayList<>();
-		//User user=userDao.checkEmail(userProfile.getUserEmail());
+	public List<Note> getCollaboratedNotes(String token) {
+		List<Note> notelist = new ArrayList<>();
+		// User user=userDao.checkEmail(userProfile.getUserEmail());
 		long id = jwtToken.parseJWT(token);
 		User user = userDao.checkId(id);
-		
-		System.out.println("user profile..."+user.getUserEmail());
+
+		System.out.println("user profile..." + user.getUserEmail());
 		String email;
-		String userEmail=user.getUserEmail();
-		List<Note> list=noteDao.collaboratedNoteList();
-		for(Note note:list) {
+		String userEmail = user.getUserEmail();
+		List<Note> list = noteDao.collaboratedNoteList();
+		for (Note note : list) {
 			System.out.println(note.getUserset().toString());
-			Set<User> userset=new HashSet<>();
-			userset=note.getUserset();
-			for(User user2:userset) {
-				System.out.println("user from userset ........."+user2.getUserEmail());
-			 email=user2.getUserEmail();
-				if(userEmail.equals(email)) {
-					long noteId=note.getNoteId();
-					Note note2=noteDao.checkNoteId(noteId);
-					notelist.add(note2);	
+			Set<User> userset = new HashSet<>();
+			userset = note.getUserset();
+			for (User user2 : userset) {
+				System.out.println("user from userset ........." + user2.getUserEmail());
+				email = user2.getUserEmail();
+				if (userEmail.equals(email)) {
+					long noteId = note.getNoteId();
+					Note note2 = noteDao.checkNoteId(noteId);
+					notelist.add(note2);
 				}
 			}
 		}
-		return notelist;	
+		return notelist;
 	}
+
 }

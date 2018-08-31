@@ -5,7 +5,124 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-08-30T00:00:00Z</updated>
+  <updated>2018-08-30T20:57:40Z</updated>
+  <entry>
+    <title>Spring Session for Apache Geode/Pivotal GemFire 2.0.5.RELEASE and 2.1.0.M1 Released!</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>John Blum</name>
+    </author>
+    <id>tag:spring.io,2018-08-30:3379</id>
+    <updated>2018-08-30T20:57:40Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the team as well as the community, I am pleased to announce the release of Spring Session for Apache Geode &amp;amp; Pivotal GemFire (SSDG) &lt;code&gt;2.0.5.RELEASE&lt;/code&gt; (&lt;strong&gt;Apple&lt;/strong&gt;) and &lt;code&gt;2.1.0.M1&lt;/code&gt; (&lt;strong&gt;Bean&lt;/strong&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;SSDG &lt;code&gt;2.0.5.RELEASE&lt;/code&gt; is based on Spring Session &lt;code&gt;2.0.5.RELEASE&lt;/code&gt;, Spring Data &lt;code&gt;Kay-SR9&lt;/code&gt; and Spring Framework &lt;code&gt;5.0.8.RELEASE&lt;/code&gt; and is available in &lt;a href="https://search.maven.org/search?q=spring-session-data-geode"&gt;Maven Central&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;SSDG &lt;code&gt;2.1.0.M1&lt;/code&gt; is based on Spring Session &lt;code&gt;2.1.0.M2&lt;/code&gt;, Spring Data &lt;code&gt;Lovelace-RC2&lt;/code&gt; and Spring Framework &lt;code&gt;5.1.0.RC2&lt;/code&gt; and is available from Spring &lt;a href="https://repo.spring.io/libs-milestone/org/springframework/session/spring-session-data-geode/"&gt;libs-milestone&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Both releases bring with it a new way to configure Spring Session when using either &lt;a href="http://geode.apache.org/"&gt;Apache Geode&lt;/a&gt; or &lt;a href="https://pivotal.io/pivotal-gemfire"&gt;Pivotal GemFire&lt;/a&gt;, or even &lt;a href="https://pivotal.io/platform/services-marketplace/data-management/pivotal-cloud-cache"&gt;Pivotal Cloud Cache (PCC)&lt;/a&gt;, to manage your Spring Boot Web application&amp;#8217;s (HTTP) Session state.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Currently, to enable (HTTP) Session state management using Spring Session with either Apache Geode or Pivotal GemFire as your provider, you would include either &lt;code&gt;org.springframework.session:spring-session-data-geode&lt;/code&gt; or &lt;code&gt;org.springframework.session:spring-session-data-gemfire&lt;/code&gt; on your Spring Boot application classpath, and then declare &lt;code&gt;@EnableGemFireHttpSession&lt;/code&gt; annotation on 1 of your application&amp;#8217;s &lt;code&gt;@Configuration&lt;/code&gt; classes, as follows:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;@SpringBootApplication
+@EnableGemFireHttpSession(maxInactiveIntervalSeconds=600)
+public class MyWebApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(MyWebApplication.class, args);
+  }
+...
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/api/org/springframework/session/data/gemfire/config/annotation/web/http/EnableGemFireHttpSession.html"&gt;@EnableGemFireHttpSession&lt;/a&gt; annotation includes several attributes to alter the configuration of your session management strategy (such as expiration; shown above) as well as the data management policies and indexes used by either Apache Geode or Pivotal GemFire to effectively manage session state.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;However, all of these attributes must be hard coded. What if you want to change the configuration during deployment, based on the environment?  Perhaps you want to vary the configuration using Spring profiles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Well, now you can dynamically configure Spring Session when using either Apache Geode or Pivotal GemFire in 1 of 2 different ways.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode-session-configuration-properties"&gt;&lt;a class="anchor" href="#geode-session-configuration-properties"&gt;&lt;/a&gt;Configuration with Properties&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Session for Apache Geode/Pivotal GemFire now gives you the ability to configure session management and Apache Geode or Pivotal GemFire using well-known, published properties.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;The &lt;code&gt;@EnableGemFireHttpSession&lt;/code&gt; annotation attributes document all the well-known, published properties itself.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;By way of example, to change the session expiration timeout, you can specify the following property in a Spring Boot &lt;code&gt;application.properties&lt;/code&gt; file, as follows:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-txt" data-lang="txt"&gt;#application.properties
+
+spring.session.data.gemfire.session.expiration.max-inactive-interval-seconds=600
+...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;More details about configuring SSDG with properties can be found in the &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-properties"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode-session-configuration-configurer"&gt;&lt;a class="anchor" href="#geode-session-configuration-configurer"&gt;&lt;/a&gt;Configuration with a Configurer&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Like Spring Web MVC&amp;#8217;s &lt;code&gt;WebMvcConfigurer&lt;/code&gt; callback interface, Spring Session for Apache Geode/Pivotal GemFire provides the &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/api/org/springframework/session/data/gemfire/config/annotation/web/http/support/SpringSessionGemFireConfigurer.html"&gt;&lt;code&gt;SpringSessionGemFireConfigurer&lt;/code&gt;&lt;/a&gt; callback interface to adjust various aspects of the Spring Session configuration.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For example, to set the session expiration timeout, simply declare the following:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="listingblock"&gt;
+&lt;div class="content"&gt;
+&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-java" data-lang="java"&gt;@Configuration
+class SpringSessionGemFireConfiguration {
+
+  @Bean
+  SpringSessionGemFireConfigurer sessionExpirationConfigurer() {
+
+    return new SpringSessionGemFireConfigurer(
+        @Value("${spring.session.timeout:600}") int sessionTimeout) {
+
+      @Override
+      public int getMaxInactiveIntervalInSeconds() {
+        return sessionTimeout;
+      }
+    };
+  }
+  ...
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;As shown above, the configuration for the Configurer can even be derived from other properties using Spring&amp;#8217;s &lt;code&gt;@Value&lt;/code&gt; annotation.  You can combine different Configurer bean definitions with different Spring profiles and so on and so forth.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;More details about using Configurers to configure SSDG can be found in the &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-configurer"&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="geode.session.feedback"&gt;&lt;a class="anchor" href="#geode.session.feedback"&gt;&lt;/a&gt;Feedback&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Any feedback and/or contributions are always highly appreciated and welcomed.  You can reach  us through the usual channels: &lt;a href="https://github.com/spring-projects/spring-session-data-geode/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session-data-geode/pulls"&gt;PR&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-session"&gt;StackOverflow&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Bootiful GCP: Integration with Google Cloud Pub/Sub (4/8)</title>
     <link rel="alternate" href="https://spring.io/blog/2018/08/30/bootiful-gcp-integration-with-google-cloud-pub-sub-4-8" />
@@ -1637,75 +1754,5 @@ Checkout the &lt;a href="https://springoneplatform.io/2018/sessions"&gt;sessions
   &lt;li&gt;great post by two of the best in the biz, Matt Raible and Simon Maple: &lt;a href="https://developer.okta.com/blog/2018/07/30/10-ways-to-secure-spring-boot"&gt;10 excellent ways to secure your Spring Boot application!&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Thanks Liberty IT &lt;a href="https://irishtechnews.ie/liberty-it-hosts-josh-long-at-spring-boot-coding/amp/"&gt;for having me in Dublin, Ireland and Belfast, North Ireland!&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content>
-  </entry>
-  <entry>
-    <title>Reactor Californium-M1, this summer's Milestone release train</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/07/reactor-californium-m1-this-summer-s-milestone-release-train" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Simon Baslé</name>
-    </author>
-    <id>tag:spring.io,2018-06-12:3297</id>
-    <updated>2018-08-07T09:08:00Z</updated>
-    <content type="html">&lt;p&gt;On behalf of the Reactor team, I have the pleasure of announcing the newest Reactor milestone, &lt;code&gt;Californium-M1&lt;/code&gt; &#x1f6a2; &#x1f682;&lt;/p&gt;
-&lt;p&gt;The team has been busy working on &lt;code&gt;Californium&lt;/code&gt;, the third major installment of Reactor 3. We are now ready for your feedback on a few select issues, and we have a lot of enhancements and bug fixes ready for your consumption as well.&lt;/p&gt;&lt;h1&gt;&lt;a href="#californium-m1-bom" class="anchor" name="californium-m1-bom"&gt;&lt;/a&gt;Californium-M1 BOM&lt;/h1&gt;
-&lt;p&gt;For its third release train, we continue on the theme of alphabetically increasing names on the periodic table of elements. Californium is an element first synthesized in California.&lt;/p&gt;
-&lt;p&gt;The milestone&amp;rsquo;s BOM contains:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code&gt;reactor-core&lt;/code&gt; &lt;code&gt;3.2.0.M3&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;reactor-extra&lt;/code&gt; &lt;code&gt;3.2.0.M1&lt;/code&gt; (with a few API alignment changes)&lt;/li&gt;
-  &lt;li&gt;&lt;code&gt;reactor-netty&lt;/code&gt; &lt;code&gt;0.8.0.M1&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Early this year (M1), there was an early preview of &lt;code&gt;reactor-core&lt;/code&gt; that was solely focused on the &amp;ldquo;error mode continue&amp;rdquo; feature, and core also had an off-train milestone release (M2) in June. This blog post covers changes from the latter in addition to those in the brand new M3.&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-netty-0-8-0-m1" class="anchor" name="reactor-netty-0-8-0-m1"&gt;&lt;/a&gt;Reactor Netty 0.8.0.M1&lt;/h1&gt;
-&lt;p&gt;The heavyweight here is &lt;a href="https://github.com/reactor/reactor-netty/releases/tag/v0.8.0.M1"&gt;&lt;code&gt;reactor-netty&lt;/code&gt;&lt;/a&gt;. Expect a fuller blog post that details the rationale behind the API changes and new features, which include:&lt;/p&gt;&lt;h3&gt;&lt;a href="#api-revamp" class="anchor" name="api-revamp"&gt;&lt;/a&gt;API revamp&lt;/h3&gt;
-&lt;p&gt;The team has introduced a large revamp of the API that is more guiding when building clients and servers, avoiding unforgiving configuration errors that were too easy to make in the 0.7.x line.&lt;/p&gt;
-&lt;p&gt;The lifecycle is also more clearly outlined by the new API.&lt;/p&gt;&lt;h3&gt;&lt;a href="#http2-support" class="anchor" name="http2-support"&gt;&lt;/a&gt;HTTP2 support&lt;/h3&gt;
-&lt;p&gt;Yes, &lt;strong&gt;HTTP2 support&lt;/strong&gt; &#x1f44d; For now it is mainly upgrading to HTTP2 transparently, but we are working on adding HTTP2 individual streams as first-class citizens in the near future.&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-core-3-2-0" class="anchor" name="reactor-core-3-2-0"&gt;&lt;/a&gt;Reactor Core 3.2.0&lt;/h1&gt;
-&lt;p&gt;Altogether, M2 and M3 bring in over 70 changes compared to the previous Bismuth iteration.&lt;/p&gt;
-&lt;p&gt;There are fewer API changes in reactor-core than in reactor-netty, and the update considerations are mainly about differences between the milestones themselves. See the &amp;ldquo;update considerations&amp;rdquo; section of &lt;a href="https://github.com/reactor/reactor-core/releases/tag/v3.2.0.M2"&gt;M2&lt;/a&gt; and &lt;a href="https://github.com/reactor/reactor-core/releases/tag/v3.2.0.M3"&gt;M3&lt;/a&gt; for more details.&lt;/p&gt;
-&lt;p&gt;We most need your feedback for the following features:&lt;/p&gt;&lt;h3&gt;&lt;a href="#metrics" class="anchor" name="metrics"&gt;&lt;/a&gt;Metrics&lt;/h3&gt;
-&lt;p&gt;Micrometer and &lt;code&gt;.metrics()&lt;/code&gt; support (&lt;a href="https://github.com/reactor/reactor-core/issues/1183"&gt;#1183&lt;/a&gt;, &lt;a href="https://github.com/reactor/reactor-core/issues/1123"&gt;#1123&lt;/a&gt;) has been added. The new &lt;code&gt;.metrics()&lt;/code&gt; operator does something only if &lt;code&gt;Micrometer&lt;/code&gt; is on the classpath.&lt;/p&gt;
-&lt;p&gt;It records metrics on &lt;code&gt;onNext&lt;/code&gt; timings, subscription-to-completion timings, signal count, and others &amp;ndash; all from the perspective of what signals the immediate upstream operator produces.&lt;/p&gt;
-&lt;p&gt;It was introduced in M2 but has seen improvements in M3, as well as a (breaking) change in some of the tags names (&lt;a href="https://github.com/reactor/reactor-core/pull/1245"&gt;#1245&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Note that an important goal was to avoid exposing Micrometer stuff in the public Reactor API. We didn&amp;rsquo;t want to have a mandatory dependency to Micrometer, and we strove to contain its usage to internal classes loaded only if we detect it on the classpath.&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Up next&lt;/strong&gt;:&lt;br/&gt;Before GA, there should also be basic instrumentation support for &lt;code&gt;Schedulers&lt;/code&gt; (or rather the &lt;code&gt;ExecutorServices&lt;/code&gt; that back some of the &lt;code&gt;Schedulers&lt;/code&gt;). We are also looking at a way to choose a specific &lt;code&gt;MeterRegistry&lt;/code&gt; globally for Reactor, again without exposing a public API that refers to the &lt;code&gt;MeterRegistry&lt;/code&gt; interface.&lt;/p&gt;
-&lt;/blockquote&gt;&lt;h3&gt;&lt;a href="#advanced-retry" class="anchor" name="advanced-retry"&gt;&lt;/a&gt;Advanced Retry&lt;/h3&gt;
-&lt;p&gt;We added a preconfigured alternative to &lt;code&gt;retryWhen&lt;/code&gt; with exponential backoff and jitter (&lt;code&gt;retryBackoff()&lt;/code&gt;. See &lt;a href="https://github.com/reactor/reactor-core/issues/1122"&gt;#1122&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;This version of retry reflects what we think is the industry best practice in terms of retries. It is a good middle ground between the too simple &lt;code&gt;retry(n)&lt;/code&gt;, the complex &lt;code&gt;retryWhen(Function)&lt;/code&gt; and the more configurable &lt;code&gt;RetryFunction&lt;/code&gt; from &lt;code&gt;reactor-addons&lt;/code&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#resource-based-reactive-closures" class="anchor" name="resource-based-reactive-closures"&gt;&lt;/a&gt;Resource-based reactive closures&lt;/h3&gt;
-&lt;p&gt;To help you build reactive transactional blocks, we added &lt;a href="https://github.com/reactor/reactor-core/issues/1220"&gt;&lt;code&gt;usingWhen&lt;/code&gt;&lt;/a&gt;. Like &lt;code&gt;using&lt;/code&gt;, it wraps a resource, generates a &lt;code&gt;Flux&lt;/code&gt; out of it, and ensures that the resource is properly cleaned up when the Flux terminates.&lt;/p&gt;
-&lt;p&gt;The major differences are:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;The resource is provided asynchronously through a &lt;code&gt;Publisher&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Cleanups are asynchronous as well (&lt;code&gt;Function&amp;lt;Resource, Publisher&amp;gt;&lt;/code&gt;) and delay only the propagation of the terminal signals, NOT the onNext signals.&lt;/li&gt;
-  &lt;li&gt;The operator can have separate async &amp;ldquo;cleanups&amp;rdquo; for complete, error, and cancel terminations.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;This was introduced in M2 but slightly changed in M3 to fix &lt;code&gt;Context&lt;/code&gt; propagation and to support cancellation of the &lt;code&gt;Publisher&amp;lt;Resource&amp;gt;&lt;/code&gt;. By cancelling the main &lt;code&gt;Flux&amp;lt;T&amp;gt;&lt;/code&gt; returned by this operator &lt;strong&gt;before&lt;/strong&gt; the &lt;code&gt;Resource&lt;/code&gt; is even emitted, your cancel instruction is propagated to the &lt;code&gt;Publisher&amp;lt;Resource&amp;gt;&lt;/code&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#code-ondiscard-code-hook" class="anchor" name="code-ondiscard-code-hook"&gt;&lt;/a&gt;&lt;code&gt;onDiscard&lt;/code&gt; hook&lt;/h3&gt;
-&lt;p&gt;This global hook, which takes the form of a &lt;code&gt;Consumer&amp;lt;Object&amp;gt;&lt;/code&gt;, is intended as the last missing piece for advanced users that deal with off-heap objects that need special cleanup.&lt;/p&gt;
-&lt;p&gt;Typically, Netty&amp;rsquo;s &lt;code&gt;ByteBuf&lt;/code&gt; or Spring 5&amp;rsquo;s &lt;code&gt;DataBuffer&lt;/code&gt; fall into this category: They are pooled, off-heap, and need a &lt;code&gt;release()&lt;/code&gt; call once they&amp;rsquo;re not used, lest there be a memory leak.&lt;/p&gt;
-&lt;p&gt;Such elements could fall between the cracks of reactive sequences and never reach user code in three broad situations:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;the operator&amp;rsquo;s source is malformed and doesn&amp;rsquo;t respect RS specification (for example, it emits a &lt;code&gt;ByteBuf&lt;/code&gt; &lt;em&gt;after&lt;/em&gt; having signalled &lt;code&gt;onComplete&lt;/code&gt;).&lt;/li&gt;
-  &lt;li&gt;the operator filters some elements as part of its semantics (for example &lt;code&gt;filter&lt;/code&gt;).&lt;/li&gt;
-  &lt;li&gt;the operator prefetches for backpressure optimization purposes and is cancelled, discarding its prefetch queue.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Case (1) was already covered by the &lt;code&gt;onNextDropped&lt;/code&gt; hook, but case (3) was definitely not.&lt;br/&gt;Case (2) (filter semantics) was a bit in the middle, with the possibility of doing the cleanup &lt;em&gt;inside&lt;/em&gt; the filtering &lt;code&gt;Predicate&lt;/code&gt;, for example. But that was cumbersome and prone to be forgotten.&lt;/p&gt;
-&lt;p&gt;So we added the &lt;code&gt;onDiscard&lt;/code&gt; to our repertoire of &lt;code&gt;Hooks&lt;/code&gt; to cover (2) and (3). Note that, unlike the &amp;ldquo;continue on error&amp;rdquo; feature, for now, there is no public API to setup the hook on a specific &lt;code&gt;Flux&lt;/code&gt; instance. There is an unsupported workaround with the &lt;code&gt;Context&lt;/code&gt;, and an official API is likely to make an appearance in the GA or a later maintenance release.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;onDiscard&lt;/code&gt; hook has the following &lt;strong&gt;characteristics and requirements&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;It is additive, meaning that invoking &lt;code&gt;Hooks.onDiscard(Consumer)&lt;/code&gt; twice will combine the two consumers using &lt;code&gt;Consumer#andThen&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;It is not keyed, meaning that while multiple calls are additive, it can only be reset in full (not on a per-&lt;code&gt;Consumer&lt;/code&gt; basis).&lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;Consumer&lt;/code&gt; MUST perform &lt;code&gt;instanceof&lt;/code&gt; checks before casting, as it WILL be used with different types of objects.&lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;Consumer&lt;/code&gt; MUST NOT throw exceptions and should contain &lt;code&gt;try catch&lt;/code&gt; blocks as needed.&lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;Consumer&lt;/code&gt; MUST be idempotent, as it might be invoked on the same instance multiple times (for example, in the case of overlapping buffers).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;On a side note, &lt;code&gt;errorStrategyContinue()&lt;/code&gt; &lt;strong&gt;has been renamed in M3 to &lt;code&gt;onErrorContinue()&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#reactor-extra-3-2-0-m1" class="anchor" name="reactor-extra-3-2-0-m1"&gt;&lt;/a&gt;Reactor Extra 3.2.0.M1&lt;/h1&gt;
-&lt;p&gt;Finally, &lt;code&gt;reactor-extra&lt;/code&gt; has a more minor API change in the retry/repeat utils side of things. It aligns with the &lt;code&gt;core&lt;/code&gt; operators, using the same default values and &lt;code&gt;Long&lt;/code&gt; rather than &lt;code&gt;Integer&lt;/code&gt; indexes.&lt;/p&gt;&lt;h1&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h1&gt;
-&lt;p&gt;The next step for &lt;code&gt;reactor-core&lt;/code&gt; is a rework of how the &lt;code&gt;Processor&lt;/code&gt; objects are exposed. The current &lt;code&gt;FluxProcessor&amp;lt;IN, OUT&amp;gt;&lt;/code&gt; is a bit bloated, because it extends and exposes the whole &lt;code&gt;Flux&lt;/code&gt; API.&lt;/p&gt;
-&lt;p&gt;Additionally, the &lt;code&gt;FluxProcessor#sink()&lt;/code&gt; and associated &lt;code&gt;FluxSink&lt;/code&gt; are too easily misused, especially when one seeks to both subscribe a &lt;code&gt;Processor&lt;/code&gt; to a &lt;code&gt;Publisher&lt;/code&gt; source AND manually push data to it through the &lt;code&gt;sink()&lt;/code&gt;, which isn&amp;rsquo;t really supported currently.&lt;br/&gt;The fact that &lt;code&gt;sink()&lt;/code&gt; should be called once and the returned &lt;code&gt;FluxSink&amp;lt;T&amp;gt;&lt;/code&gt; instance should be reused is also not crystal clear.&lt;/p&gt;
-&lt;p&gt;So we are looking at a facade over &lt;code&gt;Processor&amp;lt;T, T&amp;gt;&lt;/code&gt; that directly implements &lt;code&gt;FluxSink&lt;/code&gt; (instead of &lt;code&gt;Flux&lt;/code&gt;), works when both are used as a subscriber and a sink, and has an &lt;code&gt;asFlux()&lt;/code&gt; view method to &lt;em&gt;optionally&lt;/em&gt; build a chain of &lt;code&gt;Flux&lt;/code&gt; operators on top of it.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;MonoProcessor&lt;/code&gt; will likely follow in these steps by becoming a (simpler) interface, with the concrete implementation being renamed to &lt;code&gt;MonoNextProcessor&lt;/code&gt;. We are also looking at offering a stand-alone implementation of a &lt;code&gt;MonoSink&lt;/code&gt; that users can directly manipulate without the need to use &lt;code&gt;Mono.create()&lt;/code&gt;.&lt;/p&gt;&lt;h1&gt;&lt;a href="#conclusion" class="anchor" name="conclusion"&gt;&lt;/a&gt;Conclusion&lt;/h1&gt;
-&lt;p&gt;Cool people don&amp;rsquo;t wait for the GA release! Go kick the tires on that shiny milestone, and, as always, feedback is welcome. :)&lt;/p&gt;
-&lt;p&gt;Happy reactive coding!&lt;/p&gt;</content>
   </entry>
 </feed>

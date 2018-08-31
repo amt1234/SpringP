@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bridgeit.fundoonote.noteservice.model.Note;
+import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 import com.bridgeit.fundoonote.noteservice.service.INoteService;
 import com.bridgeit.fundoonote.userservice.model.Response;
 import com.bridgeit.fundoonote.userservice.model.UserProfile;
@@ -98,6 +99,10 @@ public class NoteController {
 		if(list!=null)
 			return new ResponseEntity<>(new Response("200",list),HttpStatus.OK);
 		return new ResponseEntity<>(new Response("404","No collaborated note"),HttpStatus.CONFLICT);
+	}
+	
+	public ResponseEntity<?> webScrapping(@RequestBody WebScrap webScrap){
 		
+		return null;
 	}
 }

@@ -1,7 +1,9 @@
 package com.bridgeit.fundoonote.noteservice.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -48,6 +51,18 @@ public class Note {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	@OneToMany(mappedBy="webScrapNote")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<WebScrap> webScrapList=new ArrayList<>();
+	
+	public List<WebScrap> getWebScrapList() {
+		return webScrapList;
+	}
+
+	public void setWebScrapList(List<WebScrap> webScrapList) {
+		this.webScrapList = webScrapList;
 	}
 
 	@ManyToMany(mappedBy="notes")

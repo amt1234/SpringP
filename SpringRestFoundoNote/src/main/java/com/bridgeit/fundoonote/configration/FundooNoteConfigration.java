@@ -108,7 +108,7 @@ public class FundooNoteConfigration {
 	public HibernateTransactionManager getTransactionManager() throws IOException {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(getSessionFactory().getObject());
-
+		transactionManager.setNestedTransactionAllowed(true);
 		return transactionManager;
 	}
 

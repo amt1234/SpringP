@@ -1,18 +1,16 @@
 package com.bridgeit.fundoonote.noteservice.dao;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bridgeit.fundoonote.noteservice.model.Note;
+import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 import com.bridgeit.fundoonote.userservice.model.User;
 
 @Repository
@@ -25,7 +23,6 @@ public class NoteDao implements INoteDao {
 	public long create(Note note) {
 		System.out.println("dao of note");
 		return (long) sessionFacetory.getCurrentSession().save(note);
-
 	}
 
 	@Override
@@ -35,10 +32,8 @@ public class NoteDao implements INoteDao {
 				.add(Restrictions.eq("noteId", noteId));
 		Note note = (Note) criteria.uniqueResult();
 		return note;
-
 	}
 	
-
 	@Override
 	public boolean updateNote(Note note) {
 		sessionFacetory.getCurrentSession().update(note);
@@ -59,9 +54,9 @@ public class NoteDao implements INoteDao {
 	public List<Note> collaboratedNoteList(){
 		Criteria criteria=sessionFacetory.getCurrentSession().createCriteria(Note.class);
 		List<Note> list=criteria.list();
-		return list;
-		
+		return list;	
 	}
+	
 	@Override
 	public boolean deleteNoteOfUser(long noteId) {
 		System.out.println("note id in dao" + noteId);
@@ -69,5 +64,11 @@ public class NoteDao implements INoteDao {
 		sessionFacetory.getCurrentSession().delete(note);
 		return true;
 	}
-
+	
+	@Override
+	public boolean createWebscrap(WebScrap webScrap) {
+		sessionFacetory.getCurrentSession().save(webScrap);
+		return true;
+	}
+	
 }
