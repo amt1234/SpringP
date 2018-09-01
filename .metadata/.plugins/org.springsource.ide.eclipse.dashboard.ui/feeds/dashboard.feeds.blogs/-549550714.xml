@@ -5,7 +5,118 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2018-08-30T20:57:40Z</updated>
+  <updated>2018-08-31T16:34:46Z</updated>
+  <entry>
+    <title>Spring Boot for Apache Geode &amp; Pivotal GemFire 1.0.0.M2 Released!</title>
+    <link rel="alternate" href="https://spring.io/blog/2018/08/31/spring-boot-for-apache-geode-pivotal-gemfire-1-0-0-m2-released" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>John Blum</name>
+    </author>
+    <id>tag:spring.io,2018-08-31:3380</id>
+    <updated>2018-08-31T16:34:46Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the team and the community, I am pleased to announce the release of Spring Boot for Apache Geode and Pivotal GemFire &lt;code&gt;1.0.0.M2&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;In summary this release brings the following improvements:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Auto-configuration support for Spring Session when using &lt;a href="http://geode.apache.org"&gt;Apache Geode&lt;/a&gt;, &lt;a href="https://pivotal.io/pivotal-gemfire"&gt;Pivotal GemFire&lt;/a&gt; or &lt;a href="https://pivotal.io/platform/services-marketplace/data-management/pivotal-cloud-cache"&gt;Pivotal Cloud Cache (PCC)&lt;/a&gt; to manage and store your Spring Boot application&amp;#8217;s (HTTP) Session state.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Recognition of &lt;code&gt;spring.cache.type&lt;/code&gt; when using Spring&amp;#8217;s &lt;a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#cache"&gt;Cache Abstraction&lt;/a&gt; auto-configured with Spring Boot.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Additions and improvements to the documentation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upgrades to Spring Framework &lt;code&gt;5.0.8.RELEASE&lt;/code&gt;, Spring Boot &lt;code&gt;2.0.4.RELEASE&lt;/code&gt; and Spring Data &lt;code&gt;Kay-SR9&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This release builds on the &lt;a href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released"&gt;recently minted&lt;/a&gt; Spring Session for Apache Geode/Pivotal GemFire (SSDG) &lt;code&gt;2.0.5.RELEASE&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;1 of the key additions to SSDG was to enable dynamic configuration of Spring Session with Apache Geode/Pivotal GemFire/PCC using Properties along with a new &lt;code&gt;SpringSessionGemFireConfigurer&lt;/code&gt; callback interface. That way, even in the context of Spring Boot&amp;#8217;s auto-configuration, users have the ability to customize the configuration to meet their application requirements.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode.boot-session-properties"&gt;&lt;a class="anchor" href="#geode.boot-session-properties"&gt;&lt;/a&gt;Configuration with Properties&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;In addition to the Properties discussed &lt;a href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released#geode-session-configuration-properties"&gt;here&lt;/a&gt; and documented &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-properties"&gt;here&lt;/a&gt;, Spring Boot for Apache Geode &amp;amp; Pivotal GemFire additionally recognizes the following properties:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;spring.session.timeout&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;server.servlet.session.timeout&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Still, &lt;code&gt;spring.session.data.gemfire.session.expiration.max-inactive-interval-seconds&lt;/code&gt; takes precedence over &lt;code&gt;spring.session.timeout&lt;/code&gt;, which takes precedence over &lt;code&gt;server.servlet.session.timeout&lt;/code&gt; if any combination of these properties are set.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Boot for Apache Geode/Pivotal GemFire additionally recognizes and respects &lt;code&gt;spring.session.store-type&lt;/code&gt;.  However, and unfortunately, this property cannot be set to either &lt;code&gt;gemfire&lt;/code&gt; or &lt;code&gt;geode&lt;/code&gt; as these values are not recognized as a valid (&lt;a href="https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/session/StoreType.html"&gt;enumerated&lt;/a&gt;) values by Spring Boot itself.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect2"&gt;
+&lt;h3 id="geode-boot-session-configurer"&gt;&lt;a class="anchor" href="#geode-boot-session-configurer"&gt;&lt;/a&gt;Configuration using a Configurer&lt;/h3&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Spring Boot for Apache Geode &amp;amp; Pivotal GemFire adds nothing beyond what is already provided by Spring Session for Apache Geode/Pivotal GemFire with respect to the new &lt;code&gt;SpringSessionGemFireConfigurer&lt;/code&gt; call back interface, as discussed &lt;a href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released#geode-session-configuration-configurer"&gt;here&lt;/a&gt; and documented &lt;a href="https://docs.spring.io/autorepo/docs/spring-session-data-geode-build/2.0.5.RELEASE/reference/html5/#httpsession-gemfire-configuration-configurer"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="geode-boot-next"&gt;&lt;a class="anchor" href="#geode-boot-next"&gt;&lt;/a&gt;What&amp;#8217;s Next&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Next up, Spring Boot for Apache Geode &amp;amp; Pivotal GemFire will provide OOTB &lt;code&gt;HealthIndicators&lt;/code&gt; to assess and monitor the runtime health of your Apache Geode/Pivotal GemFire powered Spring Boot applications.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;More information about Spring Boot &lt;code&gt;HealthIndicators&lt;/code&gt; can be found &lt;a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html#production-ready-health"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;This will be available in next release, &lt;code&gt;1.0.0.M3&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Even longer term, we are planning to add support for Spring Boot Actuator.  There is an effort underway to retrofit Apache Geode/Pivotal GemFire&amp;#8217;s Stats architecture with &lt;a href="https://micrometer.io/"&gt;Micrometer&lt;/a&gt;.  This will serve as the basis for Spring Boot for Apache Geode &amp;amp; Pviotal GemFire&amp;#8217;s Actuator support.  This will most likely be available in SBDG 1.1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="sect1"&gt;
+&lt;h2 id="geode-boot-feedback"&gt;&lt;a class="anchor" href="#geode-boot-feedback"&gt;&lt;/a&gt;Feedback&lt;/h2&gt;
+&lt;div class="sectionbody"&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Try it out!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;You can get the new Spring Boot for Apache Geode or Pivotal GemFire bits from Spring&amp;#8217;s &lt;a href="http://repo.spring.io/libs-milestone/org/springframework/geode/spring-geode-starter/1.0.0.M2/"&gt;libs-milestone&lt;/a&gt; Repository and begin building Apache Geode/Pivotal GemFire powered Spring Boot applications by including the following dependency:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;org.springframework.geode:spring-geode-starter&lt;/code&gt; (Apache Geode)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;org.springframework.geode:spring-gemfire-starter&lt;/code&gt; (Pivotal GemFire/PCC)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Any feedback and/or contributions are always welcomed and appreciated: &lt;a href="https://github.com/spring-projects/spring-boot-data-geode/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot-data-geode/pulls"&gt;PR&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-boot"&gt;StackOverflow&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Also be sure to checkout &lt;a href="https://springoneplatform.io/"&gt;SpringOne Platform&lt;/a&gt; this year.  There is a lot of great &lt;a href="https://springoneplatform.io/2018/sessions"&gt;content&lt;/a&gt; and &lt;a href="https://springoneplatform.io/2018/speakers"&gt;speakers&lt;/a&gt;.  Plus, &lt;strong&gt;Luke Shannon&lt;/strong&gt; and I will be presenting on &lt;a href="https://springoneplatform.io/2018/sessions/scaling-spring-boot-applications-in-real-time"&gt;"&lt;em&gt;Scaling Spring Boot Application in Real-Time&lt;/em&gt;"&lt;/a&gt;, where we will be showcasing this project and much more.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+  </entry>
   <entry>
     <title>Spring Session for Apache Geode/Pivotal GemFire 2.0.5.RELEASE and 2.1.0.M1 Released!</title>
     <link rel="alternate" href="https://spring.io/blog/2018/08/30/spring-session-for-apache-geode-pivotal-gemfire-2-0-5-release-and-2-1-0-m1-released" />
@@ -135,6 +246,12 @@ class SpringSessionGemFireConfiguration {
     <content type="html">&lt;blockquote&gt;
   &lt;p&gt;Hi Spring fans! In this brief 8 part series we’re going to look at the Spring Cloud integration for Google Cloud Platform, called Spring Cloud GCP. &lt;a href="https://cloud.spring.io/spring-cloud-gcp/"&gt;Spring Cloud GCP&lt;/a&gt; represents a joint effort between Google and Pivotal that endeavors to provide a first class experience for Spring Cloud developers when using the Google Cloud Platform. Pivotal Cloud Foundry users will enjoy an even &lt;a href="https://docs.pivotal.io/partners/gcp-sb/index.html"&gt;easier integration with the GCP service broker&lt;/a&gt;. I wrote these installments with input from Google Cloud Developer Advocate, and my buddy, &lt;a href="http://twitter.com/saturnism"&gt;Ray Tsang&lt;/a&gt;. You can also catch a walkthrough of Spring Cloud GCP in our Google Next 2018 session, &lt;a href="https://www.youtube.com/watch?v=2Jo3vy7iQf8"&gt;Bootiful Google Cloud Platform&lt;/a&gt;. Thanks buddy! As always, &lt;a href="http://twitter.com/starbuxman"&gt;I&amp;rsquo;d love to hear from you if you have feedback&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re just joining us, be sure to read the previous installments including:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/20/bootiful-gcp-getting-started-with-spring-cloud-for-google-cloud-platform-1-8"&gt;Bootiful GCP: Getting Started with Spring Cloud for Google Cloud Platform (1/8)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/23/bootiful-gcp-relational-data-access-with-spring-cloud-gcp-2-8"&gt;Bootiful GCP: Relational Data Access with Spring Cloud GCP (2/8)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/27/bootiful-gcp-globally-consistent-data-access-with-spanner-3-8"&gt;Bootiful GCP: Globally Consistent Data Access with Spanner&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Let’s look at application integration with Google Cloud Pub/Sub. Google Cloud Pub/Sub supports a number of classic enterprise application integration use cases at Google scale. The &lt;a href="https://cloud.google.com/pubsub/docs/overview"&gt;Google Cloud website for Pub/Sub&lt;/a&gt; lists some:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;
@@ -735,7 +852,7 @@ class Reservation {&#xD;
       <name>Artem Bilan</name>
     </author>
     <id>tag:spring.io,2018-08-21:3375</id>
-    <updated>2018-08-21T20:56:19Z</updated>
+    <updated>2018-08-21T20:56:00Z</updated>
     <content type="html">&lt;div class="paragraph"&gt;
 &lt;p&gt;Dear Spring Community!&lt;/p&gt;
 &lt;/div&gt;
@@ -793,7 +910,7 @@ Similar embedding technique is used in the Kinesis Binder when &lt;code&gt;heade
 &lt;p&gt;We are looking forward for any feedback and thrilled to evolve these projects for better community requirements in the next installments.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="https://cloud.spring.io/spring-cloud-gcp"&gt;Spring Integration AWS Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis"&gt;Spring Cloud Stream Binder for AWS Kinesis Project Page&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-integration"&gt;Help&lt;/a&gt; | &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Chat&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/spring-projects/spring-integration-aws"&gt;Spring Integration AWS Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-cloud/spring-cloud-stream-binder-aws-kinesis"&gt;Spring Cloud Stream Binder for AWS Kinesis Project Page&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-integration"&gt;Help&lt;/a&gt; | &lt;a href="https://gitter.im/spring-cloud/spring-cloud-stream"&gt;Chat&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;</content>
   </entry>
   <entry>
@@ -1697,62 +1814,5 @@ Checkout the &lt;a href="https://springoneplatform.io/2018/sessions"&gt;sessions
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - August 7th, 2018</title>
-    <link rel="alternate" href="https://spring.io/blog/2018/08/08/this-week-in-spring-august-7th-2018" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2018-08-08:3357</id>
-    <updated>2018-08-08T02:08:00Z</updated>
-    <content type="html">&lt;p&gt;HI Spring fans! This week I&amp;rsquo;m in &lt;a href="https://www.meetup.com/Miami-Java-User-Group/?_cookie-check=ijh6mnmDVvhGmEyx"&gt;Miami for the Java User Group&lt;/a&gt; and at home working on new episodes of Spring Tips. Just trying to keep moving! It&amp;rsquo;s been a whirlwind week in Spring, though, so let&amp;rsquo;s get to it! &lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Reactor team ninja Simon Baslé has just announced the first milestone of &lt;a href="https://spring.io/blog/2018/08/07/reactor-californium-m1-this-summer-s-milestone-release-train"&gt;the Californium release train of project Reactor&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is a nice example of &lt;a href="https://github.com/spring-projects/spring-data-examples/tree/master/jdbc/jooq"&gt;using Spring Data JDBC with JOOQ&lt;/a&gt;.. &lt;em&gt;in the Spring Data examples&lt;/em&gt;!&lt;/li&gt;
-  &lt;li&gt;Happy Birthday Istio! This post looks at how &lt;a href="https://content.pivotal.io/blog/happy-birthday-istio-a-closer-look-at-how-pivotal-is-embedding-the-service-mesh-to-cloud-foundry-kubernetes-and-knative"&gt;Pivotal embeds the service mesh to Cloud Foundry, Kubernetes, and Knative&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Ryan Baxter has just announced the first &lt;a href="https://spring.io/blog/2018/08/01/spring-cloud-finchley-sr1-is-available"&gt;release of Spring Cloud Finchley, SR1&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Our very own Paul Czarkowski has just published a &lt;a href="https://content.pivotal.io/blog/deploying-software-on-pks-creating-a-continuous-delivery-pipeline-with-spinnaker"&gt;fairly lengthy tutorial on deploying Spinnaker to Pivotal Container Service (or any Kubernetes)&lt;/a&gt; using Helm and then creating pipelines in Spinnaker to deploy applications to PKS/Kubernetes. This is &lt;em&gt;awesome&lt;/em&gt;!&lt;/li&gt;
-  &lt;li&gt;Spring Integration lead Gary Russell just announced maintenance and milestone &lt;a href="https://spring.io/blog/2018/08/01/new-spring-integration-amqp-kafka-maintenance-and-milestone-releases"&gt;releases for Spring Integration and Spring AMQP&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/01/spring-integration-for-aws-2-0-0-rc1-and-spring-cloud-stream-kinesis-binder-1-0-0-rc1"&gt;Spring Integration for AWS 2.0.0.RC1 and Spring Cloud Stream Kinesis Binder 1.0.0.RC1&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/08/01/spring-vault-2-1-m1-available-now"&gt;Spring Vault 2.1 M1 available now&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/31/spring-io-platform-cairo-sr3"&gt;Spring IO Platform Cairo SR3&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/31/spring-io-platform-brussels-sr12"&gt;Spring IO Platform Brussels SR12&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2018/07/31/this-week-in-spring-july-31st-2018"&gt;This Week in Spring - July 31st, 2018&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is a super helpful post by data driven Spring community member Michael Simons, now working at Neo4j, on how to &lt;a href="https://michael-simons.github.io/neo4j-sdn-ogm-tips/use_dynamic_finder.html"&gt;create Spring Data Neo4j repositories that find nodes by arbitrary properties&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Follow this dead-simple tutorial on how to use BOSH, the no-drift, service-not-server-centric package manager for infrastructure that underpins Cloud Foundry and Pivotal&amp;rsquo;s Kubernetes services, &lt;a href="https://www.cloudfoundry.org/blog/create-lean-bosh-release/"&gt;to create a dead-simple BOSH release&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://rework.withgoogle.com/guides/understanding-team-effectiveness/steps/identify-dynamics-of-effective-teams/"&gt;re:Work - Guide: Understand team effectiveness&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is a great post fro Gregor Hohpe, of the &lt;em&gt;Enterprise Integration Patterns&lt;/em&gt; book fame, &lt;a href="https://www.linkedin.com/pulse/architecture-constraints-end-multi-tenancy-gregor-hohpe/"&gt;on the end of multitenancy&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.suse.com/media/case-study/apiomat_cs.pdf"&gt;This a case study and it&amp;rsquo;s interesting&lt;/a&gt;. What&amp;rsquo;s &lt;em&gt;most&lt;/em&gt; interesting to me is that it talks about both Cloud Foundry and Kubernetes being used together. Nice!&lt;/li&gt;
-  &lt;li&gt;This is a nice article on best practices for Spring Boot developers. There&amp;rsquo;s a lot of good stuff here! &lt;a href="https://www.e4developer.com/2018/08/06/spring-boot-best-practices/"&gt;A few of us on the Spring team contributed input&lt;/a&gt;. Check it out.&lt;/li&gt;
-  &lt;li&gt;I love this Spanish-language post on how &lt;a href="http://blog.joedayz.pe/2018/08/monitoreando-tus-micro-servicios-con.html?m=1"&gt;to monitor Spring Boot-based applications&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Check out the latest release of Trampoline, a tool for managing instances of &lt;a href="https://twitter.com/trampolinesb/status/1026396042474995713?s=12"&gt;Spring Boot-based applications running on your location node during development&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Have you &lt;a href="http://asset-pipeline.com/"&gt;seen Asset Pipeline&lt;/a&gt;? it supports an asset pipeline (for things like minification, transpilation, bundling, etc., for things like JavaScript, TypeScript, CSS, SCSS, etc.) and it works with Spring Boot, Grails, Ratpack, etc.&lt;/li&gt;
-  &lt;li&gt;This won&amp;rsquo;t be news to you, dear listeners - because presumably by this point you&amp;rsquo;ve already listened to all of them! :D - but did you know that the Spring YouTube channel (which is located at &lt;a href="http://spring.io/video"&gt;spring.io/video&lt;/a&gt;) now has &lt;a href="https://twitter.com/springcentral/status/1026499676235866112"&gt;over 100k subscribers&lt;/a&gt;! Are you a subscribe? Now&amp;rsquo;s a good time to join the fun. If you&amp;rsquo;re already a subscriber, then thank you so much!&lt;/li&gt;
-  &lt;li&gt;I &lt;em&gt;love&lt;/em&gt; &lt;a href="http://blog.marcosbarbero.com/pt_BR/"&gt;Marcos Barbero&amp;rsquo;s numerous Portuguese-language posts&lt;/a&gt; on Spring Boot and so can you!&lt;/li&gt;
-  &lt;li&gt;What do you need to &lt;a href="https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9"&gt;know about migrating to Java 11&lt;/a&gt;? (Remember, it&amp;rsquo;s just around the corner!)&lt;/li&gt;
-  &lt;li&gt;Spring Cloud Kubernetes has just graduated from incubation and &lt;a href="https://twitter.com/salaboy/status/1025285377584713728"&gt;the 0.3.0.RELEASE (a preview release) is now on maven central&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Oded Shopen has a nice post on deploying &lt;a href="https://medium.com/@odedia/deploy-spring-boot-application-to-pivotal-cloud-foundry-8bab62e7fbaf"&gt;Spring Boot-based applications to Pivotal Cloud Foundry&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://medium.com/@odedia/exploring-pivotal-cloud-foundrys-apps-manager-26d6a9c8ce76"&gt;Exploring Pivotal Cloud Foundry’s Apps Manager – Oded Shopen – Medium&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Oded Shopen also &lt;a href="https://medium.com/@odedia/a-tale-of-3-cloud-native-abstractions-for-event-processing-e7f3de484aa0"&gt;put together this nice post on three abstractions for event processing&lt;/a&gt;, which is also worth a read!&lt;/li&gt;
-  &lt;li&gt;Oded Shopen &lt;em&gt;also&lt;/em&gt; did a great talk on session management &lt;a href="https://www.youtube.com/watch?v=uJePLpfPsug&amp;feature=youtu.be"&gt;with Spring and Redis in this Redis Labs talk&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Alex Soto has a nice post on &lt;a href="http://www.lordofthejars.com/2018/06/spring-boot-cockroach-db-in.html"&gt;deploying Cockroach DB on Kubernetes and talking to it from Spring Boot&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;These are the slides to &lt;a href="https://speakerdeck.com/corneil/spring-fu-a-quick-introduction"&gt;Corneil du Plessis&amp;rsquo;s talk on Spring Fu&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;The talks from the &lt;a href="https://m.youtube.com/playlist?list=PLX8CzqL3ArzVnxC6PYxMlngEMv3W1pIkn"&gt;JVM Language Summit are up and accessible!&lt;/a&gt; I &lt;em&gt;devour&lt;/em&gt; these talks every year. There&amp;rsquo;s no single better resource for ingesting all the latest and greatest of the future of Java.&lt;/li&gt;
-  &lt;li&gt;It&amp;rsquo;d be so amazing to be able to easily &amp;lsquo;link&amp;rsquo; to your IDE&amp;rsquo;s workspace so that somebody else could pick up where you left off, inheriting your context and everything else. &lt;a href="https://twitter.com/eclipse_che/status/1022837528188145665"&gt;Now, with Eclipse Che, the browser-based Eclipse IDE&lt;/a&gt;, you can!&lt;/li&gt;
-  &lt;li&gt;Whether you&amp;rsquo;re using Kubernetes or Cloud Foundry, you should get &lt;a href="https://twitter.com/cloudfoundry/status/1024734933275693056"&gt;to know the open service broker API&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;As if you need any more reasons to come to the epic SpringOne Platform event this year in Washington DC, &lt;a href="https://twitter.com/springcentral/status/1024719216883118080"&gt;Rod Johnson, the creator of Spring and CEO of Atomist, will be there, too&lt;/a&gt;!&lt;/li&gt;
-  &lt;li&gt;Get started with the latest and greatest in &lt;a href="https://twitter.com/springcloud/status/1024674329622179840"&gt;stream processing and integration powerhouse Spring Cloud Data Flow &lt;em&gt;in a single tweet&lt;/em&gt;&lt;/a&gt;!&lt;/li&gt;
-  &lt;li&gt;This is pretty interesting! It demonstrate show to use &lt;a href="https://igorski.co/java/junit/samebug-extension-junit5/"&gt;the Samebug extension for JUnit 5 to support easier debugging of Java applications&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Thorben Janssen has a &lt;a href="https://www.thoughts-on-java.org/update-database-schema-without-downtime/"&gt;great post on zero-downtime database updates&lt;/a&gt;. Not much code, but it is a &lt;em&gt;very&lt;/em&gt; useful post indeed.&lt;/li&gt;
-  &lt;li&gt;Missed a few _This Week in Spring_s? Want to catch up on the latest and greatest in the &lt;a href="https://twitter.com/springcentral/status/1024412396620795905"&gt;Pivotal and Spring ecosystems in a monthly cadence&lt;/a&gt;? Check out, you guessed it, &lt;em&gt;This Month in Spring&lt;/em&gt;!
-&lt;/li&gt;
-  &lt;li&gt;The next &lt;a href="https://twitter.com/ryanpmorgan/status/1024351467191365637?s=12"&gt;Cloud Foundry Java buildpack seamlessly integrates with the Google Cloud Stackdriver service&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/snicoll/status/1024233314440437760?s=12"&gt;twitter.com&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Redis Client Lettuce has just released &lt;a href="https://twitter.com/lettucedriver/status/1024186170786439168?s=12"&gt;4.4.6.Final and 5.0.5.RELEASE released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;great post by two of the best in the biz, Matt Raible and Simon Maple: &lt;a href="https://developer.okta.com/blog/2018/07/30/10-ways-to-secure-spring-boot"&gt;10 excellent ways to secure your Spring Boot application!&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Thanks Liberty IT &lt;a href="https://irishtechnews.ie/liberty-it-hosts-josh-long-at-spring-boot-coding/amp/"&gt;for having me in Dublin, Ireland and Belfast, North Ireland!&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content>
   </entry>
 </feed>

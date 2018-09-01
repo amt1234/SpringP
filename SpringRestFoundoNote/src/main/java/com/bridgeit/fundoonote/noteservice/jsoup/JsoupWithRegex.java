@@ -25,6 +25,9 @@ public class JsoupWithRegex {
 		List<String> containedUrls = new ArrayList<String>();
 		String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
 		Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
+		
+		text = text.replaceAll("<div>", " ");
+	    text = text.replaceAll("<br>", " ");
 		Matcher urlMatcher = pattern.matcher(text);
 
 		while (urlMatcher.find()) {
@@ -60,9 +63,7 @@ public class JsoupWithRegex {
 				System.out.println("host name :" + hostname);
 				webScrap.setLinkHost(hostname);
 				
-//				Element image = doc.select("img").first();
 				String urlimage = doc.select("meta[property=og:image]").first().attr("content").trim();
-//				String urlimage = image.absUrl("src");
 				System.out.println("image url :"+urlimage);
 				webScrap.setLinkImage(urlimage);
 				webScraps.add(webScrap);

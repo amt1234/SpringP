@@ -15,4 +15,6 @@ public interface INoteDao {
 	public boolean deleteNoteOfUser(long noteid);
 	public List<Note> collaboratedNoteList();
 	boolean createWebscrap(WebScrap webScrap);
+	public WebScrap checkWebScrapLInkId(long linkId);
+	public boolean removeWebScrap(long linkId);
 }

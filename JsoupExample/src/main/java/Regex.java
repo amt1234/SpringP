@@ -10,8 +10,10 @@ public class Regex {
 	    List<String> containedUrls = new ArrayList<String>();
 	    String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
 	    Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
-	    Matcher urlMatcher = pattern.matcher(text);
 
+	    text = text.replaceAll("<div>", " ");
+	    text = text.replaceAll("<br>", " ");
+	    Matcher urlMatcher = pattern.matcher(text);
 	    while (urlMatcher.find())
 	    {
 	        containedUrls.add(text.substring(urlMatcher.start(0),
@@ -22,7 +24,7 @@ public class Regex {
 	}
 	public List<String> list() {
 		List<String> linklist=new ArrayList<String>();
-		List<String> extractedUrls = extractUrls("https://www.indiatimes.com/news/india/now-that-99-3-demonetised-notes-are-back-in-the-banks-where-is-the-black-money-352099.html");
+		List<String> extractedUrls = extractUrls("https://wordpress.org/plugins/default-featured-image/");
 
 		for (String url : extractedUrls)
 		{

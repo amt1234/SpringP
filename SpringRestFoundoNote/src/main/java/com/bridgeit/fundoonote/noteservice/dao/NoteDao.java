@@ -71,4 +71,19 @@ public class NoteDao implements INoteDao {
 		return true;
 	}
 	
+	@Override
+	public WebScrap checkWebScrapLInkId(long linkId) {
+		Criteria criteria = sessionFacetory.getCurrentSession().createCriteria(WebScrap.class)
+				.add(Restrictions.eq("linkId", linkId));
+		WebScrap webScrap = (WebScrap) criteria.uniqueResult();
+		return webScrap;	
+	}
+	
+	@Override
+	public boolean removeWebScrap(long linkId) {
+		WebScrap webScrap=checkWebScrapLInkId(linkId);
+		sessionFacetory.getCurrentSession().delete(webScrap);
+		return true;
+	}
+	
 }

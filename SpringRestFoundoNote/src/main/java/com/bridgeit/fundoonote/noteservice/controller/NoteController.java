@@ -41,8 +41,8 @@ public class NoteController {
 		LOGGER.info("CREATE NOTE");
 		String token = request.getHeader("userid");
 		if ((note = iNoteService.createUserNote(note, token)) != null)
-			return new ResponseEntity<>(new Response("201" ,note), HttpStatus.CREATED);
-		return new ResponseEntity<>(new Response("406","note not created"), HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("201", note), HttpStatus.CREATED);
+		return new ResponseEntity<>(new Response("406", "note not created"), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/update")
@@ -50,8 +50,8 @@ public class NoteController {
 		LOGGER.info("UPDATE NOTE");
 		String token = request.getHeader("userid");
 		if (iNoteService.updateUserNote(note, token))
-			return new ResponseEntity<>(new Response("200","note updated"), HttpStatus.OK);
-		return new ResponseEntity<>(new Response("406","note not updated"), HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200", "note updated"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "note not updated"), HttpStatus.CONFLICT);
 	}
 
 	@GetMapping(value = "/list")
@@ -60,7 +60,7 @@ public class NoteController {
 		String token = request.getHeader("userid");
 		List<Note> list = iNoteService.listOfNote(token);
 		if (list != null)
-			return new ResponseEntity<>(new Response("200",list), HttpStatus.OK);
+			return new ResponseEntity<>(new Response("200", list), HttpStatus.OK);
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
@@ -69,40 +69,45 @@ public class NoteController {
 		LOGGER.info("DELETE USER NOTE");
 		String token = request.getHeader("userid");
 		if (iNoteService.deleteUserNote(token, id))
-			return new ResponseEntity<>(new Response("200","Note deleted sucessfully"), HttpStatus.OK);
-		return new ResponseEntity<>(new Response("406","Note not deleted"), HttpStatus.CONFLICT);
+			return new ResponseEntity<>(new Response("200", "Note deleted sucessfully"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("406", "Note not deleted"), HttpStatus.CONFLICT);
 	}
 
 	@PostMapping(value = "/uploadFile")
 	public ResponseEntity<?> uploadMultipleFile(@RequestParam("file") MultipartFile file) {
 		LOGGER.info("uploadFile");
 		String image;
-		if ((image=iNoteService.uploadFile(file)) != null)
-			return new ResponseEntity<>(new Response("200",image), HttpStatus.OK);
-		return new ResponseEntity<>(new Response("404","You failed to upload"), HttpStatus.NOT_FOUND);
+		if ((image = iNoteService.uploadFile(file)) != null)
+			return new ResponseEntity<>(new Response("200", image), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("404", "You failed to upload"), HttpStatus.NOT_FOUND);
 	}
-	
-	@GetMapping(value="/loadFile/{filename:.+}")
-	public ResponseEntity<?> getFile(@PathVariable("filename") String filename,HttpServletRequest httpServletRequest) throws IOException{
+
+	@GetMapping(value = "/loadFile/{filename:.+}")
+	public ResponseEntity<?> getFile(@PathVariable("filename") String filename, HttpServletRequest httpServletRequest)
+			throws IOException {
 		LOGGER.info("loadFile");
 		Resource file = iNoteService.loadFile(filename);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
 	}
-	
-	@GetMapping(value="/getCollaboratedNotes")
-	public ResponseEntity<?> getCollaboratedNotes(HttpServletRequest request){
+
+	@GetMapping(value = "/getCollaboratedNotes")
+	public ResponseEntity<?> getCollaboratedNotes(HttpServletRequest request) {
 		LOGGER.info(" Collaborator list ");
-		String token=request.getHeader("userid");
-		List<Note> list=iNoteService.getCollaboratedNotes(token);
-		if(list!=null)
-			return new ResponseEntity<>(new Response("200",list),HttpStatus.OK);
-		return new ResponseEntity<>(new Response("404","No collaborated note"),HttpStatus.CONFLICT);
+		String token = request.getHeader("userid");
+		List<Note> list = iNoteService.getCollaboratedNotes(token);
+		if (list != null)
+			return new ResponseEntity<>(new Response("200", list), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("404", "No collaborated note"), HttpStatus.CONFLICT);
 	}
-	
-	public ResponseEntity<?> webScrapping(@RequestBody WebScrap webScrap){
-		
-		return null;
+
+	@PostMapping(value = "/removeWebScrap/{id}")
+	public ResponseEntity<?> removeWebScrap(@PathVariable("id") long noteId, @RequestBody WebScrap webScrap) {
+		if (iNoteService.removeWebScrap(noteId, webScrap))
+			return new ResponseEntity<>(new Response("200", "remove link from note"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("404", "not remove note"), HttpStatus.CONFLICT);
+
 	}
+
 }

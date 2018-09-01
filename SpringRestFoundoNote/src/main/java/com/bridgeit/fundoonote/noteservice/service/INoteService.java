@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bridgeit.fundoonote.noteservice.model.Note;
+import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 
 public interface INoteService {
 
@@ -16,4 +17,5 @@ public interface INoteService {
 	public String uploadFile(MultipartFile file);
 	public Resource loadFile(String filename);
 	public List<Note> getCollaboratedNotes(String token);
+	public boolean removeWebScrap(long id, WebScrap webScrap);
 }

@@ -27,6 +27,7 @@ import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 import com.bridgeit.fundoonote.userservice.dao.UserDao;
 import com.bridgeit.fundoonote.userservice.model.User;
+import com.bridgeit.fundoonote.userservice.model.UserProfile;
 import com.bridgeit.fundoonote.userservice.utility.IJwtProgram;
 
 @Service
@@ -78,6 +79,8 @@ public class NoteService implements INoteService {
 
 		// getting userid from note table
 		Note oldNote = noteDao.checkNoteId(note.getNoteId());
+		
+		
 
 		if ((oldNote.getUser().getUserId()) == (user.getUserId())) {
 			oldNote.setNoteId(note.getNoteId());
@@ -91,6 +94,18 @@ public class NoteService implements INoteService {
 			oldNote.setNotePinned(note.isNotePinned());
 			oldNote.setNoteTrash(note.isNoteTrash());
 			oldNote.setImage(note.getImage());
+			
+			
+			List<WebScrap> webScraplist = jsoupWithRegex.listOfLink(note);
+			
+			for (WebScrap webScrap : webScraplist) {
+				webScrap.setWebScrapNote(note);
+				System.out.println("web scrapping in for loop ///.........///.............");
+				noteDao.createWebscrap(webScrap);
+			}
+			System.out.println("webscrab update");
+			oldNote.setWebScrapList(note.getWebScrapList());
+			
 			noteDao.updateNote(oldNote);
 			return true;
 		} else
@@ -227,6 +242,14 @@ public class NoteService implements INoteService {
 			}
 		}
 		return notelist;
+	}
+	
+	@Override
+	public boolean removeWebScrap(long id, WebScrap webScrap) {
+		Note note = noteDao.checkNoteId(id);
+		long webLinkId=webScrap.getLinkId();
+		noteDao.removeWebScrap(webLinkId);
+		return true;
 	}
 
 }
