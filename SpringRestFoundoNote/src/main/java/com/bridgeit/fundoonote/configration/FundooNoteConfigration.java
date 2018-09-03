@@ -2,8 +2,6 @@ package com.bridgeit.fundoonote.configration;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -30,10 +28,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -43,7 +37,6 @@ import org.springframework.retry.support.RetryTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import com.bridgeit.fundoonote.userservice.jwt.Receiver;
 import com.bridgeit.fundoonote.userservice.model.EmailInfo;
@@ -165,8 +158,7 @@ public class FundooNoteConfigration {
 				try {
 					Receiver.receiverMessageDemo(new ObjectMapper()
 							.readValue(new String(message.getBody(), StandardCharsets.UTF_8), EmailInfo.class));
-					// Receiver.sendMail(new ObjectMapper().readValue(new String(message.getBody(),
-					// StandardCharsets.UTF_8),EmailInfo.class));
+				
 				} catch (JsonParseException e) {
 					e.printStackTrace();
 				} catch (JsonMappingException e) {

@@ -123,13 +123,12 @@ public class UserController {
 			return new ResponseEntity<>(new Response("200", "user add on note"), HttpStatus.OK);
 		return new ResponseEntity<>(new Response("406", "Invalid user"), HttpStatus.NOT_FOUND);
 	}
-	
-	@PostMapping(value="/removeCollaborator/{id}")
-	public ResponseEntity<?> removeCollaborator(@PathVariable("id") long noteId,
-			@RequestBody UserProfile userProfile){
+
+	@PostMapping(value = "/removeCollaborator/{id}")
+	public ResponseEntity<?> removeCollaborator(@PathVariable("id") long noteId, @RequestBody UserProfile userProfile) {
 		LOGGER.info("REMOVE COLLABORATOR");
-		if(userService.removeCollaborator(noteId, userProfile))
-			return new ResponseEntity<>(new Response("200","remove user from note"),HttpStatus.OK);
-		return new ResponseEntity<>(new Response("404","Invalid user"),HttpStatus.CONFLICT);
+		if (userService.removeCollaborator(noteId, userProfile))
+			return new ResponseEntity<>(new Response("200", "remove user from note"), HttpStatus.OK);
+		return new ResponseEntity<>(new Response("404", "Invalid user"), HttpStatus.CONFLICT);
 	}
 }

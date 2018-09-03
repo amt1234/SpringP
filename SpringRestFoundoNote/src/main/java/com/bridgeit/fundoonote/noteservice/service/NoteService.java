@@ -27,7 +27,6 @@ import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 import com.bridgeit.fundoonote.userservice.dao.UserDao;
 import com.bridgeit.fundoonote.userservice.model.User;
-import com.bridgeit.fundoonote.userservice.model.UserProfile;
 import com.bridgeit.fundoonote.userservice.utility.IJwtProgram;
 
 @Service
@@ -100,10 +99,8 @@ public class NoteService implements INoteService {
 			
 			for (WebScrap webScrap : webScraplist) {
 				webScrap.setWebScrapNote(note);
-				System.out.println("web scrapping in for loop ///.........///.............");
 				noteDao.createWebscrap(webScrap);
 			}
-			System.out.println("webscrab update");
 			oldNote.setWebScrapList(note.getWebScrapList());
 			
 			noteDao.updateNote(oldNote);
@@ -115,32 +112,12 @@ public class NoteService implements INoteService {
 	@Override
 	public List<Note> listOfNote(String token) {
 
-		// List<ResponseDto> listOfResponseDto = new ArrayList<>();
 		// getting userId from token
 		long id = jwtToken.parseJWT(token);
 		User user = userDao.checkId(id);
 
 		// passing user as parameter because in pojo there is user field
 		List<Note> listOfNote = noteDao.notesList(user);
-
-		// for (Note note : listOfNote) {
-		// ResponseDto newNote=new ResponseDto();
-		// newNote.setNoteId(note.getNoteId());
-		// newNote.setNoteTitle(note.getNoteTitle());
-		// newNote.setNoteDescribtion(note.getNoteDescribtion());
-		// newNote.setNoteArchiev(note.isNoteArchiev());
-		// newNote.setNotePinned(note.isNotePinned());
-		// newNote.setNoteTrash(note.isNoteTrash());
-		// newNote.setCreatedDate(note.getCreatedDate());
-		// newNote.setUpdatedDate(note.getUpdatedDate());
-		// newNote.setReminderDate(note.getReminderDate());
-		// newNote.setReminderTime(note.getReminderTime());
-		// newNote.setColor(note.getColor());
-		//
-		// listOfResponseDto.add(newNote);
-		// }
-		//
-		// return listOfResponseDto;
 
 		return listOfNote;
 	}
@@ -158,8 +135,7 @@ public class NoteService implements INoteService {
 		return false;
 	}
 
-	// String
-	// imagePath="/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile";
+	
 	private final Path rootPath = Paths.get(
 			"/home/bridgelabz/Documents/workspace-sts-3.9.4.RELEASE/SpringRestFoundoNote/src/main/java/com/bridgeit/fundoonote/profile/");
 
@@ -219,7 +195,7 @@ public class NoteService implements INoteService {
 	@Override
 	public List<Note> getCollaboratedNotes(String token) {
 		List<Note> notelist = new ArrayList<>();
-		// User user=userDao.checkEmail(userProfile.getUserEmail());
+		
 		long id = jwtToken.parseJWT(token);
 		User user = userDao.checkId(id);
 
@@ -228,11 +204,9 @@ public class NoteService implements INoteService {
 		String userEmail = user.getUserEmail();
 		List<Note> list = noteDao.collaboratedNoteList();
 		for (Note note : list) {
-			System.out.println(note.getUserset().toString());
 			Set<User> userset = new HashSet<>();
 			userset = note.getUserset();
 			for (User user2 : userset) {
-				System.out.println("user from userset ........." + user2.getUserEmail());
 				email = user2.getUserEmail();
 				if (userEmail.equals(email)) {
 					long noteId = note.getNoteId();
@@ -246,7 +220,6 @@ public class NoteService implements INoteService {
 	
 	@Override
 	public boolean removeWebScrap(long id, WebScrap webScrap) {
-		Note note = noteDao.checkNoteId(id);
 		long webLinkId=webScrap.getLinkId();
 		noteDao.removeWebScrap(webLinkId);
 		return true;

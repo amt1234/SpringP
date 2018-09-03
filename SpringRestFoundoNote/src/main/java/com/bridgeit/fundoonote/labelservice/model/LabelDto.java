@@ -1,6 +1,7 @@
 package com.bridgeit.fundoonote.labelservice.model;
 
 public class LabelDto {
+
 	private long labelId;
 	private String labelName;
 

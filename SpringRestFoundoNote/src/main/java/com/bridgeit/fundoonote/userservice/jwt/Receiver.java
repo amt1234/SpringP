@@ -18,39 +18,35 @@ import com.bridgeit.fundoonote.userservice.model.EmailInfo;
 @Component
 public class Receiver {
 
-	
-	public static void sendEmail(Session session, String toEmail, String subject, String body){
-		try
-	    {
-	      MimeMessage msg = new MimeMessage(session);
-	      //set message headers
-	      msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-	      msg.addHeader("format", "flowed");
-	      msg.addHeader("Content-Transfer-Encoding", "8bit");
+	public static void sendEmail(Session session, String toEmail, String subject, String body) {
+		try {
+			MimeMessage msg = new MimeMessage(session);
+			// set message headers
+			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+			msg.addHeader("format", "flowed");
+			msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-	      msg.setFrom(new InternetAddress("poonamgadugale2017@gmail.com", "poonam gadugale"));
+			msg.setFrom(new InternetAddress("poonamgadugale2017@gmail.com", "poonam gadugale"));
 
-	      msg.setSubject(subject, "UTF-8");
+			msg.setSubject(subject, "UTF-8");
 
-	     msg.setText(body, "UTF-8");
-	  
-	      msg.setSentDate(new Date());
+			msg.setText(body, "UTF-8");
 
-	      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-	 
-	      System.out.println("Message is ready");
-	      Transport.send(msg);  
+			msg.setSentDate(new Date());
 
-	      System.out.println("EMail Sent Successfully!!");
-	    }
-	    catch (Exception e) {
-	      e.printStackTrace();
-	    }
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+
+			System.out.println("Message is ready");
+			Transport.send(msg);
+
+			System.out.println("EMail Sent Successfully!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	public static void receiverMessageDemo(EmailInfo emailInfo)
-	{
-		
+
+	public static void receiverMessageDemo(EmailInfo emailInfo) {
+
 		final String fromEmail = "fundoo.note12@gmail.com"; // requires valid gmail id
 		final String password = "fundoonote12"; // correct password for gmail id
 		final String toEmail = emailInfo.getEmail();// can be any email id
@@ -72,18 +68,7 @@ public class Receiver {
 
 		Session session = Session.getDefaultInstance(props, auth);
 		System.out.println("Session created");
-		sendEmail(session, toEmail, "SSLEmail Testing Subject", emailInfo.getUrl()+emailInfo.getToken());
+		sendEmail(session, toEmail, "SSLEmail Testing Subject", emailInfo.getUrl() + emailInfo.getToken());
 	}
-	 /*public static void sendMail(final EmailInfo emailInfo) {  
-         
-	        MimeMessagePreparator messagePreparator = new MimeMessagePreparator() {  
-	              
-	                public void prepare(MimeMessage mimeMessage) throws Exception {  
-	                   mimeMessage.setRecipient(Message.RecipientType.TO,new InternetAddress(emailInfo.getEmail()));  
-	                   mimeMessage.setSubject("Verification");  
-	                   mimeMessage.setText(emailInfo.getUrl()+emailInfo.getToken());  
-	                }  
-	        };  
-	        mailSender.send(messagePreparator);  
-	    }  */
+
 }

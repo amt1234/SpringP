@@ -24,7 +24,6 @@ public class CorseFilter extends OncePerRequestFilter {
 			LOGGER.info("Sending Header....");
 			// CORS "pre-flight" request
 			response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-			//response.addHeader("Access-Control-Allow-Headers", "Authorization");
 			response.setHeader("Access-Control-Allow-Headers", "content-type,userid");
 			response.setHeader("Access-Control-Allow-Credentials", "true");
 			response.setHeader("Access-Control-Max-Age", "1");

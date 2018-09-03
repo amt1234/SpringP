@@ -3,7 +3,6 @@ package com.bridgeit.fundoonote.noteservice.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,9 @@ public class NoteDao implements INoteDao {
 
 	@Override
 	public List<Note> collaboratedNoteList(){
+		@SuppressWarnings("deprecation")
 		Criteria criteria=sessionFacetory.getCurrentSession().createCriteria(Note.class);
+		@SuppressWarnings("unchecked")
 		List<Note> list=criteria.list();
 		return list;	
 	}
@@ -73,6 +74,7 @@ public class NoteDao implements INoteDao {
 	
 	@Override
 	public WebScrap checkWebScrapLInkId(long linkId) {
+		@SuppressWarnings("deprecation")
 		Criteria criteria = sessionFacetory.getCurrentSession().createCriteria(WebScrap.class)
 				.add(Restrictions.eq("linkId", linkId));
 		WebScrap webScrap = (WebScrap) criteria.uniqueResult();
@@ -85,5 +87,4 @@ public class NoteDao implements INoteDao {
 		sessionFacetory.getCurrentSession().delete(webScrap);
 		return true;
 	}
-	
 }

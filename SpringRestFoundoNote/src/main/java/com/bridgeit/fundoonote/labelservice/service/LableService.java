@@ -145,7 +145,6 @@ public class LableService implements ILableService {
 		Set<Note> noteset = new HashSet<Note>();
 
 		if ((note.getUser().getUserId()) == (label.getUser().getUserId())) {
-			System.out.println("remove label ");
 			noteset = label.getNotes();
 			for (Note note2 : noteset) {
 				if ((note2.getNoteId()) == noteId) {
@@ -157,7 +156,6 @@ public class LableService implements ILableService {
 			labelset = note.getLabels();
 			for (Label label2 : labelset) {
 				if ((label2.getLabelId()) == (labelDto.getLabelId())) {
-					System.out.println("labelId" + labelDto.getLabelId());
 					labelset.remove(label2);
 					break;
 				}
@@ -169,5 +167,4 @@ public class LableService implements ILableService {
 		}
 		return false;
 	}
-
 }

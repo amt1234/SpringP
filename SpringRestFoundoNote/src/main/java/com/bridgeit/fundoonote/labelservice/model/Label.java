@@ -80,6 +80,4 @@ public class Label {
 		this.labelId=labelId;
 		this.labelName=labelName;	
 	}
-	
-
 }

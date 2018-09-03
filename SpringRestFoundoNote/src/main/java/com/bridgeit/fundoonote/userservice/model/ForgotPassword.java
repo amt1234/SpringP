@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class ForgotPassword {
 
-	@NotEmpty 
+	@NotEmpty
 	@Email
 	private String userEmail;
 

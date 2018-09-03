@@ -58,7 +58,7 @@ public class RegistrationDTO {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		 this.phoneNumber = phoneNumber;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getDateOfBirth() {
@@ -68,5 +68,4 @@ public class RegistrationDTO {
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
 }

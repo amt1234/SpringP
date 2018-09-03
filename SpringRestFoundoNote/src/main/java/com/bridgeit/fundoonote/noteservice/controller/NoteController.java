@@ -26,7 +26,6 @@ import com.bridgeit.fundoonote.noteservice.model.Note;
 import com.bridgeit.fundoonote.noteservice.model.WebScrap;
 import com.bridgeit.fundoonote.noteservice.service.INoteService;
 import com.bridgeit.fundoonote.userservice.model.Response;
-import com.bridgeit.fundoonote.userservice.model.UserProfile;
 
 @RestController
 @RequestMapping(value = "/note")
@@ -107,7 +106,5 @@ public class NoteController {
 		if (iNoteService.removeWebScrap(noteId, webScrap))
 			return new ResponseEntity<>(new Response("200", "remove link from note"), HttpStatus.OK);
 		return new ResponseEntity<>(new Response("404", "not remove note"), HttpStatus.CONFLICT);
-
 	}
-
 }

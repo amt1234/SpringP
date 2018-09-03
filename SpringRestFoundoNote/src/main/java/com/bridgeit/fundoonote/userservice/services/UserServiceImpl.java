@@ -102,7 +102,6 @@ public class UserServiceImpl implements UserService {
 		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
 
 		if (token.equals(synCommand)) {
-			System.out.println("update isActive status");
 
 			User user = userDao.checkId(id);
 			user.setActiveUser(true);
@@ -137,8 +136,6 @@ public class UserServiceImpl implements UserService {
 
 		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
 
-		System.out.println("token in verified user " + token);
-
 		if (token.equals(synCommand)) {
 			User user = userDao.checkId(id);
 
@@ -156,8 +153,6 @@ public class UserServiceImpl implements UserService {
 		long id = iJwtProgram.parseJWT(token);
 
 		String synCommand = RedisConfigration.redisUtil().get(String.valueOf(id));
-
-		System.out.println("token in verified user " + token);
 
 		if (token.equals(synCommand)) {
 			try {
@@ -184,7 +179,6 @@ public class UserServiceImpl implements UserService {
 
 		String tokenkey = String.valueOf(user.getUserId());
 		RedisConfigration.redisUtil().set(tokenkey, token);
-		System.out.println("user token service");
 
 		rabbitTemplate.convertAndSend(FundooNoteConfigration.topicExchangeName, "lazy.orange.rabbit", emailInfo);
 		return true;
@@ -260,20 +254,18 @@ public class UserServiceImpl implements UserService {
 		Set<Note> notes = new HashSet<Note>();
 		Set<User> users = new HashSet<User>();
 
-		notes=user.getNoteset();
-		for(Note note2:notes) {
-			if(note2.getNoteId()==id) {
-				System.out.println("note id :"+note2.getNoteId());
+		notes = user.getNoteset();
+		for (Note note2 : notes) {
+			if (note2.getNoteId() == id) {
 				notes.remove(note2);
 				break;
 			}
 		}
 		user.setNoteset(notes);
-		
-		users=note.getUserset();
-		for(User user2:users) {
-			if(user2.getUserId()==user.getUserId()) {
-				System.out.println("note id .....: "+user2.getUserId());
+
+		users = note.getUserset();
+		for (User user2 : users) {
+			if (user2.getUserId() == user.getUserId()) {
 				users.remove(user2);
 				break;
 			}

@@ -3,7 +3,6 @@ package com.bridgeit.fundoonote.userservice.model;
 public class UserProfile {
 
 	private String userProfileImage;
-	
 
 	private String userEmail;
 	private String userName;
@@ -33,15 +32,15 @@ public class UserProfile {
 	}
 
 	public UserProfile() {
-		
+
 	}
 
-	public UserProfile( String userEmail, String userName,String userProfileImage) {
+	public UserProfile(String userEmail, String userName, String userProfileImage) {
 		super();
-		
+
 		this.userEmail = userEmail;
 		this.userName = userName;
-		this.userProfileImage=userProfileImage;
+		this.userProfileImage = userProfileImage;
 	}
-	
+
 }
